@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "nativeui",
+  "homepage": "https://nativeui.yourdomain.com",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:component",
+      "title": "Button",
+      "description": "A button component with multiple variants for React Native applications.",
+      "files": [
+        {
+          "path": "registry/new-york/button/button.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority"],
+      "registryDependencies": []
+    }
+  ]
+} 
