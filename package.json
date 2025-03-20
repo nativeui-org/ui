@@ -56,7 +56,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.3",
-    "shadcn": "2.4.0-canary.13",
+    "shadcn": "2.4.0-canary.17",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

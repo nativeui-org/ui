@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "nativeui",
-  "homepage": "https://nativeui.yourdomain.com",
+  "homepage": "https://nativeui.io",
   "items": [
     {
       "name": "button",
@@ -10,7 +10,7 @@
       "description": "A button component with multiple variants for React Native applications.",
       "files": [
         {
-          "path": "registry/new-york/button/button.tsx",
+          "path": "registry/button/button.tsx",
           "type": "registry:component"
         }
       ],
