@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "registry:build": "shadcn build"
+    "registry:build": "shadcn build",
+    "build:registry": "node scripts/build-registry.js",
+    "generate:docs": "node scripts/generate-component-docs.js",
+    "update:components": "node scripts/update-components.js",
+    "create:component": "node scripts/create-component.js"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",
@@ -56,6 +60,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.3",
+    "glob": "^11.0.2",
     "shadcn": "2.4.0-canary.17",
     "tailwindcss": "^4",
     "typescript": "^5"
