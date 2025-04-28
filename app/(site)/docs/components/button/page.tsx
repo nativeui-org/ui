@@ -4,7 +4,7 @@ export default function ButtonPage() {
   return (
     <ComponentPreview
       name="Button"
-      description="A button component for React Native applications."
+      description="A button component with multiple variants for React Native applications."
       examples={[
   {
     "title": "Default",
@@ -15,7 +15,7 @@ export default function ButtonPage() {
   {
     "title": "Variants",
     "value": "variants",
-    "content": "import { Button } from \"@nativeui/ui\";\n\nexport default function ButtonVariants() {\n  return (\n    <div className=\"flex flex-col gap-4\">\n      <Button variant=\"default\">Default</Button>\n      <Button variant=\"dark\">Dark</Button>\n      <Button variant=\"destructive\">Destructive</Button>\n      <Button variant=\"outline\">Outline</Button>\n      <Button variant=\"secondary\">Secondary</Button>\n      <Button variant=\"ghost\">Ghost</Button>\n      <Button variant=\"link\">Link</Button>\n    </div>\n  );\n}",
+    "content": "import { Button } from \"@nativeui/ui\";\n\nexport default function ButtonVariants() {\n  return (\n    <div className=\"flex flex-col gap-4\">\n      <Button variant=\"default\">Default</Button>\n      <Button variant=\"destructive\">Destructive</Button>\n      <Button variant=\"outline\">Outline</Button>\n      <Button variant=\"secondary\">Secondary</Button>\n      <Button variant=\"ghost\">Ghost</Button>\n      <Button variant=\"link\">Link</Button>\n    </div>\n  );\n}",
     "language": "tsx"
   },
   {
