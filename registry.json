@@ -14,7 +14,21 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": ["@radix-ui/react-slot", "class-variance-authority"],
+      "dependencies": ["react-native", "class-variance-authority"],
+      "registryDependencies": []
+    },
+    {
+      "name": "accordion",
+      "type": "registry:component",
+      "title": "Accordion",
+      "description": "An accordion component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/accordion/accordion.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native", "@expo/vector-icons"],
       "registryDependencies": []
     }
   ]
