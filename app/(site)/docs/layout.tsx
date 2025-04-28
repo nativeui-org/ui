@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import registry from "@/registry.json";
 
 const docsConfig = {
   sidebarNav: [
@@ -26,24 +27,10 @@ const docsConfig = {
     },
     {
       title: "Components",
-      items: [
-        {
-          title: "Button",
-          href: "/docs/components/button",
-        },
-        {
-          title: "Card",
-          href: "/docs/components/card",
-        },
-        {
-          title: "Tabs",
-          href: "/docs/components/tabs",
-        },
-        {
-          title: "Input",
-          href: "/docs/components/input",
-        },
-      ],
+      items: registry.items.map((item) => ({
+        title: item.title,
+        href: `/docs/components/${item.name}`,
+      })),
     },
   ],
 };
