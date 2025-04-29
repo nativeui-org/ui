@@ -72,6 +72,20 @@
       ],
       "dependencies": ["react-native"],
       "registryDependencies": []
+    },
+    {
+      "name": "textarea",
+      "type": "registry:component",
+      "title": "Textarea",
+      "description": "A textarea component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/textarea/textarea.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native"],
+      "registryDependencies": []
     }
   ]
 } 
