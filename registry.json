@@ -30,6 +30,20 @@
       ],
       "dependencies": ["react-native", "@expo/vector-icons"],
       "registryDependencies": []
+    },
+    {
+      "name": "badge",
+      "type": "registry:component",
+      "title": "Badge",
+      "description": "A badge component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/badge/badge.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native", "class-variance-authority"],
+      "registryDependencies": []
     }
   ]
 } 
