@@ -100,6 +100,20 @@
       ],
       "dependencies": ["react-native"],
       "registryDependencies": []
+    },
+    {
+      "name": "switch",
+      "type": "registry:component",
+      "title": "Switch",
+      "description": "A switch component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/switch/switch.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native"],
+      "registryDependencies": []
     }
   ]
 } 
