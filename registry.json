@@ -156,6 +156,20 @@
       ],
       "dependencies": ["react-native"],
       "registryDependencies": []
+    },
+    {
+      "name": "select",
+      "type": "registry:component",
+      "title": "Select",
+      "description": "A select component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/select/select.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native", "@expo/vector-icons"],
+      "registryDependencies": []
     }
   ]
 } 
