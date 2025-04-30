@@ -170,6 +170,20 @@
       ],
       "dependencies": ["react-native", "@expo/vector-icons"],
       "registryDependencies": []
+    },
+    {
+      "name": "popover",
+      "type": "registry:component",
+      "title": "Popover",
+      "description": "A popover component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/popover/popover.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native"],
+      "registryDependencies": []
     }
   ]
-} 
+}
