@@ -128,6 +128,20 @@
       ],
       "dependencies": ["react-native"],
       "registryDependencies": []
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:component",
+      "title": "Checkbox",
+      "description": "A checkbox component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/checkbox/checkbox.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native", "@expo/vector-icons"],
+      "registryDependencies": []
     }
   ]
 } 
