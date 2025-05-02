@@ -14,17 +14,10 @@ export default function SelectPage() {
   }
 ]}
       componentCode={`import * as React from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  Modal,
-  ScrollView,
-  TouchableWithoutFeedback,
-  Platform,
-} from "react-native";
+import { View, Text, Pressable, ScrollView, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { cn } from "@/lib/utils";
+import { Drawer, useDrawer } from "@/components/ui/drawer";
 
 interface SelectProps {
   value?: string;
@@ -60,12 +53,6 @@ interface SelectSeparatorProps {
   className?: string;
 }
 
-// To help TypeScript with React.Children
-type ChildType = {
-  type: React.JSXElementConstructor<any>;
-  props: any;
-};
-
 const Select = React.forwardRef<View, SelectProps>(
   (
     {
@@ -85,7 +72,6 @@ const Select = React.forwardRef<View, SelectProps>(
     const [selectedLabel, setSelectedLabel] =
       React.useState<React.ReactNode>("");
 
-    // Find the label from children for the current value
     React.useEffect(() => {
       if (value === undefined) return;
 
@@ -94,7 +80,6 @@ const Select = React.forwardRef<View, SelectProps>(
 
         const childElement = child as React.ReactElement<any>;
 
-        // Handle SelectItem direct child
         if (
           childElement.type === SelectItem &&
           childElement.props.value === value
@@ -104,7 +89,6 @@ const Select = React.forwardRef<View, SelectProps>(
           return;
         }
 
-        // Handle SelectGroup > SelectItem
         if (childElement.type === SelectGroup) {
           React.Children.forEach(childElement.props.children, (groupChild) => {
             if (
@@ -128,10 +112,12 @@ const Select = React.forwardRef<View, SelectProps>(
       if (onValueChange) {
         onValueChange(value);
       }
-      setOpen(false);
+
+      setTimeout(() => {
+        setOpen(false);
+      }, 300); // Delay setting open to false until after the animation completes
     };
 
-    // Clone children to inject the handleSelect
     const enhancedChildren = React.Children.map(children, (child) => {
       if (!React.isValidElement(child)) return child;
 
@@ -201,47 +187,16 @@ const Select = React.forwardRef<View, SelectProps>(
           />
         </Pressable>
 
-        <Modal
-          visible={open}
-          transparent
-          animationType="fade"
-          onRequestClose={() => setOpen(false)}
+        <Drawer
+          open={open}
+          onClose={() => setOpen(false)}
+          title={placeholder || "Select an option"}
+          snapPoints={[0.5, 0.8]}
+          initialSnapIndex={0}
+          contentClassName={contentClassName}
         >
-          <TouchableWithoutFeedback onPress={() => setOpen(false)}>
-            <View className="flex-1 bg-black/25 justify-center items-center p-4">
-              <TouchableWithoutFeedback>
-                <View
-                  className={cn(
-                    "bg-popover rounded-lg overflow-hidden w-full max-w-[90%] max-h-[70%] shadow-xl",
-                    Platform.OS === "ios"
-                      ? "ios:shadow-xl"
-                      : "android:elevation-8",
-                    contentClassName
-                  )}
-                >
-                  <View className="p-1 border-b border-border">
-                    <Text className="text-xl font-medium text-center py-2 text-foreground">
-                      {placeholder || "Select an option"}
-                    </Text>
-                  </View>
-
-                  <ScrollView className="p-1 max-h-[300px]">
-                    {enhancedChildren}
-                  </ScrollView>
-
-                  <Pressable
-                    onPress={() => setOpen(false)}
-                    className="border-t border-border p-3"
-                  >
-                    <Text className="text-center text-primary font-medium">
-                      Cancel
-                    </Text>
-                  </Pressable>
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal>
+          <ScrollView className="px-1 pt-2 pb-6">{enhancedChildren}</ScrollView>
+        </Drawer>
       </View>
     );
   }
@@ -267,6 +222,7 @@ const SelectItem = React.forwardRef<typeof Pressable, SelectItemProps>(
     ref
   ) => {
     const isSelected = selectedValue === value;
+    const drawer = useDrawer();
 
     return (
       <Pressable
@@ -276,6 +232,8 @@ const SelectItem = React.forwardRef<typeof Pressable, SelectItemProps>(
           if (onSelect) {
             onSelect(value, children);
           }
+
+          drawer.animateClose();
         }}
         className={cn(
           "flex-row h-14 items-center justify-between px-4 py-2 active:bg-accent/50",
