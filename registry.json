@@ -169,7 +169,7 @@
         }
       ],
       "dependencies": ["react-native", "@expo/vector-icons"],
-      "registryDependencies": []
+      "registryDependencies": ["https://nativeui.io/registry/drawer.json"]
     },
     {
       "name": "popover",
@@ -179,6 +179,20 @@
       "files": [
         {
           "path": "registry/popover/popover.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native"],
+      "registryDependencies": []
+    },
+    {
+      "name": "drawer",
+      "type": "registry:component",
+      "title": "Drawer",
+      "description": "A drawer component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/drawer/drawer.tsx",
           "type": "registry:component"
         }
       ],
