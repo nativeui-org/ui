@@ -198,6 +198,23 @@
       ],
       "dependencies": ["react-native"],
       "registryDependencies": []
+    },
+    {
+      "name": "combobox",
+      "type": "registry:component",
+      "title": "Combobox",
+      "description": "A combobox component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/combobox/combobox.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native", "@expo/vector-icons"],
+      "registryDependencies": [
+        "https://nativeui.io/registry/drawer.json",
+        "https://nativeui.io/registry/input.json"
+      ]
     }
   ]
 }

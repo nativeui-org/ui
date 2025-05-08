@@ -25,7 +25,9 @@ import {
   Dimensions,
   StyleSheet,
   Easing,
+  KeyboardAvoidingView,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { cn } from "@/lib/utils";
 
 interface DrawerProps {
@@ -37,6 +39,9 @@ interface DrawerProps {
   initialSnapIndex?: number;
   className?: string;
   contentClassName?: string;
+  avoidKeyboard?: boolean;
+  closeOnBackdropPress?: boolean;
+  disableBackHandler?: boolean;
 }
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
@@ -59,9 +64,13 @@ const Drawer = React.forwardRef<View, DrawerProps>(
       initialSnapIndex = 0,
       className,
       contentClassName,
+      avoidKeyboard = true,
+      closeOnBackdropPress = true,
+      disableBackHandler = false,
     },
     ref
   ) => {
+    const [isVisible, setIsVisible] = React.useState(false);
     const snapPointsPixels = snapPoints.map(
       (point) => SCREEN_HEIGHT - SCREEN_HEIGHT * point
     );
@@ -114,23 +123,21 @@ const Drawer = React.forwardRef<View, DrawerProps>(
         useNativeDriver: true,
         delay: 100,
       }).start(() => {
-        onClose();
+        setIsVisible(false);
         isClosing.current = false;
+        onClose();
       });
     }, [backdropOpacity, translateY, onClose]);
 
     React.useEffect(() => {
-      if (open && !isClosing.current) {
+      if (open && !isVisible) {
+        setIsVisible(true);
+      } else if (open && !isClosing.current) {
         animateOpen();
-      }
-    }, [open, animateOpen]);
-
-    // Ensure drawer animates close when open becomes false
-    React.useEffect(() => {
-      if (!open && !isClosing.current) {
+      } else if (!open && isVisible && !isClosing.current) {
         animateClose();
       }
-    }, [open, animateClose]);
+    }, [open, isVisible, animateOpen, animateClose, isClosing]);
 
     const animateToSnapPoint = (index: number, velocity = 0) => {
       if (index < 0 || index >= snapPointsPixels.length) return;
@@ -242,57 +249,71 @@ const Drawer = React.forwardRef<View, DrawerProps>(
           }
         },
       });
-    }, [snapPointsPixels, onClose, translateY, animateClose]);
+    }, [snapPointsPixels, animateClose]);
 
-    if (!open) return null;
+    if (!isVisible) return null;
+
+    const renderContent = () => (
+      <View className="flex-1">
+        <Animated.View style={[styles.backdrop, { opacity: backdropOpacity }]}>
+          {closeOnBackdropPress && (
+            <TouchableWithoutFeedback onPress={animateClose}>
+              <View style={StyleSheet.absoluteFillObject} />
+            </TouchableWithoutFeedback>
+          )}
+        </Animated.View>
+
+        <Animated.View
+          style={[styles.drawerContainer, { transform: [{ translateY }] }]}
+          className={cn(
+            "absolute bottom-0 left-0 right-0 bg-popover rounded-t-xl overflow-hidden",
+            Platform.OS === "ios" ? "ios:shadow-xl" : "android:elevation-24",
+            contentClassName
+          )}
+        >
+          <View {...panResponder.panHandlers}>
+            <View className="w-full items-center py-2">
+              <View className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+            </View>
+
+            {title && (
+              <View className="px-4 pt-1 pb-3 border-b border-border">
+                <Text className="text-xl font-medium text-center text-foreground">
+                  {title}
+                </Text>
+              </View>
+            )}
+          </View>
+
+          <SafeAreaView className="flex-1" edges={["bottom"]}>
+            <View ref={ref} className="flex-1">
+              {children}
+            </View>
+          </SafeAreaView>
+        </Animated.View>
+      </View>
+    );
 
     return (
       <DrawerContext.Provider value={{ animateClose }}>
         <Modal
-          visible={open}
+          visible={isVisible}
           transparent
           animationType="none"
           statusBarTranslucent
-          onRequestClose={animateClose}
+          onRequestClose={disableBackHandler ? undefined : animateClose}
         >
-          <View className="flex-1">
-            <Animated.View
-              style={[styles.backdrop, { opacity: backdropOpacity }]}
+          {avoidKeyboard && Platform.OS === "ios" ? (
+            <KeyboardAvoidingView
+              behavior="padding"
+              style={{ flex: 1 }}
+              keyboardVerticalOffset={10}
             >
-              <TouchableWithoutFeedback onPress={animateClose}>
-                <View style={StyleSheet.absoluteFillObject} />
-              </TouchableWithoutFeedback>
-            </Animated.View>
-
-            <Animated.View
-              style={[styles.drawerContainer, { transform: [{ translateY }] }]}
-              className={cn(
-                "absolute bottom-0 left-0 right-0 bg-popover rounded-t-xl overflow-hidden",
-                Platform.OS === "ios"
-                  ? "ios:shadow-xl"
-                  : "android:elevation-24",
-                contentClassName
-              )}
-            >
-              <View {...panResponder.panHandlers}>
-                <View className="w-full items-center py-2">
-                  <View className="w-10 h-1 rounded-full bg-muted-foreground/30" />
-                </View>
-
-                {title && (
-                  <View className="px-4 pt-1 pb-3 border-b border-border">
-                    <Text className="text-xl font-medium text-center text-foreground">
-                      {title}
-                    </Text>
-                  </View>
-                )}
-              </View>
-
-              <View ref={ref} className="flex-1">
-                {children}
-              </View>
-            </Animated.View>
-          </View>
+              {renderContent()}
+            </KeyboardAvoidingView>
+          ) : (
+            renderContent()
+          )}
         </Modal>
       </DrawerContext.Provider>
     );

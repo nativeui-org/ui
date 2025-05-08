@@ -12,6 +12,9 @@ interface SelectProps {
   className?: string;
   triggerClassName?: string;
   contentClassName?: string;
+  snapPoints?: number[];
+  initialSnapIndex?: number;
+  avoidKeyboard?: boolean;
   children: React.ReactNode;
 }
 
@@ -48,6 +51,9 @@ const Select = React.forwardRef<View, SelectProps>(
       className,
       triggerClassName,
       contentClassName,
+      snapPoints = [0.5, 0.8],
+      initialSnapIndex = 0,
+      avoidKeyboard = true,
       children,
     },
     ref
@@ -58,49 +64,53 @@ const Select = React.forwardRef<View, SelectProps>(
       React.useState<React.ReactNode>("");
 
     React.useEffect(() => {
-      if (value === undefined) return;
+      setSelectedValue(value);
+    }, [value]);
 
-      React.Children.forEach(children, (child) => {
+    React.useEffect(() => {
+      if (selectedValue === undefined) return;
+
+      let found = false;
+
+      const findLabel = (child: React.ReactNode) => {
         if (!React.isValidElement(child)) return;
 
         const childElement = child as React.ReactElement<any>;
 
         if (
           childElement.type === SelectItem &&
-          childElement.props.value === value
+          childElement.props.value === selectedValue
         ) {
           setSelectedLabel(childElement.props.children);
-          setSelectedValue(value);
+          found = true;
           return;
         }
 
         if (childElement.type === SelectGroup) {
-          React.Children.forEach(childElement.props.children, (groupChild) => {
-            if (
-              React.isValidElement(groupChild) &&
-              (groupChild as React.ReactElement<any>).type === SelectItem &&
-              (groupChild as React.ReactElement<any>).props.value === value
-            ) {
-              setSelectedLabel(
-                (groupChild as React.ReactElement<any>).props.children
-              );
-              setSelectedValue(value);
-            }
-          });
+          React.Children.forEach(childElement.props.children, findLabel);
         }
-      });
-    }, [value, children]);
+      };
+
+      React.Children.forEach(children, findLabel);
+
+      if (!found) {
+        setSelectedLabel("");
+      }
+    }, [selectedValue, children]);
 
     const handleSelect = (value: string, label: React.ReactNode) => {
-      setSelectedValue(value);
-      setSelectedLabel(label);
       if (onValueChange) {
         onValueChange(value);
       }
 
+      if (!onValueChange) {
+        setSelectedValue(value);
+        setSelectedLabel(label);
+      }
+
       setTimeout(() => {
         setOpen(false);
-      }, 300); // Delay setting open to false until after the animation completes
+      }, 300);
     };
 
     const enhancedChildren = React.Children.map(children, (child) => {
@@ -176,11 +186,19 @@ const Select = React.forwardRef<View, SelectProps>(
           open={open}
           onClose={() => setOpen(false)}
           title={placeholder || "Select an option"}
-          snapPoints={[0.5, 0.8]}
-          initialSnapIndex={0}
+          snapPoints={snapPoints}
+          initialSnapIndex={initialSnapIndex}
           contentClassName={contentClassName}
+          avoidKeyboard={avoidKeyboard}
+          closeOnBackdropPress={true}
         >
-          <ScrollView className="px-1 pt-2 pb-6">{enhancedChildren}</ScrollView>
+          <ScrollView
+            className="px-1 pt-2 pb-6"
+            keyboardShouldPersistTaps="handled"
+            nestedScrollEnabled={true}
+          >
+            {enhancedChildren}
+          </ScrollView>
         </Drawer>
       </View>
     );
