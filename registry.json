@@ -215,6 +215,18 @@
         "https://nativeui.io/registry/drawer.json",
         "https://nativeui.io/registry/input.json"
       ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:component",
+      "title": "Skeleton",
+      "description": "A skeleton component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/skeleton/skeleton.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }
