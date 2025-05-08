@@ -227,6 +227,20 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:component",
+      "title": "Separator",
+      "description": "A separator component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/separator/separator.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native"],
+      "registryDependencies": []
     }
   ]
 }
