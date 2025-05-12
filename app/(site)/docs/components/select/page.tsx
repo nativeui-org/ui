@@ -27,7 +27,7 @@ interface SelectProps {
   className?: string;
   triggerClassName?: string;
   contentClassName?: string;
-  snapPoints?: number[];
+  size?: "small" | "medium" | "large" | "full" | number[];
   initialSnapIndex?: number;
   avoidKeyboard?: boolean;
   children: React.ReactNode;
@@ -38,7 +38,6 @@ interface SelectItemProps {
   children: React.ReactNode;
   disabled?: boolean;
   className?: string;
-  onSelect?: (value: string, label: React.ReactNode) => void;
   selectedValue?: string;
 }
 
@@ -56,6 +55,16 @@ interface SelectSeparatorProps {
   className?: string;
 }
 
+interface SelectContextValue {
+  selectedValue?: string;
+  onSelect: (value: string, label: React.ReactNode) => void;
+}
+
+const SelectContext = React.createContext<SelectContextValue>({
+  selectedValue: undefined,
+  onSelect: () => {},
+});
+
 const Select = React.forwardRef<View, SelectProps>(
   (
     {
@@ -66,7 +75,7 @@ const Select = React.forwardRef<View, SelectProps>(
       className,
       triggerClassName,
       contentClassName,
-      snapPoints = [0.5, 0.8],
+      size = "medium",
       initialSnapIndex = 0,
       avoidKeyboard = true,
       children,
@@ -79,9 +88,10 @@ const Select = React.forwardRef<View, SelectProps>(
       React.useState<React.ReactNode>("");
 
     React.useEffect(() => {
-      setSelectedValue(value);
-    }, [value]);
-
+      if (value !== selectedValue) {
+        setSelectedValue(value);
+      }
+    }, [value, selectedValue]);
     React.useEffect(() => {
       if (selectedValue === undefined) return;
 
@@ -113,54 +123,27 @@ const Select = React.forwardRef<View, SelectProps>(
       }
     }, [selectedValue, children]);
 
-    const handleSelect = (value: string, label: React.ReactNode) => {
-      if (onValueChange) {
-        onValueChange(value);
-      }
-
-      if (!onValueChange) {
+    const handleSelect = React.useCallback(
+      (value: string, label: React.ReactNode) => {
         setSelectedValue(value);
         setSelectedLabel(label);
-      }
 
-      setTimeout(() => {
+        if (onValueChange) {
+          onValueChange(value);
+        }
+
         setOpen(false);
-      }, 300);
-    };
+      },
+      [onValueChange]
+    );
 
-    const enhancedChildren = React.Children.map(children, (child) => {
-      if (!React.isValidElement(child)) return child;
-
-      const childElement = child as React.ReactElement<any>;
-
-      if (childElement.type === SelectItem) {
-        return React.cloneElement(childElement, {
-          onSelect: handleSelect,
-          selectedValue,
-        });
-      }
-
-      if (childElement.type === SelectGroup) {
-        const groupChildren = React.Children.map(
-          childElement.props.children,
-          (groupChild) => {
-            if (
-              React.isValidElement(groupChild) &&
-              (groupChild as React.ReactElement<any>).type === SelectItem
-            ) {
-              return React.cloneElement(groupChild as React.ReactElement<any>, {
-                onSelect: handleSelect,
-                selectedValue,
-              });
-            }
-            return groupChild;
-          }
-        );
-        return React.cloneElement(childElement, {}, groupChildren);
-      }
-
-      return child;
-    });
+    const contextValue = React.useMemo(
+      () => ({
+        selectedValue,
+        onSelect: handleSelect,
+      }),
+      [selectedValue, handleSelect]
+    );
 
     return (
       <View ref={ref} className={cn("w-full", className)}>
@@ -186,7 +169,9 @@ const Select = React.forwardRef<View, SelectProps>(
             )}
             numberOfLines={1}
           >
-            {selectedValue ? selectedLabel : placeholder || "Select an option"}
+            {selectedValue && selectedLabel
+              ? selectedLabel
+              : placeholder || "Select an option"}
           </Text>
 
           <Ionicons
@@ -197,24 +182,26 @@ const Select = React.forwardRef<View, SelectProps>(
           />
         </Pressable>
 
-        <Drawer
-          open={open}
-          onClose={() => setOpen(false)}
-          title={placeholder || "Select an option"}
-          snapPoints={snapPoints}
-          initialSnapIndex={initialSnapIndex}
-          contentClassName={contentClassName}
-          avoidKeyboard={avoidKeyboard}
-          closeOnBackdropPress={true}
-        >
-          <ScrollView
-            className="px-1 pt-2 pb-6"
-            keyboardShouldPersistTaps="handled"
-            nestedScrollEnabled={true}
+        <SelectContext.Provider value={contextValue}>
+          <Drawer
+            open={open}
+            onClose={() => setOpen(false)}
+            title={placeholder || "Select an option"}
+            size={size}
+            initialSnapIndex={initialSnapIndex}
+            contentClassName={contentClassName}
+            avoidKeyboard={avoidKeyboard}
+            closeOnBackdropPress={true}
           >
-            {enhancedChildren}
-          </ScrollView>
-        </Drawer>
+            <ScrollView
+              className="px-1 pt-2 pb-6"
+              keyboardShouldPersistTaps="handled"
+              nestedScrollEnabled={true}
+            >
+              {children}
+            </ScrollView>
+          </Drawer>
+        </SelectContext.Provider>
       </View>
     );
   }
@@ -235,24 +222,28 @@ const SelectGroup = React.forwardRef<View, SelectGroupProps>(
 SelectGroup.displayName = "SelectGroup";
 
 const SelectItem = React.forwardRef<typeof Pressable, SelectItemProps>(
-  (
-    { className, children, value, disabled, onSelect, selectedValue, ...props },
-    ref
-  ) => {
+  ({ className, children, value, disabled, ...props }, ref) => {
+    const { selectedValue, onSelect } = React.useContext(SelectContext);
     const isSelected = selectedValue === value;
     const drawer = useDrawer();
+
+    const handlePress = React.useCallback(() => {
+      if (disabled) return;
+
+      onSelect(value, children);
+
+      setTimeout(() => {
+        if (drawer && typeof drawer.close === "function") {
+          drawer.close();
+        }
+      }, 50);
+    }, [onSelect, value, children, disabled, drawer]);
 
     return (
       <Pressable
         ref={ref as any}
         disabled={disabled}
-        onPress={() => {
-          if (onSelect) {
-            onSelect(value, children);
-          }
-
-          drawer.animateClose();
-        }}
+        onPress={handlePress}
         className={cn(
           "flex-row h-14 items-center justify-between px-4 py-2 active:bg-accent/50",
           isSelected ? "bg-accent" : "",

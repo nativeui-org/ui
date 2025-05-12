@@ -196,7 +196,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": ["react-native"],
+      "dependencies": ["react-native", "react-native-safe-area-context"],
       "registryDependencies": []
     },
     {
