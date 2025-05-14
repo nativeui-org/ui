@@ -343,6 +343,20 @@
       ],
       "dependencies": ["react-native", "class-variance-authority"],
       "registryDependencies": []
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:component",
+      "title": "Tooltip",
+      "description": "A tooltip component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/tooltip/tooltip.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native"],
+      "registryDependencies": []
     }
   ]
 }
