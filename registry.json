@@ -315,6 +315,20 @@
       ],
       "dependencies": ["react-native"],
       "registryDependencies": []
+    },
+    {
+      "name": "pagination",
+      "type": "registry:component",
+      "title": "Pagination",
+      "description": "A pagination component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/pagination/pagination.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native", "@expo/vector-icons"],
+      "registryDependencies": []
     }
   ]
 }
