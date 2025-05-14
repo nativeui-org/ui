@@ -241,6 +241,20 @@
       ],
       "dependencies": ["react-native"],
       "registryDependencies": []
+    },
+    {
+      "name": "sheet",
+      "type": "registry:component",
+      "title": "Sheet",
+      "description": "A sheet component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/sheet/sheet.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native", "react-native-safe-area-context", "@expo/vector-icons"],
+      "registryDependencies": []
     }
   ]
 }
