@@ -329,6 +329,20 @@
       ],
       "dependencies": ["react-native", "@expo/vector-icons"],
       "registryDependencies": []
+    },
+    {
+      "name": "alert",
+      "type": "registry:component",
+      "title": "Alert",
+      "description": "An alert component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/alert/alert.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native", "class-variance-authority"],
+      "registryDependencies": []
     }
   ]
 }
