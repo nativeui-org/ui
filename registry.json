@@ -287,6 +287,20 @@
       ],
       "dependencies": ["react-native"],
       "registryDependencies": []
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:component",
+      "title": "Toggle Group",
+      "description": "A toggle group component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/toggle-group/toggle-group.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native"],
+      "registryDependencies": []
     }
   ]
 }
