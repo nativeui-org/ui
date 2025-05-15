@@ -371,6 +371,20 @@
       ],
       "dependencies": ["react-native", "@expo/vector-icons"],
       "registryDependencies": []
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:component",
+      "title": "Breadcrumb",
+      "description": "A breadcrumb component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/breadcrumb/breadcrumb.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native", "@expo/vector-icons"],
+      "registryDependencies": []
     }
   ]
 }
