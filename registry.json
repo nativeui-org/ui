@@ -385,6 +385,20 @@
       ],
       "dependencies": ["react-native", "@expo/vector-icons"],
       "registryDependencies": []
+    },
+    {
+      "name": "table",
+      "type": "registry:component",
+      "title": "Table",
+      "description": "A table component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/table/table.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native"],
+      "registryDependencies": []
     }
   ]
 }
