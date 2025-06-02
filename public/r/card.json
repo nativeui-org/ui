@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card",
+  "type": "registry:component",
+  "title": "Card",
+  "description": "A card component for React Native applications.",
+  "dependencies": [
+    "react-native"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/card/card.tsx",
+      "content": "import * as React from \"react\";\nimport { View, ViewProps } from \"react-native\";\nimport { cn } from \"@/lib/utils\";\n\ninterface CardProps extends ViewProps {\n  children: React.ReactNode;\n  className?: string;\n}\n\nfunction Card({ className, children, ...props }: CardProps) {\n  return (\n    <View\n      className={cn(\n        \"bg-card rounded-2xl border border-border p-4 shadow-sm\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n    </View>\n  );\n}\n\nfunction CardHeader({ className, children, ...props }: CardProps) {\n  return (\n    <View\n      className={cn(\n        \"flex-row justify-between items-start gap-4 mb-4\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n    </View>\n  );\n}\n\nfunction CardTitle({ className, children, ...props }: CardProps) {\n  return (\n    <View className={cn(\"flex-shrink\", className)} {...props}>\n      {children}\n    </View>\n  );\n}\n\nfunction CardDescription({ className, children, ...props }: CardProps) {\n  return (\n    <View className={cn(\"text-muted-foreground\", className)} {...props}>\n      {children}\n    </View>\n  );\n}\n\nfunction CardContent({ className, children, ...props }: CardProps) {\n  return (\n    <View className={cn(\"\", className)} {...props}>\n      {children}\n    </View>\n  );\n}\n\nfunction CardFooter({ className, children, ...props }: CardProps) {\n  return (\n    <View\n      className={cn(\"mt-4 flex-row items-center justify-end gap-4\", className)}\n      {...props}\n    >\n      {children}\n    </View>\n  );\n}\n\nexport {\n  Card,\n  CardHeader,\n  CardFooter,\n  CardTitle,\n  CardDescription,\n  CardContent,\n};\n",
+      "type": "registry:component"
+    }
+  ]
+}
