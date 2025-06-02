@@ -455,6 +455,20 @@
       ],
       "dependencies": ["react-native"],
       "registryDependencies": []
+    },
+    {
+      "name": "carousel",
+      "type": "registry:component",
+      "title": "Carousel",
+      "description": "A carousel component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/carousel/carousel.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native", "@expo/vector-icons"],
+      "registryDependencies": []
     }
   ]
 }
