@@ -441,6 +441,20 @@
       ],
       "dependencies": ["react-native"],
       "registryDependencies": []
+    },
+    {
+      "name": "card",
+      "type": "registry:component",
+      "title": "Card",
+      "description": "A card component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/card/card.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native"],
+      "registryDependencies": []
     }
   ]
 }
