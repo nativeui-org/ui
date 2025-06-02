@@ -427,6 +427,20 @@
       ],
       "dependencies": ["react-native", "@expo/vector-icons"],
       "registryDependencies": []
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:component",
+      "title": "Alert Dialog",
+      "description": "An alert dialog component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/alert-dialog/alert-dialog.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native"],
+      "registryDependencies": []
     }
   ]
 }
