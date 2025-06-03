@@ -483,6 +483,20 @@
       ],
       "dependencies": ["react-native", "@expo/vector-icons"],
       "registryDependencies": []
+    },
+    {
+      "name": "calendar",
+      "type": "registry:component",
+      "title": "Calendar",
+      "description": "A calendar component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/calendar/calendar.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native", "date-fns", "@expo/vector-icons", "@react-native-community/datetimepicker"],
+      "registryDependencies": []
     }
   ]
 }
