@@ -497,6 +497,20 @@
       ],
       "dependencies": ["react-native", "date-fns", "@expo/vector-icons", "@react-native-community/datetimepicker"],
       "registryDependencies": []
+    },
+    {
+      "name": "date-time-picker",
+      "type": "registry:component",
+      "title": "Date Time Picker",
+      "description": "A date time picker component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/date-time-picker/date-time-picker.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["react-native", "date-fns", "@expo/vector-icons"],
+      "registryDependencies": ["https://nativeui.io/registry/calendar.json"]
     }
   ]
 }
