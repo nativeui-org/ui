@@ -77,7 +77,7 @@ export function CodeBlock({
       {
         types: ["comment", "prolog", "doctype", "cdata"],
         style: {
-          color: "#6a9955",
+          color: "#6A9955",
           fontStyle: "italic",
         },
       },
@@ -90,7 +90,7 @@ export function CodeBlock({
       {
         types: ["string", "attr-value"],
         style: {
-          color: "#a3be8c",
+          color: "#ce9178",
         },
       },
       {
@@ -102,34 +102,58 @@ export function CodeBlock({
       {
         types: ["entity", "url", "symbol", "number", "boolean", "variable", "constant", "property", "regex", "inserted"],
         style: {
-          color: "#d4d4d4",
+          color: "#9CDCFE",
         },
       },
       {
-        types: ["atrule", "keyword", "attr-name", "selector"],
+        types: ["atrule", "keyword", "attr-name"],
         style: {
-          color: "#c792ea",
+          color: "#569CD6",
         },
       },
       {
-        types: ["function", "deleted", "tag"],
+        types: ["function"],
         style: {
-          color: "#e06c75",
+          color: "#DCDCAA",
         },
       },
       {
-        types: ["function-variable"],
+        types: ["deleted", "tag"],
         style: {
-          color: "#c792ea",
+          color: "#569CD6",
         },
       },
       {
-        types: ["tag", "selector", "keyword"],
+        types: ["selector"],
         style: {
-          color: "#d4d4d4",
+          color: "#d7ba7d",
         },
       },
-    ],
+      {
+        types: ["important", "bold"],
+        style: {
+          fontWeight: "bold",
+        },
+      },
+      {
+        types: ["italic"],
+        style: {
+          fontStyle: "italic",
+        },
+      },
+      {
+        types: ["class-name", "maybe-class-name"],
+        style: {
+          color: "#4EC9B0",
+        },
+      },
+      {
+        types: ["parameter"],
+        style: {
+          color: "#9CDCFE",
+        },
+      }
+    ]
   };
 
   const theme = applicationTheme === "dark" ? customDarkTheme : themes.github;
