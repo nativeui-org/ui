@@ -64,6 +64,7 @@ export default function InputDemo() {
 }`}
       registryName="input"
       packageName="@nativeui/ui"
+      dependencies={["react-native"]}
     />
   );
 }

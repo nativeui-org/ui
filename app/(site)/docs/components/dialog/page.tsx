@@ -382,6 +382,7 @@ export default function DialogDemo() {
 }`}
       registryName="dialog"
       packageName="@nativeui/ui"
+      dependencies={["react-native","@expo/vector-icons"]}
     />
   );
 }

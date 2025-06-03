@@ -7,7 +7,8 @@ module.exports = {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
     './registry/**/*.{ts,tsx}',
-	],
+    './components/ui/**/*.{js,jsx,ts,tsx}',
+  ],
   theme: {
     container: {
       center: true,
@@ -74,4 +75,5 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
+  presets: [require('nativewind/preset')],
 } 

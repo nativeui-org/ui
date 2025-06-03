@@ -99,7 +99,11 @@ function extractSizes(code) {
  * Generate examples based on component properties
  */
 function generateExamples(componentName, variants, sizes) {
-  const formattedComponentName = componentName.charAt(0).toUpperCase() + componentName.slice(1);
+  // Convert kebab-case to PascalCase
+  const formattedComponentName = componentName
+    .split('-')
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('');
   
   const examples = [
     {
@@ -161,7 +165,34 @@ export default function ${formattedComponentName}Sizes() {
  * Generate page content for the component
  */
 function generatePageContent(componentName, description, examples, componentCode) {
-  const formattedComponentName = componentName.charAt(0).toUpperCase() + componentName.slice(1);
+  // Convert kebab-case to PascalCase
+  const formattedComponentName = componentName
+    .split('-')
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('');
+
+  // Get component dependencies from registry.json
+  const registryContent = JSON.parse(fs.readFileSync('registry.json', 'utf8'));
+  const componentInfo = registryContent.items.find(item => item.name === componentName);
+  
+  // Combine both types of dependencies
+  const directDependencies = componentInfo?.dependencies || [];
+  const registryDependencies = componentInfo?.registryDependencies || [];
+  
+  // Format registry dependencies to show they are from the registry
+  const formattedRegistryDeps = registryDependencies.map(dep => {
+    // Si c'est une URL, extraire juste le nom du composant
+    if (dep.startsWith('http')) {
+      const parts = dep.split('/');
+      return `@nativeui/ui/${parts[parts.length - 1].replace('.json', '')}`;
+    }
+    return `@nativeui/ui/${dep}`;
+  });
+  
+  const allDependencies = [
+    ...directDependencies,
+    ...formattedRegistryDeps
+  ];
   
   // Generate preview code
   const previewCode = `import { ${formattedComponentName} } from "@nativeui/ui";
@@ -198,6 +229,7 @@ export default function ${formattedComponentName}Page() {
       previewCode={\`${previewCode.replace(/`/g, '\\`')}\`}
       registryName="${componentName}"
       packageName="@nativeui/ui"
+      dependencies={${JSON.stringify(allDependencies)}}
     />
   );
 }

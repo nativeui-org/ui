@@ -237,6 +237,7 @@ export default function AccordionDemo() {
 }`}
       registryName="accordion"
       packageName="@nativeui/ui"
+      dependencies={["react-native","@expo/vector-icons"]}
     />
   );
 }

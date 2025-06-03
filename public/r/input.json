@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "input",
-  "type": "registry:component",
+  "type": "registry:ui",
   "title": "Input",
   "description": "An input component for React Native applications.",
   "dependencies": [
@@ -12,7 +12,7 @@
     {
       "path": "registry/input/input.tsx",
       "content": "import * as React from \"react\";\nimport { TextInput, Platform } from \"react-native\";\nimport { cn } from \"@/lib/utils\";\n\nconst Input = React.forwardRef<\n  TextInput,\n  React.ComponentProps<typeof TextInput>\n>(({ className, ...props }, ref) => {\n  const [isFocused, setIsFocused] = React.useState(false);\n\n  return (\n    <TextInput\n      className={cn(\n        \"h-12 w-full rounded-md border border-input bg-transparent px-3 text-primary shadow-sm\",\n        \"placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50\",\n        isFocused ? \"border-ring ring-1 ring-ring\" : \"\",\n        Platform.OS === \"ios\"\n          ? \"ios:shadow-sm ios:shadow-foreground/10\"\n          : \"android:elevation-1\",\n        className\n      )}\n      ref={ref}\n      textAlignVertical=\"center\"\n      underlineColorAndroid=\"transparent\"\n      onFocus={() => setIsFocused(true)}\n      onBlur={() => setIsFocused(false)}\n      {...props}\n    />\n  );\n});\n\nInput.displayName = \"Input\";\n\nexport { Input };\n",
-      "type": "registry:component"
+      "type": "registry:ui"
     }
   ]
 }

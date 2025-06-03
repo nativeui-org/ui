@@ -1,15 +1,15 @@
 import { ComponentPreview } from "@/components/docs/component-preview";
 
-export default function Toggle-groupPage() {
+export default function ToggleGroupPage() {
   return (
     <ComponentPreview
-      name="Toggle-group"
+      name="ToggleGroup"
       description="A toggle group component for React Native applications."
       examples={[
   {
     "title": "Default",
     "value": "default",
-    "content": "import { Toggle-group } from \"@nativeui/ui\";\n\nexport default function Toggle-groupDemo() {\n  return (\n    <Toggle-group>\n      Click me\n    </Toggle-group>\n  );\n}",
+    "content": "import { ToggleGroup } from \"@nativeui/ui\";\n\nexport default function ToggleGroupDemo() {\n  return (\n    <ToggleGroup>\n      Click me\n    </ToggleGroup>\n  );\n}",
     "language": "tsx"
   }
 ]}
@@ -163,22 +163,23 @@ ToggleGroupItem.displayName = "ToggleGroupItem";
 
 export { ToggleGroup, ToggleGroupItem };
 `}
-      previewCode={`import { Toggle-group } from "@nativeui/ui";
+      previewCode={`import { ToggleGroup } from "@nativeui/ui";
 
-export default function Toggle-groupDemo() {
+export default function ToggleGroupDemo() {
   return (
     <div className="flex flex-col gap-4">
-      <Toggle-group>Default Toggle-group</Toggle-group>
-      <Toggle-group variant="destructive">Delete</Toggle-group>
-      <Toggle-group variant="outline">Outline</Toggle-group>
-      <Toggle-group variant="secondary">Secondary</Toggle-group>
-      <Toggle-group variant="ghost">Ghost</Toggle-group>
-      <Toggle-group variant="link">Link</Toggle-group>
+      <ToggleGroup>Default ToggleGroup</ToggleGroup>
+      <ToggleGroup variant="destructive">Delete</ToggleGroup>
+      <ToggleGroup variant="outline">Outline</ToggleGroup>
+      <ToggleGroup variant="secondary">Secondary</ToggleGroup>
+      <ToggleGroup variant="ghost">Ghost</ToggleGroup>
+      <ToggleGroup variant="link">Link</ToggleGroup>
     </div>
   );
 }`}
       registryName="toggle-group"
       packageName="@nativeui/ui"
+      dependencies={["react-native"]}
     />
   );
 }

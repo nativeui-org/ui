@@ -13,6 +13,7 @@ interface CodeBlockProps {
   showLineNumbers?: boolean;
   title?: string;
   showHeader?: boolean;
+  headerPrefix?: React.ReactNode;
   tabs?: Array<{
     title: string;
     value: string;
@@ -31,6 +32,7 @@ export function CodeBlock({
   showLineNumbers = false,
   title,
   showHeader = true,
+  headerPrefix,
   tabs,
   activeTab,
   onTabChange,
@@ -66,13 +68,78 @@ export function CodeBlock({
     ? tabs.find(tab => tab.value === localActiveTab)?.language || language
     : language;
 
-  const theme = applicationTheme === "dark" ? themes.nightOwl : themes.github;
+  const customDarkTheme: typeof themes.nightOwl = {
+    plain: {
+      color: "#d4d4d4",
+      backgroundColor: "#1a1a1a",
+    },
+    styles: [
+      {
+        types: ["comment", "prolog", "doctype", "cdata"],
+        style: {
+          color: "#6a9955",
+          fontStyle: "italic",
+        },
+      },
+      {
+        types: ["namespace"],
+        style: {
+          opacity: 0.7,
+        },
+      },
+      {
+        types: ["string", "attr-value"],
+        style: {
+          color: "#a3be8c",
+        },
+      },
+      {
+        types: ["punctuation", "operator"],
+        style: {
+          color: "#d4d4d4",
+        },
+      },
+      {
+        types: ["entity", "url", "symbol", "number", "boolean", "variable", "constant", "property", "regex", "inserted"],
+        style: {
+          color: "#d4d4d4",
+        },
+      },
+      {
+        types: ["atrule", "keyword", "attr-name", "selector"],
+        style: {
+          color: "#c792ea",
+        },
+      },
+      {
+        types: ["function", "deleted", "tag"],
+        style: {
+          color: "#e06c75",
+        },
+      },
+      {
+        types: ["function-variable"],
+        style: {
+          color: "#c792ea",
+        },
+      },
+      {
+        types: ["tag", "selector", "keyword"],
+        style: {
+          color: "#d4d4d4",
+        },
+      },
+    ],
+  };
+
+  const theme = applicationTheme === "dark" ? customDarkTheme : themes.github;
 
   return (
     <div className={cn("relative group rounded-md overflow-hidden border border-border", className)}>
       {showHeader && (
         <div className="flex items-center justify-between border-b border-border bg-muted/50 px-4 py-2">
           <div className="flex items-center gap-2">
+            {headerPrefix}
             {title && <div className="text-sm font-medium">{title}</div>}
             {tabs && tabs.length > 0 && (
               <div className="flex items-center">
@@ -136,7 +203,10 @@ export function CodeBlock({
                 "text-sm p-4 overflow-x-auto",
                 className
               )}
-              style={style}
+              style={{
+                ...style,
+                backgroundColor: applicationTheme === "dark" ? "#1a1a1a" : style.backgroundColor,
+              }}
             >
               {tokens.map((line, i) => {
                 const lineProps = getLineProps({ line });

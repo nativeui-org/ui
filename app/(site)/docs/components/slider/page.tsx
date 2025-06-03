@@ -248,6 +248,7 @@ export default function SliderDemo() {
 }`}
       registryName="slider"
       packageName="@nativeui/ui"
+      dependencies={["react-native"]}
     />
   );
 }

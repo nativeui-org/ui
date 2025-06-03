@@ -116,6 +116,7 @@ export default function ToggleDemo() {
 }`}
       registryName="toggle"
       packageName="@nativeui/ui"
+      dependencies={["react-native"]}
     />
   );
 }

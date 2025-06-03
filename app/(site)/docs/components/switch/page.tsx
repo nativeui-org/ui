@@ -109,6 +109,7 @@ export default function SwitchDemo() {
 }`}
       registryName="switch"
       packageName="@nativeui/ui"
+      dependencies={["react-native"]}
     />
   );
 }

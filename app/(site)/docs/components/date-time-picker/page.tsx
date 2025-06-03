@@ -1,15 +1,15 @@
 import { ComponentPreview } from "@/components/docs/component-preview";
 
-export default function Date-time-pickerPage() {
+export default function DateTimePickerPage() {
   return (
     <ComponentPreview
-      name="Date-time-picker"
+      name="DateTimePicker"
       description="A date time picker component for React Native applications."
       examples={[
   {
     "title": "Default",
     "value": "default",
-    "content": "import { Date-time-picker } from \"@nativeui/ui\";\n\nexport default function Date-time-pickerDemo() {\n  return (\n    <Date-time-picker>\n      Click me\n    </Date-time-picker>\n  );\n}",
+    "content": "import { DateTimePicker } from \"@nativeui/ui\";\n\nexport default function DateTimePickerDemo() {\n  return (\n    <DateTimePicker>\n      Click me\n    </DateTimePicker>\n  );\n}",
     "language": "tsx"
   }
 ]}
@@ -317,22 +317,23 @@ DateTimePicker.displayName = "DateTimePicker";
 
 export { DateTimePicker, type DateTimePickerProps };
 `}
-      previewCode={`import { Date-time-picker } from "@nativeui/ui";
+      previewCode={`import { DateTimePicker } from "@nativeui/ui";
 
-export default function Date-time-pickerDemo() {
+export default function DateTimePickerDemo() {
   return (
     <div className="flex flex-col gap-4">
-      <Date-time-picker>Default Date-time-picker</Date-time-picker>
-      <Date-time-picker variant="destructive">Delete</Date-time-picker>
-      <Date-time-picker variant="outline">Outline</Date-time-picker>
-      <Date-time-picker variant="secondary">Secondary</Date-time-picker>
-      <Date-time-picker variant="ghost">Ghost</Date-time-picker>
-      <Date-time-picker variant="link">Link</Date-time-picker>
+      <DateTimePicker>Default DateTimePicker</DateTimePicker>
+      <DateTimePicker variant="destructive">Delete</DateTimePicker>
+      <DateTimePicker variant="outline">Outline</DateTimePicker>
+      <DateTimePicker variant="secondary">Secondary</DateTimePicker>
+      <DateTimePicker variant="ghost">Ghost</DateTimePicker>
+      <DateTimePicker variant="link">Link</DateTimePicker>
     </div>
   );
 }`}
       registryName="date-time-picker"
       packageName="@nativeui/ui"
+      dependencies={["react-native","date-fns","@expo/vector-icons","@nativeui/ui/calendar"]}
     />
   );
 }

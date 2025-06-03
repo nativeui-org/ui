@@ -322,6 +322,7 @@ export default function SelectDemo() {
 }`}
       registryName="select"
       packageName="@nativeui/ui"
+      dependencies={["react-native","@expo/vector-icons","@nativeui/ui/drawer"]}
     />
   );
 }

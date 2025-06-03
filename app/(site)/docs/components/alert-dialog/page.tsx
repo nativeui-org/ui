@@ -1,15 +1,15 @@
 import { ComponentPreview } from "@/components/docs/component-preview";
 
-export default function Alert-dialogPage() {
+export default function AlertDialogPage() {
   return (
     <ComponentPreview
-      name="Alert-dialog"
+      name="AlertDialog"
       description="An alert dialog component for React Native applications."
       examples={[
   {
     "title": "Default",
     "value": "default",
-    "content": "import { Alert-dialog } from \"@nativeui/ui\";\n\nexport default function Alert-dialogDemo() {\n  return (\n    <Alert-dialog>\n      Click me\n    </Alert-dialog>\n  );\n}",
+    "content": "import { AlertDialog } from \"@nativeui/ui\";\n\nexport default function AlertDialogDemo() {\n  return (\n    <AlertDialog>\n      Click me\n    </AlertDialog>\n  );\n}",
     "language": "tsx"
   }
 ]}
@@ -376,22 +376,23 @@ export {
   AlertDialogCancel,
 };
 `}
-      previewCode={`import { Alert-dialog } from "@nativeui/ui";
+      previewCode={`import { AlertDialog } from "@nativeui/ui";
 
-export default function Alert-dialogDemo() {
+export default function AlertDialogDemo() {
   return (
     <div className="flex flex-col gap-4">
-      <Alert-dialog>Default Alert-dialog</Alert-dialog>
-      <Alert-dialog variant="destructive">Delete</Alert-dialog>
-      <Alert-dialog variant="outline">Outline</Alert-dialog>
-      <Alert-dialog variant="secondary">Secondary</Alert-dialog>
-      <Alert-dialog variant="ghost">Ghost</Alert-dialog>
-      <Alert-dialog variant="link">Link</Alert-dialog>
+      <AlertDialog>Default AlertDialog</AlertDialog>
+      <AlertDialog variant="destructive">Delete</AlertDialog>
+      <AlertDialog variant="outline">Outline</AlertDialog>
+      <AlertDialog variant="secondary">Secondary</AlertDialog>
+      <AlertDialog variant="ghost">Ghost</AlertDialog>
+      <AlertDialog variant="link">Link</AlertDialog>
     </div>
   );
 }`}
       registryName="alert-dialog"
       packageName="@nativeui/ui"
+      dependencies={["react-native"]}
     />
   );
 }

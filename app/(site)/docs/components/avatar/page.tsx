@@ -189,6 +189,7 @@ export default function AvatarDemo() {
 }`}
       registryName="avatar"
       packageName="@nativeui/ui"
+      dependencies={["react-native"]}
     />
   );
 }

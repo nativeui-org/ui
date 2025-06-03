@@ -1,15 +1,15 @@
 import { ComponentPreview } from "@/components/docs/component-preview";
 
-export default function Input-otpPage() {
+export default function InputOtpPage() {
   return (
     <ComponentPreview
-      name="Input-otp"
+      name="InputOtp"
       description="An input OTP component for React Native applications."
       examples={[
   {
     "title": "Default",
     "value": "default",
-    "content": "import { Input-otp } from \"@nativeui/ui\";\n\nexport default function Input-otpDemo() {\n  return (\n    <Input-otp>\n      Click me\n    </Input-otp>\n  );\n}",
+    "content": "import { InputOtp } from \"@nativeui/ui\";\n\nexport default function InputOtpDemo() {\n  return (\n    <InputOtp>\n      Click me\n    </InputOtp>\n  );\n}",
     "language": "tsx"
   }
 ]}
@@ -274,22 +274,23 @@ export function useOTPInput(maxLength: number) {
   };
 }
 `}
-      previewCode={`import { Input-otp } from "@nativeui/ui";
+      previewCode={`import { InputOtp } from "@nativeui/ui";
 
-export default function Input-otpDemo() {
+export default function InputOtpDemo() {
   return (
     <div className="flex flex-col gap-4">
-      <Input-otp>Default Input-otp</Input-otp>
-      <Input-otp variant="destructive">Delete</Input-otp>
-      <Input-otp variant="outline">Outline</Input-otp>
-      <Input-otp variant="secondary">Secondary</Input-otp>
-      <Input-otp variant="ghost">Ghost</Input-otp>
-      <Input-otp variant="link">Link</Input-otp>
+      <InputOtp>Default InputOtp</InputOtp>
+      <InputOtp variant="destructive">Delete</InputOtp>
+      <InputOtp variant="outline">Outline</InputOtp>
+      <InputOtp variant="secondary">Secondary</InputOtp>
+      <InputOtp variant="ghost">Ghost</InputOtp>
+      <InputOtp variant="link">Link</InputOtp>
     </div>
   );
 }`}
       registryName="input-otp"
       packageName="@nativeui/ui"
+      dependencies={["react-native"]}
     />
   );
 }

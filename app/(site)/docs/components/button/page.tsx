@@ -115,6 +115,7 @@ export default function ButtonDemo() {
 }`}
       registryName="button"
       packageName="@nativeui/ui"
+      dependencies={["react-native","class-variance-authority"]}
     />
   );
 }

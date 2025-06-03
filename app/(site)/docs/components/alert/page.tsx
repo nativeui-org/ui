@@ -113,6 +113,7 @@ export default function AlertDemo() {
 }`}
       registryName="alert"
       packageName="@nativeui/ui"
+      dependencies={["react-native","class-variance-authority"]}
     />
   );
 }

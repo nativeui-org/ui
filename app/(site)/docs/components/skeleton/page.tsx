@@ -48,6 +48,7 @@ export default function SkeletonDemo() {
 }`}
       registryName="skeleton"
       packageName="@nativeui/ui"
+      dependencies={[]}
     />
   );
 }

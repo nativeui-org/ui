@@ -52,6 +52,7 @@ export default function SeparatorDemo() {
 }`}
       registryName="separator"
       packageName="@nativeui/ui"
+      dependencies={["react-native"]}
     />
   );
 }

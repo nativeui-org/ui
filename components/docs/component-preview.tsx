@@ -19,6 +19,7 @@ export interface ComponentPreviewProps {
   previewCode: string;
   registryName: string;
   packageName: string;
+  dependencies?: string[];
 }
 
 export function ComponentPreview({
@@ -29,6 +30,7 @@ export function ComponentPreview({
   previewCode,
   registryName,
   packageName,
+  dependencies = [],
 }: ComponentPreviewProps) {
   const [showLineNumbers, setShowLineNumbers] = useState(false);
   const [activeInstallTab, setActiveInstallTab] = useState("cli");
@@ -71,6 +73,95 @@ export function ComponentPreview({
           Install the {name.toLowerCase()} component using the NativeUI CLI or
           install it manually.
         </p>
+
+        {dependencies.length > 0 && (
+          <div className="mt-4">
+            <h3 className="text-lg font-semibold mb-2">Dependencies</h3>
+            <div className="bg-muted rounded-md p-4">
+              <p className="text-sm text-muted-foreground mb-2">
+                This component requires the following dependencies:
+              </p>
+              <div className="space-y-4">
+                {/* Package Dependencies */}
+                {dependencies.filter(dep => !dep.startsWith('@nativeui/ui/')).length > 0 && (
+                  <div>
+                    <h4 className="text-sm font-semibold mb-2">Package Dependencies:</h4>
+                    <ul className="list-disc list-inside space-y-1">
+                      {dependencies
+                        .filter(dep => !dep.startsWith('@nativeui/ui/'))
+                        .map((dep) => (
+                          <li key={dep} className="text-sm">
+                            <a
+                              href={`https://www.npmjs.com/package/${dep.split('@')[0]}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center hover:text-primary"
+                            >
+                              <code className="text-sm font-mono bg-background px-1 py-0.5 rounded">{dep}</code>
+                              <svg
+                                className="w-4 h-4 ml-1 opacity-70"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                />
+                              </svg>
+                            </a>
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
+                )}
+                
+                {/* Registry Dependencies */}
+                {dependencies.filter(dep => dep.startsWith('@nativeui/ui/')).length > 0 && (
+                  <div>
+                    <h4 className="text-sm font-semibold mb-2">Required Components:</h4>
+                    <ul className="list-disc list-inside space-y-1">
+                      {dependencies
+                        .filter(dep => dep.startsWith('@nativeui/ui/'))
+                        .map((dep) => {
+                          const componentName = dep.replace('@nativeui/ui/', '');
+                          return (
+                            <li key={dep} className="text-sm">
+                              <a
+                                href={`/docs/components/${componentName}`}
+                                className="inline-flex items-center hover:text-primary"
+                              >
+                                <code className="text-sm font-mono bg-background px-1 py-0.5 rounded">
+                                  {componentName}
+                                </code>
+                                <svg
+                                  className="w-4 h-4 ml-1 opacity-70"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M9 5l7 7-7 7"
+                                  />
+                                </svg>
+                              </a>
+                            </li>
+                          );
+                        })}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="mt-6">
           <div className="flex items-center border-b">

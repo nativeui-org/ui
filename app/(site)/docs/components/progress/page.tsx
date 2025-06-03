@@ -84,6 +84,7 @@ export default function ProgressDemo() {
 }`}
       registryName="progress"
       packageName="@nativeui/ui"
+      dependencies={["react-native"]}
     />
   );
 }

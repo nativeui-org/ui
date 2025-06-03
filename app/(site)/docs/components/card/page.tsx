@@ -110,6 +110,7 @@ export default function CardDemo() {
 }`}
       registryName="card"
       packageName="@nativeui/ui"
+      dependencies={["react-native"]}
     />
   );
 }

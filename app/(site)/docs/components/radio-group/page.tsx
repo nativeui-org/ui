@@ -1,15 +1,15 @@
 import { ComponentPreview } from "@/components/docs/component-preview";
 
-export default function Radio-groupPage() {
+export default function RadioGroupPage() {
   return (
     <ComponentPreview
-      name="Radio-group"
+      name="RadioGroup"
       description="A radio group component for React Native applications."
       examples={[
   {
     "title": "Default",
     "value": "default",
-    "content": "import { Radio-group } from \"@nativeui/ui\";\n\nexport default function Radio-groupDemo() {\n  return (\n    <Radio-group>\n      Click me\n    </Radio-group>\n  );\n}",
+    "content": "import { RadioGroup } from \"@nativeui/ui\";\n\nexport default function RadioGroupDemo() {\n  return (\n    <RadioGroup>\n      Click me\n    </RadioGroup>\n  );\n}",
     "language": "tsx"
   }
 ]}
@@ -153,22 +153,23 @@ RadioGroupLabel.displayName = "RadioGroupLabel";
 
 export { RadioGroup, RadioGroupItem, RadioGroupLabel };
 `}
-      previewCode={`import { Radio-group } from "@nativeui/ui";
+      previewCode={`import { RadioGroup } from "@nativeui/ui";
 
-export default function Radio-groupDemo() {
+export default function RadioGroupDemo() {
   return (
     <div className="flex flex-col gap-4">
-      <Radio-group>Default Radio-group</Radio-group>
-      <Radio-group variant="destructive">Delete</Radio-group>
-      <Radio-group variant="outline">Outline</Radio-group>
-      <Radio-group variant="secondary">Secondary</Radio-group>
-      <Radio-group variant="ghost">Ghost</Radio-group>
-      <Radio-group variant="link">Link</Radio-group>
+      <RadioGroup>Default RadioGroup</RadioGroup>
+      <RadioGroup variant="destructive">Delete</RadioGroup>
+      <RadioGroup variant="outline">Outline</RadioGroup>
+      <RadioGroup variant="secondary">Secondary</RadioGroup>
+      <RadioGroup variant="ghost">Ghost</RadioGroup>
+      <RadioGroup variant="link">Link</RadioGroup>
     </div>
   );
 }`}
       registryName="radio-group"
       packageName="@nativeui/ui"
+      dependencies={["react-native"]}
     />
   );
 }

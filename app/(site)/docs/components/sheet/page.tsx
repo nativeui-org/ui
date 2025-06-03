@@ -459,6 +459,7 @@ export default function SheetDemo() {
 }`}
       registryName="sheet"
       packageName="@nativeui/ui"
+      dependencies={["react-native","react-native-safe-area-context","@expo/vector-icons"]}
     />
   );
 }

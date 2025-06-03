@@ -4,13 +4,14 @@ import * as React from "react";
 import { CodeBlock } from "@/components/ui/code-block";
 
 interface InstallationTabsProps {
-  command: string;
+  command?: string;
   packageName?: string;
 }
 
 export function InstallationTabs({ command, packageName }: InstallationTabsProps) {
   const getNativeUICommand = (packageManager: string) => {
-    return `${packageManager} nativeui ${command}`;
+    if (!command) return "";
+    return `${packageManager} ${command}`;
   };
 
   const getDirectInstallCommand = (packageManager: string) => {
@@ -64,7 +65,7 @@ export function InstallationTabs({ command, packageName }: InstallationTabsProps
       code=""
       showHeader={true}
       tabs={tabs}
-      activeTab="pnpm"
+      activeTab="npm"
       title="Terminal"
     />
   );
