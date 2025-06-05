@@ -1,7 +1,7 @@
 import React from "react";
 import { CodeBlock } from "@/components/ui/code-block";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, Copy } from "lucide-react";
+import { ChevronDown, ChevronUp, Copy, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface CollapsibleCodeBlockProps {
@@ -31,19 +31,25 @@ export function CollapsibleCodeBlock({
   activeTab,
 }: CollapsibleCodeBlockProps) {
   const [isExpanded, setIsExpanded] = React.useState(false);
+  const [copied, setCopied] = React.useState(false);
   const codeLines = code.split("\n");
   const shouldCollapse = codeLines.length > maxVisibleLines;
   const displayedCode = shouldCollapse && !isExpanded 
     ? codeLines.slice(0, maxVisibleLines).join("\n")
     : code;
-
-  // Always keep the full code in a hidden textarea for copying
-  const fullCodeRef = React.useRef<HTMLTextAreaElement>(null);
   
-  const handleCopy = () => {
-    if (fullCodeRef.current) {
-      fullCodeRef.current.select();
-      document.execCommand('copy');
+  const handleCopy = async () => {
+    try {
+      // Si on a des tabs, on copie le contenu de l'onglet actif
+      const textToCopy = tabs && activeTab
+        ? tabs.find(tab => tab.value === activeTab)?.content || code
+        : code;
+
+      await navigator.clipboard.writeText(textToCopy);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
     }
   };
 
@@ -89,35 +95,46 @@ export function CollapsibleCodeBlock({
   };
 
   return (
-    <div className={cn("relative group", className)}>
-      <div className="absolute right-4 top-4 z-20 flex gap-2">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-6 w-6 bg-background/50 backdrop-blur-sm"
-          onClick={handleCopy}
-        >
-          <Copy className="h-4 w-4" />
-        </Button>
-      </div>
+    <div className={cn("relative rounded-lg border border-border overflow-hidden transition-all duration-200", className)}>
+      {showHeader && (
+        <div className="flex items-center justify-between px-4 py-2 bg-muted/50 border-b border-border">
+          <div className="flex items-center gap-2">
+            {getLanguageIcon(language)}
+            {title && <span className="text-sm font-medium">{title}</span>}
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-6 w-6 transition-all duration-200 hover:bg-muted"
+              onClick={handleCopy}
+            >
+              {copied ? (
+                <Check className="h-4 w-4 text-green-500" />
+              ) : (
+                <Copy className="h-4 w-4" />
+              )}
+            </Button>
+          </div>
+        </div>
+      )}
       
       <CodeBlock
         language={language}
         code={displayedCode}
-        showHeader={showHeader}
+        showHeader={false}
         title={title}
         tabs={tabs}
         activeTab={activeTab}
-        headerPrefix={getLanguageIcon(language)}
       />
       
       {shouldCollapse && (
-        <div className="relative -mt-8 flex justify-center">
-          <div className="absolute inset-x-0 h-12 bg-gradient-to-t from-background to-transparent" />
+        <div className="relative flex justify-center">
+          <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-background to-transparent pointer-events-none" />
           <Button
             variant="ghost"
             size="sm"
-            className="relative"
+            className="relative mb-2 transition-transform duration-200 hover:translate-y-0"
             onClick={() => setIsExpanded(!isExpanded)}
           >
             {isExpanded ? (
@@ -134,14 +151,6 @@ export function CollapsibleCodeBlock({
           </Button>
         </div>
       )}
-
-      {/* Hidden textarea for copying full code */}
-      <textarea
-        ref={fullCodeRef}
-        value={code}
-        readOnly
-        className="sr-only"
-      />
     </div>
   );
 } 

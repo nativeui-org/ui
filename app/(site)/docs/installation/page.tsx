@@ -468,7 +468,6 @@ export default function RootLayout() {
                   <p className="text-sm text-muted-foreground mb-4">
                     First, create the lib directory at the root of your project:
                   </p>
-                  <InstallationTabs command="mkdir lib" />
                   <p className="text-sm text-muted-foreground mt-4 mb-4">
                     Then create lib/utils.ts with the following content:
                   </p>

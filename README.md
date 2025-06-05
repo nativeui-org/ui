@@ -109,3 +109,274 @@ npx shadcn@latest add https://your-registry-url.com/r/button.json
 ## License
 
 MIT
+
+
+*
+
+# Composants NativeUI
+
+Ce fichier liste tous les composants disponibles dans la bibliothèque NativeUI avec leurs commandes d'installation.
+
+## Installation
+
+Pour installer un composant, utilisez la commande suivante :
+
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/[nom-du-composant]
+```
+
+## Liste des composants
+
+### Accordion
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/accordion
+```
+Description : Un composant accordion pour les applications React Native.
+Dépendances : react-native, @expo/vector-icons
+
+### Alert
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/alert
+```
+Description : Un composant alert pour les applications React Native.
+Dépendances : react-native, class-variance-authority
+
+### Alert Dialog
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/alert-dialog
+```
+Description : Un composant alert dialog pour les applications React Native.
+Dépendances : react-native
+
+### Avatar
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/avatar
+```
+Description : Un composant avatar pour les applications React Native.
+Dépendances : react-native
+
+### Badge
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/badge
+```
+Description : Un composant badge pour les applications React Native.
+Dépendances : react-native, class-variance-authority
+
+### Breadcrumb
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/breadcrumb
+```
+Description : Un composant breadcrumb pour les applications React Native.
+Dépendances : react-native, @expo/vector-icons
+
+### Button
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/button
+```
+Description : Un composant button avec plusieurs variantes pour les applications React Native.
+Dépendances : react-native, class-variance-authority
+
+### Calendar
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/calendar
+```
+Description : Un composant calendar pour les applications React Native.
+Dépendances : react-native, date-fns, @expo/vector-icons, @react-native-community/datetimepicker
+
+### Card
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/card
+```
+Description : Un composant card pour les applications React Native.
+Dépendances : react-native
+
+### Carousel
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/carousel
+```
+Description : Un composant carousel pour les applications React Native.
+Dépendances : react-native, @expo/vector-icons
+
+### Checkbox
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/checkbox
+```
+Description : Un composant checkbox pour les applications React Native.
+Dépendances : react-native, @expo/vector-icons
+
+### Collapsible
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/collapsible
+```
+Description : Un composant collapsible pour les applications React Native.
+Dépendances : react-native, @expo/vector-icons
+
+### Combobox
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/combobox
+```
+Description : Un composant combobox pour les applications React Native.
+Dépendances : react-native, @expo/vector-icons
+Dépendances de registry : drawer, input
+
+### Date Time Picker
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/date-time-picker
+```
+Description : Un composant date time picker pour les applications React Native.
+Dépendances : react-native, date-fns, @expo/vector-icons
+Dépendances de registry : calendar
+
+### Dialog
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/dialog
+```
+Description : Un composant dialog pour les applications React Native.
+Dépendances : react-native, @expo/vector-icons
+
+### Drawer
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/drawer
+```
+Description : Un composant drawer pour les applications React Native.
+Dépendances : react-native, react-native-safe-area-context
+
+### Dropdown
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/dropdown
+```
+Description : Un composant dropdown pour les applications React Native.
+Dépendances : react-native, @expo/vector-icons
+
+### Input
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/input
+```
+Description : Un composant input pour les applications React Native.
+Dépendances : react-native
+
+### Input OTP
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/input-otp
+```
+Description : Un composant input OTP pour les applications React Native.
+Dépendances : react-native
+
+### Label
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/label
+```
+Description : Un composant label pour les applications React Native.
+Dépendances : react-native
+
+### Pagination
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/pagination
+```
+Description : Un composant pagination pour les applications React Native.
+Dépendances : react-native, @expo/vector-icons
+
+### Popover
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/popover
+```
+Description : Un composant popover pour les applications React Native.
+Dépendances : react-native
+
+### Progress
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/progress
+```
+Description : Un composant progress pour les applications React Native.
+Dépendances : react-native
+
+### Radio Group
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/radio-group
+```
+Description : Un composant radio group pour les applications React Native.
+Dépendances : react-native
+
+### Select
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/select
+```
+Description : Un composant select pour les applications React Native.
+Dépendances : react-native, @expo/vector-icons
+Dépendances de registry : drawer
+
+### Separator
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/separator
+```
+Description : Un composant separator pour les applications React Native.
+Dépendances : react-native
+
+### Sheet
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/sheet
+```
+Description : Un composant sheet pour les applications React Native.
+Dépendances : react-native, react-native-safe-area-context, @expo/vector-icons
+
+### Skeleton
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/skeleton
+```
+Description : Un composant skeleton pour les applications React Native.
+
+### Slider
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/slider
+```
+Description : Un composant slider pour les applications React Native.
+Dépendances : react-native
+
+### Switch
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/switch
+```
+Description : Un composant switch pour les applications React Native.
+Dépendances : react-native
+
+### Table
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/table
+```
+Description : Un composant table pour les applications React Native.
+Dépendances : react-native
+
+### Tabs
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/tabs
+```
+Description : Un composant tabs pour les applications React Native.
+Dépendances : react-native
+
+### Textarea
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/textarea
+```
+Description : Un composant textarea pour les applications React Native.
+Dépendances : react-native
+
+### Toggle
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/toggle
+```
+Description : Un composant toggle pour les applications React Native.
+Dépendances : react-native
+
+### Toggle Group
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/toggle-group
+```
+Description : Un composant toggle group pour les applications React Native.
+Dépendances : react-native
+
+### Tooltip
+```bash
+npx shadcn@latest add http://127.0.0.1:3000/registry/tooltip
+```
+Description : Un composant tooltip pour les applications React Native.
+Dépendances : react-native
