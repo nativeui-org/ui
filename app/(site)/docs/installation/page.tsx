@@ -154,195 +154,179 @@ export default function InstallationPage() {
                     language="javascript"
                     title="tailwind.config.js"
                     code={`/** @type {import('tailwindcss').Config} */
+
 module.exports = {
-    content: [
-      './app/**/*.{js,jsx,ts,tsx}',
-      './components/**/*.{js,jsx,ts,tsx}',
-    ],
-    presets: [require('nativewind/preset')],
-    theme: {
-      extend: {
-        colors: {
-          primary: {
-            DEFAULT: "hsl(var(--primary))",
-            light: "hsl(var(--primary-light))",
-            dark: "hsl(var(--primary-dark))",
-            foreground: "hsl(var(--primary-foreground))",
-          },
-          secondary: {
-            DEFAULT: "hsl(var(--secondary))",
-            light: "hsl(var(--secondary-light))",
-            dark: "hsl(var(--secondary-dark))",
-            foreground: "hsl(var(--secondary-foreground))",
-          },
-          
-          background: "hsl(var(--background))",
-          foreground: "hsl(var(--foreground))",
-          card: "hsl(var(--card))",
-          "card-foreground": "hsl(var(--card-foreground))",
-          popover: "hsl(var(--popover))",
-          "popover-foreground": "hsl(var(--popover-foreground))",
-          
-          destructive: {
-            DEFAULT: "hsl(var(--destructive))",
-            foreground: "hsl(var(--destructive-foreground))",
-          },
-          success: {
-            DEFAULT: "hsl(var(--success))",
-            foreground: "hsl(var(--success-foreground))",
-          },
-          warning: {
-            DEFAULT: "hsl(var(--warning))",
-            foreground: "hsl(var(--warning-foreground))",
-          },
-          info: {
-            DEFAULT: "hsl(var(--info))",
-            foreground: "hsl(var(--info-foreground))",
-          },
-          
-          muted: {
-            DEFAULT: "hsl(var(--muted))",
-            foreground: "hsl(var(--muted-foreground))",
-          },
-          accent: {
-            DEFAULT: "hsl(var(--accent))",
-            foreground: "hsl(var(--accent-foreground))",
-          },
-          border: "hsl(var(--border))",
-          input: "hsl(var(--input))",
-          ring: "hsl(var(--ring))",
+  content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
+  presets: [require("nativewind/preset")],
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: "rgb(var(--color-primary) / <alpha-value>)",
+          foreground: "rgb(var(--color-primary-foreground) / <alpha-value>)",
         },
-        borderRadius: {
-          lg: "var(--radius)",
-          md: "calc(var(--radius) - 0.2rem)",
-          sm: "calc(var(--radius) - 0.4rem)",
-          xl: "calc(var(--radius) + 0.2rem)",
-          '2xl': "calc(var(--radius) + 0.4rem)",
-          full: "9999px",
+        secondary: "rgb(var(--color-secondary) / <alpha-value>)",
+        background: "rgb(var(--color-background) / <alpha-value>)",
+        "background-foreground":
+          "rgb(var(--color-background-foreground) / <alpha-value>)",
+        foreground: "rgb(var(--color-foreground) / <alpha-value>)",
+        destructive: "rgb(var(--color-destructive) / <alpha-value>)",
+        success: "rgb(var(--color-success) / <alpha-value>)",
+        warning: "rgb(var(--color-warning) / <alpha-value>)",
+        info: "rgb(var(--color-info) / <alpha-value>)",
+        muted: "rgb(var(--color-muted) / <alpha-value>)",
+        card: "rgb(var(--card-rgb) / <alpha-value>)",
+        "card-foreground": "rgb(var(--card-foreground-rgb) / <alpha-value>)",
+        popover: "rgb(var(--popover-rgb) / <alpha-value>)",
+        "popover-foreground":
+          "rgb(var(--popover-foreground-rgb) / <alpha-value>)",
+        accent: {
+          DEFAULT: "rgb(var(--accent-rgb) / <alpha-value>)",
+          foreground: "rgb(var(--accent-foreground-rgb) / <alpha-value>)",
         },
+        border: "rgb(var(--border-rgb) / <alpha-value>)",
+        input: "rgb(var(--input-rgb) / <alpha-value>)",
+        ring: "rgb(var(--ring-rgb) / <alpha-value>)",
       },
     },
-    plugins: [],
-    safelist: [
-      {
-        pattern: /^(bg|text|border)-/,
-        variants: ['dark'],
-      },
-    ],
-};`}
+  },
+  plugins: [
+    ({ addBase }) => {
+      addBase({
+        ":root": {
+          "--color-primary": "0 0 0",
+          "--color-secondary": "45 45 45",
+          "--color-background": "255 255 255",
+          "--color-primary-foreground": "255 255 255",
+          "--color-foreground": "0 0 0",
+          "--color-destructive": "239 68 68",
+          "--color-success": "34 197 94",
+          "--color-warning": "234 179 8",
+          "--color-info": "59 130 246",
+          "--color-muted": "115 115 115",
+        },
+      });
+    },
+  ],
+};
+`}
                   />
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">4. Create CSS File</h3>
+                  <h3 className="text-xl font-semibold mt-8">4. Create theme File</h3>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Create global.css in your project root:
+                    Create theme.ts in /lib directory:
                   </p>
                   <CollapsibleCodeBlock
                     language="css"
-                    title="global.css"
-                    code={`@tailwind base;
-@tailwind components;
-@tailwind utilities;
+                    title="theme.ts"
+                    code={`import { vars } from "nativewind";
 
-@layer base {
-  :root {
-    --radius: 0.75rem;
-    
-    --primary: 222.2 84% 4.9%;
-    --primary-light: 222.2 47.4% 20%;
-    --primary-dark: 222.2 47.4% 8%;
-    --primary-foreground: 0 0% 100%;
-    
-    --secondary: 210 40% 96.1%;
-    --secondary-light: 210 40% 98.1%;
-    --secondary-dark: 210 40% 92.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+export const themes = {
+    light: vars({
+      // Primary colors
+      "--color-primary":      "0 0 0",
+      "--color-primary-foreground": "255 255 255",
+      "--color-foreground":   "13 13 13",
 
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    
-    --success: 142 76% 36%;
-    --success-foreground: 210 40% 98%;
-    
-    --warning: 38 92% 50%;
-    --warning-foreground: 210 40% 98%;
-    
-    --info: 204 94% 94%;
-    --info-foreground: 199 89% 48%;
-    
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-  }
+      // General context (background) and cards / popovers
+      "--color-background":   "255 255 255",
+      "--color-background-foreground": "13 13 13",
+      "--color-card":         "255 255 255",
+      "--color-card-foreground": "13 13 13",
+      "--color-popover":      "255 255 255",
+      "--color-popover-foreground": "13 13 13",
 
-  .dark {
-    --primary: 0 0% 100%;
-    --primary-light: 210 40% 90%;
-    --primary-dark: 210 40% 95%;
-    --primary-foreground: 222.2 84% 4.9%;
-    
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-light: 217.2 32.6% 22.5%;
-    --secondary-dark: 217.2 32.6% 12.5%;
-    --secondary-foreground: 210 40% 98%;
+      // Secondary colors
+      "--color-secondary":    "45 45 45",
+      "--color-muted":        "115 115 115",
 
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    
-    --success: 142 72% 29%;
-    --success-foreground: 210 40% 98%;
-    
-    --warning: 38 92% 40%;
-    --warning-foreground: 210 40% 98%;
-    
-    --info: 199 89% 48%;
-    --info-foreground: 210 40% 98%;
-    
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-  }
-}
+      // Accent colors
+      "--color-accent":       "45 45 45",
+      "--color-accent-foreground": "255 255 255",
 
-* {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, border-radius 0.3s ease;
-}`}
+      // Status colors
+      "--color-destructive":  "239 68 68",
+      "--color-destructive-foreground": "250 250 250",
+
+      "--color-success":      "34 197 94",
+      "--color-success-foreground": "250 250 250",
+
+      "--color-warning":      "234 179  8",
+      "--color-warning-foreground": "13 13 13",
+
+      "--color-info":         "59 130 246",
+      "--color-info-foreground": "250 250 250",
+
+      // Borders, inputs and "rings"
+      "--border":             "229 231 235",
+      "--input":              "229 231 235",
+      "--ring":               "13 13 13",
+    }),
+
+    dark: vars({
+      // Primary colors
+      "--color-primary":      "255 255 255",
+      "--color-primary-foreground": "13 13 13",
+      "--color-foreground":   "250 250 250",
+
+      // General context (background) and cards / popovers
+      "--color-background":   "23 23 28",
+      "--color-background-foreground": "250 250 250",
+      "--color-card":         "32 32 36",
+      "--color-card-foreground": "250 250 250",
+      "--color-popover":      "32 32 36",
+      "--color-popover-foreground": "250 250 250",
+
+      // Secondary colors
+      "--color-secondary":    "58 58 58",
+      "--color-muted":        "163 163 163",
+
+      // Accent colors
+      "--color-accent":       "58  58  58",
+      "--color-accent-foreground": "250 250 250",
+
+      // Status colors
+      "--color-destructive":  "153  27  27",
+      "--color-destructive-foreground": "250 250 250",
+
+      "--color-success":      "22 163  74",
+      "--color-success-foreground": "250 250 250",
+
+      "--color-warning":      "161  98   7",
+      "--color-warning-foreground": "250 250 250",
+
+      "--color-info":         " 37  99 235",
+      "--color-info-foreground": "250 250 250",
+
+      // Borders, inputs and "rings"
+      "--border":             " 38  38  38",
+      "--input":              " 38  38  38",
+      "--ring":               "212 212 212",
+    }),
+} as const;
+`}
                   />
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">5. Configure TypeScript</h3>
+                  <h3 className="text-xl font-semibold mt-8">5. Create global.css</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Create global.css in /app directory:
+                  </p>
+                  <CollapsibleCodeBlock
+                    language="css"
+                    title="app/global.css"
+                    code={`@tailwind base;
+@tailwind components;
+@tailwind utilities;`}
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold mt-8">6. Configure TypeScript</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Create a new declaration file for NativeWind types:
                   </p>
@@ -354,7 +338,7 @@ module.exports = {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">6. Configure TypeScript Paths</h3>
+                  <h3 className="text-xl font-semibold mt-8">7. Configure TypeScript Paths</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Update your tsconfig.json:
                   </p>
@@ -384,7 +368,7 @@ module.exports = {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">7. Configure Babel</h3>
+                  <h3 className="text-xl font-semibold mt-8">8. Configure Babel</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Update or create babel.config.js:
                   </p>
@@ -407,7 +391,7 @@ module.exports = {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">8. Configure Metro</h3>
+                  <h3 className="text-xl font-semibold mt-8">9. Configure Metro</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Create metro.config.js:
                   </p>
@@ -428,25 +412,30 @@ module.exports = withNativeWind(config, {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">9. Update App Entry</h3>
+                  <h3 className="text-xl font-semibold mt-8">10. Update App Entry</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Update _layout.tsx:
                   </p>
                   <CollapsibleCodeBlock
                     language="typescript"
                     title="app/_layout.tsx"
-                    code={`import '../global.css';
+                    code={`
+import { themes } from "@/lib/theme";
+import './global.css';
 
 export default function RootLayout() {
+  const [theme, setTheme] = useState<"light" | "dark">("light");
   return (
-    // Your App
+    <View style={activeTheme} className="flex-1 bg-background">
+      {/* Your App */}
+    </View>
   );
 }`}
                   />
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">10. Configure app.json</h3>
+                  <h3 className="text-xl font-semibold mt-8">11. Configure app.json</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Update app.json:
                   </p>
@@ -464,7 +453,7 @@ export default function RootLayout() {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">11. Create Utility Functions</h3>
+                  <h3 className="text-xl font-semibold mt-8">12. Create Utility Functions</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     First, create the lib directory at the root of your project:
                   </p>
@@ -484,7 +473,7 @@ export function cn(...inputs: ClassValue[]) {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">12. Configure shadcn</h3>
+                  <h3 className="text-xl font-semibold mt-8">13. Configure shadcn</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Create components.json in your project root:
                   </p>
@@ -520,12 +509,12 @@ export function cn(...inputs: ClassValue[]) {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">13. Start Development</h3>
+                  <h3 className="text-xl font-semibold mt-8">14. Start Development</h3>
                   <InstallationTabs command="expo start" />
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">14. Test Your Setup</h3>
+                  <h3 className="text-xl font-semibold mt-8">15. Test Your Setup</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Add this code in any of your components to test that everything is working:
                   </p>
