@@ -1,17 +1,20 @@
-import * as React from "react";
-import { View, Text, Pressable, ViewStyle } from "react-native";
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react";
+import { Pressable, Text, View, ViewStyle } from "react-native";
 
 const badgeVariants = cva(
   "flex-row items-center justify-center rounded-full px-2.5 py-1",
   {
     variants: {
       variant: {
-        default: "bg-primary",
-        secondary: "bg-secondary",
-        destructive: "bg-destructive",
-        outline: "border border-input bg-transparent",
+        default: "bg-primary text-primary-foreground",
+        secondary: "bg-secondary text-secondary-foreground",
+        destructive: "bg-destructive text-destructive-foreground",
+        outline: "border border-input bg-transparent text-foreground",
+        success: "bg-success text-success-foreground",
+        warning: "bg-warning text-warning-foreground",
+        info: "bg-info text-info-foreground",
       },
       size: {
         default: "h-8 px-3",
@@ -53,17 +56,6 @@ function Badge({
       textStyle = cn(textStyle, "text-xs");
     } else {
       textStyle = cn(textStyle, "text-xs");
-    }
-
-    // Adjust text color based on variant
-    if (variant === "default") {
-      textStyle = cn(textStyle, "text-primary-foreground");
-    } else if (variant === "secondary") {
-      textStyle = cn(textStyle, "text-secondary-foreground");
-    } else if (variant === "destructive") {
-      textStyle = cn(textStyle, "text-destructive-foreground");
-    } else if (variant === "outline") {
-      textStyle = cn(textStyle, "text-foreground");
     }
 
     return textStyle;

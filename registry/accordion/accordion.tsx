@@ -1,14 +1,14 @@
+import { cn } from "@/lib/utils";
+import { Feather } from "@expo/vector-icons";
 import * as React from "react";
 import {
-  Pressable,
-  View,
-  Text,
   LayoutAnimation,
   Platform,
+  Pressable,
+  Text,
   UIManager,
+  View,
 } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import { cn } from "@/lib/utils";
 
 // Enable layout animation for Android
 if (Platform.OS === "android") {
@@ -107,7 +107,7 @@ const AccordionItem = ({ value, className, children }: AccordionItemProps) => {
   const isExpanded = context.value.includes(value);
 
   return (
-    <View className={cn("border-b border-border", className)}>
+    <View className={cn("border-b border-primary/10", className)}>
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
           return React.cloneElement(child as React.ReactElement<any>, {
@@ -181,7 +181,6 @@ interface AccordionContentProps {
 const AccordionContent = ({
   className,
   children,
-  value,
   isExpanded,
 }: AccordionContentProps) => {
   if (!isExpanded) {
@@ -191,7 +190,7 @@ const AccordionContent = ({
   return (
     <View className={cn("pb-4 pt-0", className)}>
       {typeof children === "string" ? (
-        <Text className="text-base text-muted-foreground">{children}</Text>
+        <Text className="text-base text-primary">{children}</Text>
       ) : (
         children
       )}
@@ -204,4 +203,4 @@ AccordionItem.displayName = "AccordionItem";
 AccordionTrigger.displayName = "AccordionTrigger";
 AccordionContent.displayName = "AccordionContent";
 
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };
+export { Accordion, AccordionContent, AccordionItem, AccordionTrigger };

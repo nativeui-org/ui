@@ -166,28 +166,56 @@ module.exports = {
           DEFAULT: "rgb(var(--color-primary) / <alpha-value>)",
           foreground: "rgb(var(--color-primary-foreground) / <alpha-value>)",
         },
-        secondary: "rgb(var(--color-secondary) / <alpha-value>)",
-        background: "rgb(var(--color-background) / <alpha-value>)",
-        "background-foreground":
-          "rgb(var(--color-background-foreground) / <alpha-value>)",
-        foreground: "rgb(var(--color-foreground) / <alpha-value>)",
-        destructive: "rgb(var(--color-destructive) / <alpha-value>)",
-        success: "rgb(var(--color-success) / <alpha-value>)",
-        warning: "rgb(var(--color-warning) / <alpha-value>)",
-        info: "rgb(var(--color-info) / <alpha-value>)",
-        muted: "rgb(var(--color-muted) / <alpha-value>)",
-        card: "rgb(var(--card-rgb) / <alpha-value>)",
-        "card-foreground": "rgb(var(--card-foreground-rgb) / <alpha-value>)",
-        popover: "rgb(var(--popover-rgb) / <alpha-value>)",
-        "popover-foreground":
-          "rgb(var(--popover-foreground-rgb) / <alpha-value>)",
+        secondary: {
+          DEFAULT: "rgb(var(--color-secondary) / <alpha-value>)",
+          foreground: "rgb(var(--color-secondary-foreground) / <alpha-value>)",
+        },
+        background: {
+          DEFAULT: "rgb(var(--color-background) / <alpha-value>)",
+          foreground: "rgb(var(--color-background-foreground) / <alpha-value>)",
+        },
+        foreground: {
+          DEFAULT: "rgb(var(--color-foreground) / <alpha-value>)",
+          muted: "rgb(var(--color-foreground-muted) / <alpha-value>)",
+        },
+        destructive: {
+          DEFAULT: "rgb(var(--color-destructive) / <alpha-value>)",
+          foreground: "rgb(var(--color-destructive-foreground) / <alpha-value>)",
+        },
+        success: {
+          DEFAULT: "rgb(var(--color-success) / <alpha-value>)",
+          foreground: "rgb(var(--color-success-foreground) / <alpha-value>)",
+        },
+        warning: {
+          DEFAULT: "rgb(var(--color-warning) / <alpha-value>)",
+          foreground: "rgb(var(--color-warning-foreground) / <alpha-value>)",
+        },
+        info: {
+          DEFAULT: "rgb(var(--color-info) / <alpha-value>)",
+          foreground: "rgb(var(--color-info-foreground) / <alpha-value>)",
+        },
+        card: {
+          DEFAULT: "rgb(var(--card-rgb) / <alpha-value>)",
+          foreground: "rgb(var(--card-foreground-rgb) / <alpha-value>)",
+        },
+        popover: {
+          DEFAULT: "rgb(var(--popover-rgb) / <alpha-value>)",
+          foreground: "rgb(var(--popover-foreground-rgb) / <alpha-value>)",
+        },
         accent: {
           DEFAULT: "rgb(var(--accent-rgb) / <alpha-value>)",
           foreground: "rgb(var(--accent-foreground-rgb) / <alpha-value>)",
         },
-        border: "rgb(var(--border-rgb) / <alpha-value>)",
-        input: "rgb(var(--input-rgb) / <alpha-value>)",
+        border: {
+          DEFAULT: "rgb(var(--border-rgb) / <alpha-value>)",
+          foreground: "rgb(var(--border-foreground-rgb) / <alpha-value>)",
+        },
+        input: {
+          DEFAULT: "rgb(var(--input-rgb) / <alpha-value>)",
+          foreground: "rgb(var(--input-foreground-rgb) / <alpha-value>)",
+        },
         ring: "rgb(var(--ring-rgb) / <alpha-value>)",
+        radius: "var(--radius)",
       },
     },
   },
@@ -241,7 +269,8 @@ export const themes = {
 
       // Secondary colors
       "--color-secondary":    "45 45 45",
-      "--color-muted":        "115 115 115",
+      "--color-secondary-foreground": "255 255 255",
+      "--color-foreground-muted": "115 115 115",
 
       // Accent colors
       "--color-accent":       "45 45 45",
@@ -262,7 +291,9 @@ export const themes = {
 
       // Borders, inputs and "rings"
       "--border":             "229 231 235",
+      "--border-foreground": "13 13 13",
       "--input":              "229 231 235",
+      "--input-foreground": "13 13 13",
       "--ring":               "13 13 13",
     }),
 
