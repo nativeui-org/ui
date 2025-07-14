@@ -13,7 +13,7 @@ export default function PopoverPage() {
     "language": "tsx"
   }
 ]}
-      componentCode={`import * as React from "react";
+      componentCode={`import * as React from "react"
 import {
   View,
   Text,
@@ -22,80 +22,63 @@ import {
   TouchableWithoutFeedback,
   Platform,
   Animated,
-} from "react-native";
-import { cn } from "@/lib/utils";
+} from "react-native"
+import { cn } from "@/lib/utils"
 
 interface PopoverProps {
-  children: React.ReactNode;
-  className?: string;
+  children: React.ReactNode
+  className?: string
 }
 
 interface PopoverTriggerProps {
-  children: React.ReactNode;
-  className?: string;
-  disabled?: boolean;
-  asChild?: boolean;
+  children: React.ReactNode
+  className?: string
+  disabled?: boolean
+  asChild?: boolean
 }
 
 interface PopoverAnchorProps {
-  children: React.ReactNode;
-  className?: string;
+  children: React.ReactNode
+  className?: string
 }
 
 interface PopoverContentProps {
-  children: React.ReactNode;
-  className?: string;
-  align?: "start" | "center" | "end";
-  side?: "top" | "right" | "bottom" | "left";
-  sideOffset?: number;
+  children: React.ReactNode
+  className?: string
+  align?: "start" | "center" | "end"
+  side?: "top" | "right" | "bottom" | "left"
+  sideOffset?: number
 }
 
 const PopoverContext = React.createContext<{
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  triggerRef: React.RefObject<View>;
-  triggerLayout: { x: number; y: number; width: number; height: number } | null;
-  setTriggerLayout: React.Dispatch<
-    React.SetStateAction<{
-      x: number;
-      y: number;
-      width: number;
-      height: number;
-    } | null>
-  >;
-  contentLayout: { width: number; height: number } | null;
-  setContentLayout: React.Dispatch<
-    React.SetStateAction<{ width: number; height: number } | null>
-  >;
-  isAnimating: boolean;
-  setIsAnimating: React.Dispatch<React.SetStateAction<boolean>>;
+  open: boolean
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  triggerRef: React.RefObject<View>
+  triggerLayout: { x: number; y: number; width: number; height: number } | null
+  setTriggerLayout: React.Dispatch<React.SetStateAction<{ x: number; y: number; width: number; height: number } | null>>
+  contentLayout: { width: number; height: number } | null
+  setContentLayout: React.Dispatch<React.SetStateAction<{ width: number; height: number } | null>>
+  isAnimating: boolean
+  setIsAnimating: React.Dispatch<React.SetStateAction<boolean>>
 }>({
   open: false,
-  setOpen: () => {},
+  setOpen: () => { },
   triggerRef: { current: null },
   triggerLayout: null,
-  setTriggerLayout: () => {},
+  setTriggerLayout: () => { },
   contentLayout: null,
-  setContentLayout: () => {},
+  setContentLayout: () => { },
   isAnimating: false,
-  setIsAnimating: () => {},
-});
+  setIsAnimating: () => { },
+})
 
 const Popover = React.forwardRef<View, PopoverProps>(
   ({ children, className, ...props }, ref) => {
-    const [open, setOpen] = React.useState(false);
-    const triggerRef = React.useRef<View>(null);
-    const [triggerLayout, setTriggerLayout] = React.useState<{
-      x: number;
-      y: number;
-      width: number;
-      height: number;
-    } | null>(null);
-    const [contentLayout, setContentLayout] = React.useState<{
-      width: number;
-      height: number;
-    } | null>(null);
-    const [isAnimating, setIsAnimating] = React.useState(false);
+    const [open, setOpen] = React.useState(false)
+    const triggerRef = React.useRef<View>(null)
+    const [triggerLayout, setTriggerLayout] = React.useState<{ x: number; y: number; width: number; height: number } | null>(null)
+    const [contentLayout, setContentLayout] = React.useState<{ width: number; height: number } | null>(null)
+    const [isAnimating, setIsAnimating] = React.useState(false)
 
     return (
       <PopoverContext.Provider
@@ -115,24 +98,23 @@ const Popover = React.forwardRef<View, PopoverProps>(
           {children}
         </View>
       </PopoverContext.Provider>
-    );
+    )
   }
-);
+)
 
-Popover.displayName = "Popover";
+Popover.displayName = "Popover"
 
 const PopoverTrigger = React.forwardRef<View, PopoverTriggerProps>(
   ({ children, className, disabled = false, ...props }, ref) => {
-    const { setOpen, open, triggerRef, setTriggerLayout, isAnimating } =
-      React.useContext(PopoverContext);
+    const { setOpen, open, triggerRef, setTriggerLayout, isAnimating } = React.useContext(PopoverContext)
 
     const measureTrigger = () => {
       if (triggerRef.current) {
         triggerRef.current.measureInWindow((x, y, width, height) => {
-          setTriggerLayout({ x, y, width, height });
-        });
+          setTriggerLayout({ x, y, width, height })
+        })
       }
-    };
+    }
 
     return (
       <Pressable
@@ -141,10 +123,10 @@ const PopoverTrigger = React.forwardRef<View, PopoverTriggerProps>(
         disabled={disabled || isAnimating}
         onPress={() => {
           if (open) {
-            setOpen(false);
+            setOpen(false)
           } else {
-            measureTrigger();
-            setOpen(true);
+            measureTrigger()
+            setOpen(true)
           }
         }}
         accessibilityRole="button"
@@ -152,11 +134,11 @@ const PopoverTrigger = React.forwardRef<View, PopoverTriggerProps>(
       >
         {children}
       </Pressable>
-    );
+    )
   }
-);
+)
 
-PopoverTrigger.displayName = "PopoverTrigger";
+PopoverTrigger.displayName = "PopoverTrigger"
 
 const PopoverAnchor = React.forwardRef<View, PopoverAnchorProps>(
   ({ children, className, ...props }, ref) => {
@@ -164,24 +146,14 @@ const PopoverAnchor = React.forwardRef<View, PopoverAnchorProps>(
       <View ref={ref} className={cn("", className)} {...props}>
         {children}
       </View>
-    );
+    )
   }
-);
+)
 
-PopoverAnchor.displayName = "PopoverAnchor";
+PopoverAnchor.displayName = "PopoverAnchor"
 
 const PopoverContent = React.forwardRef<View, PopoverContentProps>(
-  (
-    {
-      children,
-      className,
-      align = "center",
-      side = "bottom",
-      sideOffset = 8,
-      ...props
-    },
-    ref
-  ) => {
+  ({ children, className, align = "center", side = "bottom", sideOffset = 8, ...props }, ref) => {
     const {
       open,
       setOpen,
@@ -189,90 +161,87 @@ const PopoverContent = React.forwardRef<View, PopoverContentProps>(
       contentLayout,
       setContentLayout,
       setIsAnimating,
-    } = React.useContext(PopoverContext);
+    } = React.useContext(PopoverContext)
 
-    const contentRef = React.useRef<View>(null);
-    const fadeAnim = React.useRef(new Animated.Value(0)).current;
+    const contentRef = React.useRef<View>(null)
+    const fadeAnim = React.useRef(new Animated.Value(0)).current
 
     React.useEffect(() => {
       if (open) {
-        setIsAnimating(true);
+        setIsAnimating(true)
         if (contentRef.current) {
           setTimeout(() => {
             contentRef.current?.measure((_x, _y, width, height) => {
-              setContentLayout({ width, height });
+              setContentLayout({ width, height })
               Animated.timing(fadeAnim, {
                 toValue: 1,
                 duration: 150, // Animation duration
                 useNativeDriver: true,
               }).start(() => {
-                setIsAnimating(false);
-              });
-            });
-          }, 10);
+                setIsAnimating(false)
+              })
+            })
+          }, 10)
         }
       } else {
         // Reset fadeAnim when closed
-        fadeAnim.setValue(0);
+        fadeAnim.setValue(0)
       }
 
       // Cleanup animation when component unmounts
       return () => {
-        fadeAnim.setValue(0);
-      };
-    }, [open, setContentLayout, fadeAnim, setIsAnimating]);
+        fadeAnim.setValue(0)
+      }
+    }, [open, setContentLayout, fadeAnim, setIsAnimating])
 
     const closePopover = React.useCallback(() => {
-      setIsAnimating(true);
+      setIsAnimating(true)
       Animated.timing(fadeAnim, {
         toValue: 0,
         duration: 100,
         useNativeDriver: true,
       }).start(() => {
-        setOpen(false);
-        setIsAnimating(false);
-      });
-    }, [fadeAnim, setOpen, setIsAnimating]);
+        setOpen(false)
+        setIsAnimating(false)
+      })
+    }, [fadeAnim, setOpen, setIsAnimating])
 
-    if (!open) return null;
+    if (!open) return null
 
     const getPosition = () => {
-      if (!triggerLayout || !contentLayout) return {};
+      if (!triggerLayout || !contentLayout) return {}
 
-      let left = 0;
-      let top = 0;
+      let left = 0
+      let top = 0
 
       // Handle horizontal alignment
       if (align === "start") {
-        left = triggerLayout.x;
+        left = triggerLayout.x
       } else if (align === "center") {
-        left =
-          triggerLayout.x + triggerLayout.width / 2 - contentLayout.width / 2;
+        left = triggerLayout.x + (triggerLayout.width / 2) - (contentLayout.width / 2)
       } else if (align === "end") {
-        left = triggerLayout.x + triggerLayout.width - contentLayout.width;
+        left = triggerLayout.x + triggerLayout.width - contentLayout.width
       }
 
       // Handle vertical positioning
       if (side === "top") {
-        top = triggerLayout.y - contentLayout.height - sideOffset;
+        top = triggerLayout.y - contentLayout.height - sideOffset
       } else if (side === "bottom") {
-        top = triggerLayout.y + triggerLayout.height + sideOffset;
+        top = triggerLayout.y + triggerLayout.height + sideOffset
       } else if (side === "left") {
-        left = triggerLayout.x - contentLayout.width - sideOffset;
-        top =
-          triggerLayout.y + triggerLayout.height / 2 - contentLayout.height / 2;
+        left = triggerLayout.x - contentLayout.width - sideOffset
+        top = triggerLayout.y + (triggerLayout.height / 2) - (contentLayout.height / 2)
       } else if (side === "right") {
-        left = triggerLayout.x + triggerLayout.width + sideOffset;
-        top =
-          triggerLayout.y + triggerLayout.height / 2 - contentLayout.height / 2;
+        left = triggerLayout.x + triggerLayout.width + sideOffset
+        top = triggerLayout.y + (triggerLayout.height / 2) - (contentLayout.height / 2)
       }
 
       // Ensure the popover stays within screen bounds
-      left = Math.max(16, left);
-      top = Math.max(50, top);
+      left = Math.max(16, left)
+      top = Math.max(50, top)
 
-      return { left, top };
-    };
+      return { left, top }
+    }
 
     return (
       <Modal
@@ -286,13 +255,14 @@ const PopoverContent = React.forwardRef<View, PopoverContentProps>(
             <TouchableWithoutFeedback>
               <Animated.View
                 ref={contentRef}
-                style={[getPosition(), { opacity: fadeAnim }]}
+                style={[
+                  getPosition(),
+                  { opacity: fadeAnim }
+                ]}
                 className={cn(
                   "absolute rounded-md border border-border bg-popover p-4",
                   "shadow-lg min-w-[200px] max-w-[90%]",
-                  Platform.OS === "ios"
-                    ? "ios:shadow-lg"
-                    : "android:elevation-4",
+                  Platform.OS === "ios" ? "ios:shadow-lg" : "android:elevation-4",
                   className
                 )}
                 {...props}
@@ -303,13 +273,13 @@ const PopoverContent = React.forwardRef<View, PopoverContentProps>(
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-    );
+    )
   }
-);
+)
 
-PopoverContent.displayName = "PopoverContent";
+PopoverContent.displayName = "PopoverContent"
 
-export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor };
+export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor }
 `}
       previewCode={`import { Popover } from "@nativeui/ui";
 

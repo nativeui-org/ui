@@ -67,9 +67,9 @@ const DropdownContext = React.createContext<{
   setTriggerRect: (rect: LayoutRectangle) => void;
 }>({
   open: false,
-  setOpen: () => {},
+  setOpen: () => { },
   triggerRect: null,
-  setTriggerRect: () => {},
+  setTriggerRect: () => { },
 });
 
 const Dropdown = React.forwardRef<View, DropdownProps>(

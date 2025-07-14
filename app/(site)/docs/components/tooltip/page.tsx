@@ -67,10 +67,10 @@ const TooltipContext = React.createContext<{
   >;
 }>({
   open: false,
-  setOpen: () => {},
+  setOpen: () => { },
   triggerRef: { current: null },
   triggerLayout: null,
-  setTriggerLayout: () => {},
+  setTriggerLayout: () => { },
 });
 
 const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } = Dimensions.get("window");

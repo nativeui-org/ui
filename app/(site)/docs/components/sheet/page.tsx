@@ -98,7 +98,7 @@ interface SheetContextValue {
 }
 
 export const SheetContext = React.createContext<SheetContextValue>({
-  close: () => {},
+  close: () => { },
   isClosing: false,
   isAnimating: false,
   position: new Animated.Value(0),

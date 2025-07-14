@@ -53,7 +53,8 @@ const badgeVariants = cva(
   }
 );
 
-export interface BadgeProps extends VariantProps<typeof badgeVariants> {
+export interface BadgeProps
+  extends VariantProps<typeof badgeVariants> {
   className?: string;
   style?: ViewStyle;
   children: React.ReactNode;
@@ -97,12 +98,12 @@ function Badge({
   };
 
   const content = (
-    <View
-      className={cn(badgeVariants({ variant, size, className }))}
-      style={style}
-    >
-      {typeof children === "string" ? (
-        <Text className={getTextStyle()} numberOfLines={1}>
+    <View className={cn(badgeVariants({ variant, size, className }))} style={style}>
+      {typeof children === 'string' ? (
+        <Text
+          className={getTextStyle()}
+          numberOfLines={1}
+        >
           {children}
         </Text>
       ) : (
@@ -116,13 +117,12 @@ function Badge({
       <Pressable
         onPress={onPress}
         accessibilityRole="button"
-        accessibilityLabel={
-          accessibilityLabel ||
-          (typeof children === "string" ? children : undefined)
-        }
+        accessibilityLabel={accessibilityLabel || (typeof children === 'string' ? children : undefined)}
       >
         {({ pressed }) => (
-          <View style={{ opacity: pressed ? 0.7 : 1 }}>{content}</View>
+          <View style={{ opacity: pressed ? 0.7 : 1 }}>
+            {content}
+          </View>
         )}
       </Pressable>
     );
@@ -133,8 +133,7 @@ function Badge({
 
 Badge.displayName = "Badge";
 
-export { Badge, badgeVariants };
-`}
+export { Badge, badgeVariants }; `}
       previewCode={`import { Badge } from "@nativeui/ui";
 
 export default function BadgeDemo() {

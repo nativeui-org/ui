@@ -13,52 +13,48 @@ export default function SwitchPage() {
     "language": "tsx"
   }
 ]}
-      componentCode={`import * as React from "react";
-import { TouchableOpacity, Animated } from "react-native";
-import { cn } from "@/lib/utils";
+      componentCode={`import * as React from "react"
+import { TouchableOpacity, Animated } from "react-native"
+import { cn } from "@/lib/utils"
 
-interface SwitchProps
-  extends Omit<
-    React.ComponentPropsWithoutRef<typeof TouchableOpacity>,
-    "onPress"
-  > {
-  checked?: boolean;
-  onCheckedChange?: (checked: boolean) => void;
-  disabled?: boolean;
+interface SwitchProps extends Omit<React.ComponentPropsWithoutRef<typeof TouchableOpacity>, "onPress"> {
+  checked?: boolean
+  onCheckedChange?: (checked: boolean) => void
+  disabled?: boolean
 }
 
 const Switch = React.forwardRef<
   React.ElementRef<typeof TouchableOpacity>,
   SwitchProps
 >(({ className, checked, onCheckedChange, disabled, ...props }, ref) => {
-  const [innerChecked, setInnerChecked] = React.useState(checked ?? false);
-  const isChecked = checked !== undefined ? checked : innerChecked;
-  const [animatedValue] = React.useState(new Animated.Value(isChecked ? 1 : 0));
+  const [innerChecked, setInnerChecked] = React.useState(checked ?? false)
+  const isChecked = checked !== undefined ? checked : innerChecked
+  const [animatedValue] = React.useState(new Animated.Value(isChecked ? 1 : 0))
 
   React.useEffect(() => {
     Animated.timing(animatedValue, {
       toValue: isChecked ? 1 : 0,
       duration: 100,
       useNativeDriver: true,
-    }).start();
-  }, [isChecked, animatedValue]);
+    }).start()
+  }, [isChecked, animatedValue])
 
   const handlePress = React.useCallback(() => {
-    if (disabled) return;
+    if (disabled) return
 
-    const newChecked = !isChecked;
+    const newChecked = !isChecked
 
     if (checked === undefined) {
-      setInnerChecked(newChecked);
+      setInnerChecked(newChecked)
     }
 
-    onCheckedChange?.(newChecked);
-  }, [isChecked, onCheckedChange, disabled, checked]);
+    onCheckedChange?.(newChecked)
+  }, [isChecked, onCheckedChange, disabled, checked])
 
   const translateX = animatedValue.interpolate({
     inputRange: [0, 1],
-    outputRange: [2, 21],
-  });
+    outputRange: [2, 21]
+  })
 
   return (
     <TouchableOpacity
@@ -71,7 +67,9 @@ const Switch = React.forwardRef<
       data-state={isChecked ? "checked" : "unchecked"}
       className={cn(
         "relative h-7 w-12 rounded-full border-2 border-transparent overflow-hidden",
-        isChecked ? "bg-primary" : "bg-gray-300 dark:bg-gray-600 border-border",
+        isChecked
+          ? "bg-primary"
+          : "bg-gray-300 dark:bg-gray-600 border-border",
         disabled && "opacity-50",
         className
       )}
@@ -86,12 +84,12 @@ const Switch = React.forwardRef<
         }}
       />
     </TouchableOpacity>
-  );
-});
+  )
+})
 
-Switch.displayName = "Switch";
+Switch.displayName = "Switch"
 
-export { Switch };
+export { Switch }
 `}
       previewCode={`import { Switch } from "@nativeui/ui";
 

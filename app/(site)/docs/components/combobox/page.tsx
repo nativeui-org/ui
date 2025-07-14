@@ -423,7 +423,7 @@ const ComboboxItem = React.forwardRef<typeof Pressable, ComboboxItemProps>(
         onSelect(value);
       }
 
-      if (!multiple && drawer && typeof drawer.close === "function") {
+      if (!multiple && drawer && typeof drawer.close === 'function') {
         requestAnimationFrame(() => {
           drawer.close();
         });
@@ -505,8 +505,7 @@ export {
   ComboboxItem,
   ComboboxLabel,
   ComboboxSeparator,
-};
-`}
+}; `}
       previewCode={`import { Combobox } from "@nativeui/ui";
 
 export default function ComboboxDemo() {

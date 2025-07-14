@@ -1,20 +1,17 @@
+import * as React from "react";
+import { View, Text, Pressable, ViewStyle } from "react-native";
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
-import * as React from "react";
-import { Pressable, Text, View, ViewStyle } from "react-native";
 
 const badgeVariants = cva(
   "flex-row items-center justify-center rounded-full px-2.5 py-1",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground",
-        secondary: "bg-secondary text-secondary-foreground",
-        destructive: "bg-destructive text-destructive-foreground",
-        outline: "border border-input bg-transparent text-foreground",
-        success: "bg-success text-success-foreground",
-        warning: "bg-warning text-warning-foreground",
-        info: "bg-info text-info-foreground",
+        default: "bg-primary",
+        secondary: "bg-secondary",
+        destructive: "bg-destructive",
+        outline: "border border-input bg-transparent",
       },
       size: {
         default: "h-8 px-3",
@@ -29,7 +26,8 @@ const badgeVariants = cva(
   }
 );
 
-export interface BadgeProps extends VariantProps<typeof badgeVariants> {
+export interface BadgeProps
+  extends VariantProps<typeof badgeVariants> {
   className?: string;
   style?: ViewStyle;
   children: React.ReactNode;
@@ -58,16 +56,27 @@ function Badge({
       textStyle = cn(textStyle, "text-xs");
     }
 
+    // Adjust text color based on variant
+    if (variant === "default") {
+      textStyle = cn(textStyle, "text-primary-foreground");
+    } else if (variant === "secondary") {
+      textStyle = cn(textStyle, "text-secondary-foreground");
+    } else if (variant === "destructive") {
+      textStyle = cn(textStyle, "text-destructive-foreground");
+    } else if (variant === "outline") {
+      textStyle = cn(textStyle, "text-foreground");
+    }
+
     return textStyle;
   };
 
   const content = (
-    <View
-      className={cn(badgeVariants({ variant, size, className }))}
-      style={style}
-    >
-      {typeof children === "string" ? (
-        <Text className={getTextStyle()} numberOfLines={1}>
+    <View className={cn(badgeVariants({ variant, size, className }))} style={style}>
+      {typeof children === 'string' ? (
+        <Text
+          className={getTextStyle()}
+          numberOfLines={1}
+        >
           {children}
         </Text>
       ) : (
@@ -81,13 +90,12 @@ function Badge({
       <Pressable
         onPress={onPress}
         accessibilityRole="button"
-        accessibilityLabel={
-          accessibilityLabel ||
-          (typeof children === "string" ? children : undefined)
-        }
+        accessibilityLabel={accessibilityLabel || (typeof children === 'string' ? children : undefined)}
       >
         {({ pressed }) => (
-          <View style={{ opacity: pressed ? 0.7 : 1 }}>{content}</View>
+          <View style={{ opacity: pressed ? 0.7 : 1 }}>
+            {content}
+          </View>
         )}
       </Pressable>
     );
@@ -98,4 +106,4 @@ function Badge({
 
 Badge.displayName = "Badge";
 
-export { Badge, badgeVariants };
+export { Badge, badgeVariants }; 

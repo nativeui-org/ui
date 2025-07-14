@@ -96,10 +96,10 @@ const TableHead = React.forwardRef<View, TableHeadProps>(
   ({ className, align = "left", width, children, ...props }, ref) => {
     const style: ViewStyle | undefined = width
       ? {
-          width,
-          minWidth: width,
-          maxWidth: width,
-        }
+        width,
+        minWidth: width,
+        maxWidth: width,
+      }
       : undefined;
 
     return (
@@ -126,10 +126,10 @@ const TableCell = React.forwardRef<View, TableCellProps>(
   ({ className, align = "left", width, children, ...props }, ref) => {
     const style: ViewStyle | undefined = width
       ? {
-          width,
-          minWidth: width,
-          maxWidth: width,
-        }
+        width,
+        minWidth: width,
+        maxWidth: width,
+      }
       : undefined;
 
     return (

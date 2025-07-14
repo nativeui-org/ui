@@ -13,16 +13,16 @@ export default function SliderPage() {
     "language": "tsx"
   }
 ]}
-      componentCode={`import * as React from "react";
+      componentCode={`import { cn } from "@/lib/utils";
+import * as React from "react";
 import {
-  View,
-  Pressable,
   GestureResponderEvent,
   LayoutChangeEvent,
   PanResponder,
   PanResponderGestureState,
+  Pressable,
+  View,
 } from "react-native";
-import { cn } from "@/lib/utils";
 
 export interface SliderProps {
   defaultValue?: number[];
@@ -119,13 +119,10 @@ export const Slider = React.forwardRef<View, SliderProps>(
         onPanResponderMove: (_, gestureState: PanResponderGestureState) => {
           if (disabled) return;
 
-          const newPositions = [...values.map((v) => getPositionFromValue(v))];
+          const newPositions = [...values.map(v => getPositionFromValue(v))];
           newPositions[index] = Math.max(
             0,
-            Math.min(
-              trackLayout.width,
-              gestureState.dx + getPositionFromValue(values[index])
-            )
+            Math.min(trackLayout.width, gestureState.dx + getPositionFromValue(values[index]))
           );
 
           updateValue(newPositions, index);
@@ -142,7 +139,7 @@ export const Slider = React.forwardRef<View, SliderProps>(
       const trackX = trackLayout.x;
       const pressX = event.nativeEvent.pageX - trackX;
 
-      const thumbPositions = values.map((v) => getPositionFromValue(v));
+      const thumbPositions = values.map(v => getPositionFromValue(v));
       let closestThumbIndex = 0;
       let minDistance = Math.abs(thumbPositions[0] - pressX);
 
@@ -191,17 +188,16 @@ export const Slider = React.forwardRef<View, SliderProps>(
               style={
                 isSingleValue
                   ? {
-                      left: 0,
-                      width: getPositionFromValue(values[0]),
-                    }
+                    left: 0,
+                    width: getPositionFromValue(values[0]),
+                  }
                   : {
-                      left: getPositionFromValue(Math.min(...values)),
-                      width: Math.max(
-                        getPositionFromValue(Math.max(...values)) -
-                          getPositionFromValue(Math.min(...values)),
-                        4
-                      ),
-                    }
+                    left: getPositionFromValue(Math.min(...values)),
+                    width: Math.max(
+                      getPositionFromValue(Math.max(...values)) - getPositionFromValue(Math.min(...values)),
+                      4
+                    ),
+                  }
               }
             />
           </View>
@@ -211,7 +207,7 @@ export const Slider = React.forwardRef<View, SliderProps>(
           <View
             key={index}
             style={{
-              position: "absolute",
+              position: 'absolute',
               transform: [{ translateX: getPositionFromValue(value) }],
               top: -8,
               left: 0,

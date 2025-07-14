@@ -69,7 +69,7 @@ export const buttonVariants = cva(
 
 export interface ButtonProps
   extends Omit<RNPressableProps, "style">,
-    VariantProps<typeof buttonVariants> {
+  VariantProps<typeof buttonVariants> {
   className?: string;
   style?: ViewStyle;
   asChild?: boolean;

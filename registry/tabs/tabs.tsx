@@ -32,7 +32,7 @@ const TabsContext = React.createContext<{
   onValueChange: (value: string) => void;
 }>({
   value: "",
-  onValueChange: () => {},
+  onValueChange: () => { },
 });
 
 const Tabs = React.forwardRef<View, TabsProps>(

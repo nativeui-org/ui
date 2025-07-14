@@ -1,10 +1,10 @@
-import * as React from "react";
-import { View, Text, Pressable, Modal, Animated } from "react-native";
 import { cn } from "@/lib/utils";
-import { Calendar } from "@/components/ui/calendar";
 import { Ionicons } from "@expo/vector-icons";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
+import * as React from "react";
+import { Animated, Modal, Pressable, Text, View } from "react-native";
+import { Calendar } from "./calendar";
 
 interface DateRange {
   from: Date;
@@ -183,7 +183,7 @@ const DateTimePicker = React.forwardRef<View, DateTimePickerProps>(
           onPress={openPicker}
           disabled={disabled}
           className={cn(
-            "w-full rounded-md border border-input bg-transparent shadow-sm flex-row items-center justify-between",
+            "w-full rounded-md border border-input bg-transparent flex-row items-center justify-between",
             sizeClasses[size],
             isFocused ? "border-ring ring-1 ring-ring" : "",
             value ? "border-primary" : "",
@@ -254,8 +254,8 @@ const DateTimePicker = React.forwardRef<View, DateTimePickerProps>(
                     {mode === "range"
                       ? "Select dates"
                       : mode === "datetime"
-                      ? "Select date & time"
-                      : "Select date"}
+                        ? "Select date & time"
+                        : "Select date"}
                   </Text>
 
                   <Pressable

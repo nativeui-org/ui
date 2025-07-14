@@ -101,8 +101,8 @@ interface DrawerContextValue {
 }
 
 export const DrawerContext = React.createContext<DrawerContextValue>({
-  close: () => {},
-  snapTo: () => {},
+  close: () => { },
+  snapTo: () => { },
   currentSnapIndex: 0,
   snapPoints: DRAWER_SIZES.MEDIUM,
   isClosing: false,

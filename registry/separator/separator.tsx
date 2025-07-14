@@ -7,7 +7,10 @@ interface SeparatorProps {
   orientation?: "horizontal" | "vertical";
 }
 
-function Separator({ className, orientation = "horizontal" }: SeparatorProps) {
+function Separator({
+  className,
+  orientation = "horizontal",
+}: SeparatorProps) {
   return (
     <View
       className={cn(

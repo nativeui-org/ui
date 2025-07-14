@@ -47,7 +47,7 @@ interface SelectContextValue {
 
 const SelectContext = React.createContext<SelectContextValue>({
   selectedValue: undefined,
-  onSelect: () => {},
+  onSelect: () => { },
 });
 
 const Select = React.forwardRef<View, SelectProps>(

@@ -1,33 +1,30 @@
-import * as React from "react";
-import { View, Text, Pressable } from "react-native";
-import { cn } from "@/lib/utils";
+import * as React from "react"
+import { View, Text, Pressable } from "react-native"
+import { cn } from "@/lib/utils"
 
-interface RadioGroupRootProps
-  extends React.ComponentPropsWithoutRef<typeof View> {
-  value?: string;
-  defaultValue?: string;
-  onValueChange?: (value: string) => void;
-  disabled?: boolean;
+interface RadioGroupRootProps extends React.ComponentPropsWithoutRef<typeof View> {
+  value?: string
+  defaultValue?: string
+  onValueChange?: (value: string) => void
+  disabled?: boolean
 }
 
-interface RadioGroupItemProps
-  extends Omit<React.ComponentPropsWithoutRef<typeof Pressable>, "children"> {
-  value: string;
-  disabled?: boolean;
-  id?: string;
+interface RadioGroupItemProps extends Omit<React.ComponentPropsWithoutRef<typeof Pressable>, 'children'> {
+  value: string
+  disabled?: boolean
+  id?: string
 }
 
-interface RadioGroupLabelProps
-  extends React.ComponentPropsWithoutRef<typeof Text> {
-  disabled?: boolean;
-  htmlFor?: string;
+interface RadioGroupLabelProps extends React.ComponentPropsWithoutRef<typeof Text> {
+  disabled?: boolean
+  htmlFor?: string
 }
 
 const RadioGroupContext = React.createContext<{
-  value?: string;
-  onValueChange?: (value: string) => void;
-  disabled?: boolean;
-}>({});
+  value?: string
+  onValueChange?: (value: string) => void
+  disabled?: boolean
+}>({})
 
 function RadioGroup({
   value,
@@ -38,31 +35,22 @@ function RadioGroup({
   children,
   ...props
 }: RadioGroupRootProps) {
-  const [innerValue, setInnerValue] = React.useState<string | undefined>(
-    value ?? defaultValue
-  );
-  const currentValue = value !== undefined ? value : innerValue;
+  const [innerValue, setInnerValue] = React.useState<string | undefined>(value ?? defaultValue)
+  const currentValue = value !== undefined ? value : innerValue
 
-  const handleValueChange = React.useCallback(
-    (newValue: string) => {
-      if (disabled) return;
+  const handleValueChange = React.useCallback((newValue: string) => {
+    if (disabled) return
 
-      if (value === undefined) {
-        setInnerValue(newValue);
-      }
+    if (value === undefined) {
+      setInnerValue(newValue)
+    }
 
-      onValueChange?.(newValue);
-    },
-    [value, onValueChange, disabled]
-  );
+    onValueChange?.(newValue)
+  }, [value, onValueChange, disabled])
 
   return (
     <RadioGroupContext.Provider
-      value={{
-        value: currentValue,
-        onValueChange: handleValueChange,
-        disabled,
-      }}
+      value={{ value: currentValue, onValueChange: handleValueChange, disabled }}
     >
       <View
         className={cn("space-y-4", className)}
@@ -72,26 +60,22 @@ function RadioGroup({
         {children}
       </View>
     </RadioGroupContext.Provider>
-  );
+  )
 }
 
 const RadioGroupItem = React.forwardRef<
   React.ElementRef<typeof Pressable>,
   RadioGroupItemProps
 >(({ className, value, disabled, id, ...props }, ref) => {
-  const {
-    value: groupValue,
-    onValueChange,
-    disabled: groupDisabled,
-  } = React.useContext(RadioGroupContext);
-  const isDisabled = disabled || groupDisabled;
-  const isChecked = value === groupValue;
+  const { value: groupValue, onValueChange, disabled: groupDisabled } = React.useContext(RadioGroupContext)
+  const isDisabled = disabled || groupDisabled
+  const isChecked = value === groupValue
 
   const handlePress = () => {
     if (!isDisabled) {
-      onValueChange?.(value);
+      onValueChange?.(value)
     }
-  };
+  }
 
   return (
     <Pressable
@@ -111,10 +95,12 @@ const RadioGroupItem = React.forwardRef<
       accessibilityLabel={id}
       {...props}
     >
-      {isChecked && <View className="h-3 w-3 rounded-full bg-primary" />}
+      {isChecked && (
+        <View className="h-3 w-3 rounded-full bg-primary" />
+      )}
     </Pressable>
-  );
-});
+  )
+})
 
 const RadioGroupLabel = React.forwardRef<
   React.ElementRef<typeof Text>,
@@ -130,10 +116,10 @@ const RadioGroupLabel = React.forwardRef<
       )}
       {...props}
     />
-  );
-});
+  )
+})
 
-RadioGroupItem.displayName = "RadioGroupItem";
-RadioGroupLabel.displayName = "RadioGroupLabel";
+RadioGroupItem.displayName = "RadioGroupItem"
+RadioGroupLabel.displayName = "RadioGroupLabel"
 
-export { RadioGroup, RadioGroupItem, RadioGroupLabel };
+export { RadioGroup, RadioGroupItem, RadioGroupLabel }

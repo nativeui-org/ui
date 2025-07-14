@@ -83,7 +83,7 @@ const AlertDialogContext = React.createContext<{
   handleClose?: () => void;
 }>({
   open: false,
-  setOpen: () => {},
+  setOpen: () => { },
 });
 
 const AlertDialog = React.forwardRef<View, AlertDialogProps>(

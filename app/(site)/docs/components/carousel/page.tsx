@@ -294,9 +294,9 @@ const Carousel = React.forwardRef<View, CarouselProps>(
               setItemsCount(
                 Math.ceil(
                   (orientation === "horizontal" ? w : h) /
-                    (orientation === "horizontal"
-                      ? dimensions.width
-                      : dimensions.height)
+                  (orientation === "horizontal"
+                    ? dimensions.width
+                    : dimensions.height)
                 )
               );
             }}

@@ -1,6 +1,6 @@
-import * as React from "react";
-import { Pressable, Platform, View } from "react-native";
 import { cn } from "@/lib/utils";
+import * as React from "react";
+import { Platform, Pressable, View } from "react-native";
 
 interface ToggleProps {
   pressed?: boolean;
@@ -53,9 +53,13 @@ const Toggle = React.forwardRef<View, ToggleProps>(
     const getVariantStyles = () => {
       switch (variant) {
         case "outline":
-          return "border border-input bg-transparent";
+          return isPressed
+            ? "border border-toggle-border bg-toggle-active/20"
+            : "border border-toggle-border bg-background/10";
         default:
-          return "bg-transparent";
+          return isPressed
+            ? "bg-toggle-active/20"
+            : "bg-background/10";
       }
     };
 
@@ -68,9 +72,10 @@ const Toggle = React.forwardRef<View, ToggleProps>(
           "flex-row items-center justify-center rounded-lg",
           getSizeStyles(),
           getVariantStyles(),
-          isPressed ? "bg-accent" : "bg-transparent",
-          isPressed ? "text-accent-foreground" : "text-foreground",
-          disabled && "opacity-50",
+          isPressed
+            ? "text-toggle-active-foreground"
+            : "text-foreground",
+          disabled && "opacity-50 bg-muted text-muted-foreground",
           className
         )}
         {...props}

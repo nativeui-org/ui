@@ -1,17 +1,10 @@
-import { cn } from "@/lib/utils";
-import { Feather } from "@expo/vector-icons";
-import * as React from "react";
-import {
-  LayoutAnimation,
-  Platform,
-  Pressable,
-  Text,
-  UIManager,
-  View,
-} from "react-native";
+import * as React from 'react';
+import { Pressable, View, Text, LayoutAnimation, Platform, UIManager } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import { cn } from '@/lib/utils';
 
 // Enable layout animation for Android
-if (Platform.OS === "android") {
+if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
@@ -20,15 +13,13 @@ if (Platform.OS === "android") {
 interface AccordionContextValue {
   value: string[];
   onValueChange: (itemValue: string) => void;
-  type: "single" | "multiple";
+  type: 'single' | 'multiple';
 }
 
-const AccordionContext = React.createContext<AccordionContextValue | null>(
-  null
-);
+const AccordionContext = React.createContext<AccordionContextValue | null>(null);
 
 export interface AccordionProps {
-  type?: "single" | "multiple";
+  type?: 'single' | 'multiple';
   collapsible?: boolean;
   value?: string[];
   onValueChange?: (value: string[]) => void;
@@ -38,7 +29,7 @@ export interface AccordionProps {
 }
 
 const Accordion = ({
-  type = "single",
+  type = 'single',
   collapsible = false,
   value,
   onValueChange,
@@ -46,47 +37,42 @@ const Accordion = ({
   className,
   children,
 }: AccordionProps) => {
-  const [state, setState] = React.useState<string[]>(
-    value || defaultValue || []
-  );
+  const [state, setState] = React.useState<string[]>(value || defaultValue || []);
 
   const isControlled = value !== undefined;
   const accordionValue = isControlled ? value : state;
 
-  const handleValueChange = React.useCallback(
-    (itemValue: string) => {
-      const isSelected = accordionValue.includes(itemValue);
+  const handleValueChange = React.useCallback((itemValue: string) => {
+    const isSelected = accordionValue.includes(itemValue);
 
-      let newValue: string[] = [];
+    let newValue: string[] = [];
 
-      if (type === "single") {
-        if (isSelected) {
-          newValue = collapsible ? [] : [itemValue];
-        } else {
-          newValue = [itemValue];
-        }
+    if (type === 'single') {
+      if (isSelected) {
+        newValue = collapsible ? [] : [itemValue];
       } else {
-        if (isSelected) {
-          newValue = accordionValue.filter((v) => v !== itemValue);
-        } else {
-          newValue = [...accordionValue, itemValue];
-        }
+        newValue = [itemValue];
       }
-
-      if (!isControlled) {
-        setState(newValue);
+    } else {
+      if (isSelected) {
+        newValue = accordionValue.filter((v) => v !== itemValue);
+      } else {
+        newValue = [...accordionValue, itemValue];
       }
+    }
 
-      onValueChange?.(newValue);
-    },
-    [accordionValue, collapsible, isControlled, onValueChange, type]
-  );
+    if (!isControlled) {
+      setState(newValue);
+    }
+
+    onValueChange?.(newValue);
+  }, [accordionValue, collapsible, isControlled, onValueChange, type]);
 
   return (
-    <AccordionContext.Provider
-      value={{ value: accordionValue, onValueChange: handleValueChange, type }}
-    >
-      <View className={cn("w-full", className)}>{children}</View>
+    <AccordionContext.Provider value={{ value: accordionValue, onValueChange: handleValueChange, type }}>
+      <View className={cn("w-full", className)}>
+        {children}
+      </View>
     </AccordionContext.Provider>
   );
 };
@@ -101,13 +87,13 @@ const AccordionItem = ({ value, className, children }: AccordionItemProps) => {
   const context = React.useContext(AccordionContext);
 
   if (!context) {
-    throw new Error("AccordionItem must be used within an Accordion");
+    throw new Error('AccordionItem must be used within an Accordion');
   }
 
   const isExpanded = context.value.includes(value);
 
   return (
-    <View className={cn("border-b border-primary/10", className)}>
+    <View className={cn("border-b border-border", className)}>
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
           return React.cloneElement(child as React.ReactElement<any>, {
@@ -150,16 +136,17 @@ const AccordionTrigger = ({
   return (
     <Pressable
       onPress={handlePress}
-      className={cn("flex-row items-center justify-between py-4", className)}
+      className={cn(
+        "flex-row items-center justify-between py-4",
+        className
+      )}
       accessibilityRole="button"
       accessibilityState={{ expanded: isExpanded }}
       accessibilityHint="Toggle accordion section"
     >
       <View className="flex-1">
-        {typeof children === "string" ? (
-          <Text className="text-base font-medium text-foreground">
-            {children}
-          </Text>
+        {typeof children === 'string' ? (
+          <Text className="text-base font-medium text-foreground">{children}</Text>
         ) : (
           children
         )}
@@ -181,6 +168,7 @@ interface AccordionContentProps {
 const AccordionContent = ({
   className,
   children,
+  value,
   isExpanded,
 }: AccordionContentProps) => {
   if (!isExpanded) {
@@ -188,9 +176,11 @@ const AccordionContent = ({
   }
 
   return (
-    <View className={cn("pb-4 pt-0", className)}>
-      {typeof children === "string" ? (
-        <Text className="text-base text-primary">{children}</Text>
+    <View
+      className={cn("pb-4 pt-0", className)}
+    >
+      {typeof children === 'string' ? (
+        <Text className="text-base text-muted-foreground">{children}</Text>
       ) : (
         children
       )}
@@ -198,9 +188,9 @@ const AccordionContent = ({
   );
 };
 
-Accordion.displayName = "Accordion";
-AccordionItem.displayName = "AccordionItem";
-AccordionTrigger.displayName = "AccordionTrigger";
-AccordionContent.displayName = "AccordionContent";
+Accordion.displayName = 'Accordion';
+AccordionItem.displayName = 'AccordionItem';
+AccordionTrigger.displayName = 'AccordionTrigger';
+AccordionContent.displayName = 'AccordionContent';
 
-export { Accordion, AccordionContent, AccordionItem, AccordionTrigger };
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }; 

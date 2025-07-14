@@ -45,7 +45,7 @@ const alertVariants = cva("w-full rounded-xl border p-4 mb-4", {
 
 interface AlertProps
   extends React.ComponentPropsWithoutRef<typeof View>,
-    VariantProps<typeof alertVariants> {
+  VariantProps<typeof alertVariants> {
   icon?: React.ReactNode;
 }
 
@@ -62,7 +62,7 @@ function Alert({ className, variant, icon, children, ...props }: AlertProps) {
   );
 }
 
-interface AlertTitleProps extends React.ComponentPropsWithoutRef<typeof Text> {}
+interface AlertTitleProps extends React.ComponentPropsWithoutRef<typeof Text> { }
 
 function AlertTitle({ className, ...props }: AlertTitleProps) {
   return (
@@ -77,7 +77,7 @@ function AlertTitle({ className, ...props }: AlertTitleProps) {
 }
 
 interface AlertDescriptionProps
-  extends React.ComponentPropsWithoutRef<typeof Text> {}
+  extends React.ComponentPropsWithoutRef<typeof Text> { }
 
 function AlertDescription({ className, ...props }: AlertDescriptionProps) {
   return (

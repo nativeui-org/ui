@@ -81,7 +81,7 @@ const DialogContext = React.createContext<{
   handleClose?: () => void;
 }>({
   open: false,
-  setOpen: () => {},
+  setOpen: () => { },
 });
 
 const Dialog = React.forwardRef<View, DialogProps>(
