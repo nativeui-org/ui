@@ -24,6 +24,6 @@ export async function GET() {
 
     return NextResponse.json(components);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch components' }, { status: 500 });
+    return NextResponse.json({ error: error }, { status: 500 });
   }
-} 
+}

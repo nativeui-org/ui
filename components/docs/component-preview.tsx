@@ -32,7 +32,7 @@ export function ComponentPreview({
   packageName,
   dependencies = [],
 }: ComponentPreviewProps) {
-  const [showLineNumbers, setShowLineNumbers] = useState(false);
+  const [showLineNumbers,] = useState(false); 
   const [activeInstallTab, setActiveInstallTab] = useState("cli");
 
   const previews = [

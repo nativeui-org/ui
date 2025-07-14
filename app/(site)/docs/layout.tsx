@@ -45,7 +45,7 @@ interface DocsSidebarNavProps {
   }[];
 }
 
-export function DocsSidebarNav({ items }: DocsSidebarNavProps) {
+function DocsSidebarNav({ items }: DocsSidebarNavProps) {
   const pathname = usePathname();
 
   return (
@@ -93,4 +93,4 @@ export default function DocsLayout({
       </main>
     </div>
   );
-} 
+}

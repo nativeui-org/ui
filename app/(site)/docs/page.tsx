@@ -18,7 +18,7 @@ export default function DocsPage() {
         <div className="space-y-4">
           <h2 className="text-2xl font-bold tracking-tight">Introduction</h2>
           <p className="text-muted-foreground leading-7">
-            NativeUI is an open-source UI component library for React Native applications inspired by shadcn/ui's design principles. Our goal is to provide developers with a set of customizable, accessible, and platform-adaptive components to build beautiful mobile applications.
+            NativeUI is an open-source UI component library for React Native applications inspired by shadcn/ui&apos;s design principles. Our goal is to provide developers with a set of customizable, accessible, and platform-adaptive components to build beautiful mobile applications.
           </p>
         </div>
 
@@ -27,12 +27,6 @@ export default function DocsPage() {
           <p className="text-muted-foreground leading-7">
             Like shadcn/ui, NativeUI is not a component library you install from npm. Instead, we provide a collection of reusable components that you can copy and customize for your React Native applications.
           </p>
-          <ul className="list-disc list-inside space-y-2 text-muted-foreground mt-4 ml-4">
-            <li>Copy and paste - Take the components you need</li>
-            <li>Style with NativeWind - Easy theming and customization</li>
-            <li>Accessible components - Following best practices</li>
-            <li>Platform-adaptive - Works on iOS, Android, and Web</li>
-          </ul>
         </div>
 
         <div className="mt-12 space-y-4">
@@ -71,4 +65,4 @@ export default function DocsPage() {
       </div>
     </div>
   );
-} 
+}

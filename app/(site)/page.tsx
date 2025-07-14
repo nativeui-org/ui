@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { BackgroundBeams } from "@/components/ui/background-beams";
-import { Separator } from "@/components/ui/separator";
 import { Button as MovingBorderButton } from "@/components/ui/moving-border";
 import { motion } from "framer-motion";
 
@@ -153,7 +152,7 @@ export default function HomePage() {
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Open Source Community</h2>
               <p className="text-lg text-gray-600 dark:text-gray-400 mb-10">
                 NativeUI is an open-source project inspired by shadcn/ui, bringing its design principles to React Native. 
-                We leverage shadcn's registry while adapting components for native mobile development.
+                We leverage shadcn&apos;s registry while adapting components for native mobile development.
               </p>
             </motion.div>
             
@@ -171,8 +170,7 @@ export default function HomePage() {
                   <h3 className="text-xl font-bold">Philosophy</h3>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Like shadcn/ui, we're not a component library you install from npm. Instead, we provide a collection of reusable components 
-                  that you can copy and customize for your React Native applications.
+                  Like shadcn/ui, we&apos;re not a component library you install from npm. Instead, we provide a collection of reusable components that you can copy and customize for your React Native applications.
                 </p>
               </motion.div>
               

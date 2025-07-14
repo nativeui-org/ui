@@ -1,8 +1,6 @@
 "use client";
 
 import React from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CodeBlock } from "@/components/ui/code-block";
 import { CollapsibleCodeBlock } from "@/components/ui/collapsible-code-block";
 import { InstallationTabs } from "@/components/docs/installation-tabs";
 import Image from "next/image";

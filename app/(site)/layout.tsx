@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link"; // Ajout de l'import Link
 import { CommandMenu } from "@/components/command-menu";
 import { Github } from "lucide-react";
 import { ModeToggle } from "@/components/mode-toggle";
@@ -12,7 +13,7 @@ export default function SiteLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { theme, resolvedTheme } = useTheme();
+  const { resolvedTheme } = useTheme(); // Suppression de theme non utilisé
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
@@ -24,10 +25,10 @@ export default function SiteLayout({
       <div className="flex min-h-screen flex-col">
         <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
           <div className="container mx-auto flex h-16 items-center justify-between px-4">
-            <a href="/" className="flex items-center gap-2 text-xl font-bold">
+            <Link href="/" className="flex items-center gap-2 text-xl font-bold"> {/* Remplacement de <a> par <Link> */}
               <div className="w-8 h-8" /> {/* Placeholder for logo */}
               NativeUI
-            </a>
+            </Link>
             <div className="flex items-center gap-4">
               <div className="w-[200px]" /> {/* Placeholder for menu */}
             </div>
@@ -42,16 +43,15 @@ export default function SiteLayout({
     <div className="flex min-h-screen flex-col">
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <a href="/" className="flex items-center gap-2 text-xl font-bold">
+          <Link href="/" className="flex items-center gap-2 text-xl font-bold"> {/* Remplacement de <a> par <Link> */}
             <Image 
               src={resolvedTheme === 'dark' ? '/logo-dark.png' : '/logo-wout-bg.png'}
               alt="NativeUI Logo" 
               width={32} 
               height={32} 
-              className="object-contain"
             />
             NativeUI
-          </a>
+          </Link>
           <div className="flex items-center gap-4">
             <CommandMenu />
             <nav className="flex items-center gap-4">
