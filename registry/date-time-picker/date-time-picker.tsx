@@ -1,10 +1,10 @@
+import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { Ionicons } from "@expo/vector-icons";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
 import * as React from "react";
 import { Animated, Modal, Pressable, Text, View } from "react-native";
-import { Calendar } from "./calendar";
 
 interface DateRange {
   from: Date;
@@ -127,7 +127,6 @@ const DateTimePicker = React.forwardRef<View, DateTimePickerProps>(
     const openPicker = React.useCallback(() => {
       if (disabled) return;
       setIsOpen(true);
-      setIsFocused(true);
 
       Animated.parallel([
         Animated.timing(fadeAnim, {
@@ -210,7 +209,6 @@ const DateTimePicker = React.forwardRef<View, DateTimePickerProps>(
           </Text>
         </Pressable>
 
-        {/* Calendar Modal */}
         <Modal
           visible={isOpen}
           transparent
@@ -240,7 +238,6 @@ const DateTimePicker = React.forwardRef<View, DateTimePickerProps>(
                 transform: [{ scale: scaleAnim }],
               }}
             >
-              {/* Modal Header */}
               <View className="bg-background rounded-t-2xl border-b border-border">
                 <View className="flex-row justify-between items-center px-4 py-3">
                   <Pressable
@@ -269,7 +266,6 @@ const DateTimePicker = React.forwardRef<View, DateTimePickerProps>(
                 </View>
               </View>
 
-              {/* Calendar */}
               <Calendar
                 mode={mode}
                 selected={value}

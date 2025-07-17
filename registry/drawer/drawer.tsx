@@ -1,19 +1,19 @@
+import { cn } from "@/lib/utils";
 import * as React from "react";
 import {
-  View,
-  Text,
-  Modal,
-  TouchableWithoutFeedback,
-  Platform,
   Animated,
-  PanResponder,
   Dimensions,
-  StyleSheet,
   Easing,
   KeyboardAvoidingView,
+  Modal,
+  PanResponder,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { cn } from "@/lib/utils";
 
 // Animation config constants
 const ANIMATION = {
@@ -445,6 +445,7 @@ const Drawer = React.forwardRef<View, DrawerProps>(
               contentClassName
             )}
           >
+
             <View {...panResponder.panHandlers}>
               <View className="w-full items-center py-2">
                 <View className="w-10 h-1 rounded-full bg-muted-foreground/30" />
@@ -515,7 +516,6 @@ const styles = StyleSheet.create({
   },
   drawerContainer: {
     height: SCREEN_HEIGHT,
-    paddingBottom: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -3 },
     shadowOpacity: 0.15,
