@@ -50,7 +50,6 @@ export default function SkeletonDemo() {
       packageName="@nativeui/ui"
       dependencies={[]}
       changelog={[]}
-      customUsage={``}
     />
   );
 }

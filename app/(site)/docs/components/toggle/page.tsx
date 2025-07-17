@@ -123,7 +123,6 @@ export default function ToggleDemo() {
       packageName="@nativeui/ui"
       dependencies={["react-native"]}
       changelog={[]}
-      customUsage={``}
     />
   );
 }

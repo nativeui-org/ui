@@ -394,7 +394,6 @@ export default function AlertDialogDemo() {
       packageName="@nativeui/ui"
       dependencies={["react-native"]}
       changelog={[]}
-      customUsage={``}
     />
   );
 }

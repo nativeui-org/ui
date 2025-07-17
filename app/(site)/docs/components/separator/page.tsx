@@ -57,7 +57,6 @@ export default function SeparatorDemo() {
       packageName="@nativeui/ui"
       dependencies={["react-native"]}
       changelog={[]}
-      customUsage={``}
     />
   );
 }

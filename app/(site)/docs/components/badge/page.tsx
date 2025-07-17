@@ -152,7 +152,6 @@ export default function BadgeDemo() {
       packageName="@nativeui/ui"
       dependencies={["react-native","class-variance-authority"]}
       changelog={[]}
-      customUsage={``}
     />
   );
 }

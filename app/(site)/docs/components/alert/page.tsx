@@ -115,7 +115,6 @@ export default function AlertDemo() {
       packageName="@nativeui/ui"
       dependencies={["react-native","class-variance-authority"]}
       changelog={[]}
-      customUsage={``}
     />
   );
 }

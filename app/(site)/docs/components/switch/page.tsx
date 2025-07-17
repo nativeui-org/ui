@@ -109,7 +109,6 @@ export default function SwitchDemo() {
       packageName="@nativeui/ui"
       dependencies={["react-native"]}
       changelog={[]}
-      customUsage={``}
     />
   );
 }

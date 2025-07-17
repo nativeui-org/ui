@@ -299,7 +299,6 @@ export default function PopoverDemo() {
       packageName="@nativeui/ui"
       dependencies={["react-native"]}
       changelog={[]}
-      customUsage={``}
     />
   );
 }

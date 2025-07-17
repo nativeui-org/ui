@@ -196,7 +196,12 @@ function generatePageContent(componentName, description, examples, componentCode
   ];
   
   // Generate preview code
-  const previewCode = `import { ${formattedComponentName} } from "@nativeui/ui";
+  // Lire le fichier JSON du composant pour obtenir customPreview
+  const jsonPath = path.join(PUBLIC_REGISTRY_DIR, `${componentName}.json`);
+  const componentJson = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+  
+  // Utiliser customPreview s'il existe, sinon utiliser le code généré par défaut
+  const previewCode = componentJson.customPreview || `import { ${formattedComponentName} } from "@nativeui/ui";
 
 export default function ${formattedComponentName}Demo() {
   return (

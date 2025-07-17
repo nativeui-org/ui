@@ -462,7 +462,6 @@ export default function CarouselDemo() {
       packageName="@nativeui/ui"
       dependencies={["react-native","@expo/vector-icons"]}
       changelog={[]}
-      customUsage={``}
     />
   );
 }

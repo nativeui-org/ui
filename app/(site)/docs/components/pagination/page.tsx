@@ -176,7 +176,6 @@ export default function PaginationDemo() {
       packageName="@nativeui/ui"
       dependencies={["react-native","@expo/vector-icons"]}
       changelog={[]}
-      customUsage={``}
     />
   );
 }

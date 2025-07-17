@@ -197,7 +197,6 @@ export default function BreadcrumbDemo() {
       packageName="@nativeui/ui"
       dependencies={["react-native","@expo/vector-icons"]}
       changelog={[]}
-      customUsage={``}
     />
   );
 }

@@ -561,7 +561,6 @@ export default function DrawerDemo() {
       packageName="@nativeui/ui"
       dependencies={["react-native","react-native-safe-area-context"]}
       changelog={[]}
-      customUsage={``}
     />
   );
 }

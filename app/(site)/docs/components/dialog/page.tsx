@@ -384,7 +384,6 @@ export default function DialogDemo() {
       packageName="@nativeui/ui"
       dependencies={["react-native","@expo/vector-icons"]}
       changelog={[]}
-      customUsage={``}
     />
   );
 }

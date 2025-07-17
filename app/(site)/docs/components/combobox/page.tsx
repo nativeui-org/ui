@@ -524,7 +524,6 @@ export default function ComboboxDemo() {
       packageName="@nativeui/ui"
       dependencies={["react-native","@expo/vector-icons","@nativeui/ui/drawer","@nativeui/ui/input"]}
       changelog={[]}
-      customUsage={``}
     />
   );
 }

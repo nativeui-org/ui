@@ -429,7 +429,6 @@ export default function DropdownDemo() {
       packageName="@nativeui/ui"
       dependencies={["react-native","@expo/vector-icons"]}
       changelog={[]}
-      customUsage={``}
     />
   );
 }

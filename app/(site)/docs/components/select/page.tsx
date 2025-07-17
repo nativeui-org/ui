@@ -324,7 +324,6 @@ export default function SelectDemo() {
       packageName="@nativeui/ui"
       dependencies={["react-native","@expo/vector-icons","@nativeui/ui/drawer"]}
       changelog={[]}
-      customUsage={``}
     />
   );
 }

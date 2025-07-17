@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CodeBlock } from "@/components/ui/code-block";
 import { InstallationTabs } from "@/components/docs/installation-tabs";
 
@@ -27,6 +27,76 @@ export interface ComponentPreviewProps {
   }>;
 }
 
+const ComponentPreviewSkeleton = () => {
+  return (
+    <div className="container max-w-3xl py-10 animate-pulse">
+      {/* Header skeleton */}
+      <div className="space-y-4">
+        <div className="h-9 bg-muted rounded-md w-2/3"></div>
+        <div className="h-6 bg-muted rounded-md w-full"></div>
+        <div className="h-6 bg-muted rounded-md w-4/5"></div>
+      </div>
+
+      {/* Preview section skeleton */}
+      <div className="mt-12">
+        <div className="border rounded-lg overflow-hidden">
+          <div className="flex border-b">
+            <div className="h-10 bg-muted w-20 border-r"></div>
+            <div className="h-10 bg-muted w-16"></div>
+          </div>
+          <div className="h-64 bg-muted/50"></div>
+        </div>
+      </div>
+
+      {/* Installation section skeleton */}
+      <div className="mt-12 space-y-4">
+        <div className="h-8 bg-muted rounded-md w-1/3"></div>
+        <div className="h-5 bg-muted rounded-md w-full"></div>
+        <div className="h-5 bg-muted rounded-md w-3/4"></div>
+        
+        <div className="mt-6">
+          <div className="flex border-b">
+            <div className="h-10 bg-muted w-16 border-r"></div>
+            <div className="h-10 bg-muted w-20"></div>
+          </div>
+          <div className="p-6 border border-t-0 rounded-b-md">
+            <div className="space-y-3">
+              <div className="h-4 bg-muted rounded w-3/4"></div>
+              <div className="h-32 bg-muted rounded"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Usage section skeleton */}
+      <div className="mt-12 space-y-4">
+        <div className="h-8 bg-muted rounded-md w-1/4"></div>
+        <div className="h-5 bg-muted rounded-md w-full"></div>
+        <div className="h-5 bg-muted rounded-md w-2/3"></div>
+        <div className="h-40 bg-muted rounded-md"></div>
+      </div>
+    </div>
+  );
+};
+
+// Composant de loading avec spinner élégant
+const LoadingSpinner = () => {
+  return (
+    <div className="flex items-center justify-center min-h-[400px]">
+      <div className="flex flex-col items-center space-y-4">
+        <div className="relative">
+          <div className="w-12 h-12 border-4 border-muted rounded-full"></div>
+          <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin absolute top-0 left-0"></div>
+        </div>
+        <div className="text-center space-y-2">
+          <p className="text-sm font-medium text-foreground">Chargement du composant...</p>
+          <p className="text-xs text-muted-foreground">Préparation de la documentation</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export function ComponentPreview({
   name,
   description,
@@ -40,6 +110,58 @@ export function ComponentPreview({
 }: ComponentPreviewProps) {
   const [showLineNumbers,] = useState(false); 
   const [activeInstallTab, setActiveInstallTab] = useState("cli");
+  const [customUsage, setCustomUsage] = useState<string | null>(null);
+  
+  // États de chargement
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadingStates, setLoadingStates] = useState({
+    componentJson: false,
+    theme: false,
+    codeBlocks: false,
+    dependencies: false,
+  });
+
+  useEffect(() => {
+    const loadAllResources = async () => {
+      setIsLoading(true);
+      
+      try {
+        setLoadingStates(prev => ({ ...prev, theme: true }));
+        await new Promise(resolve => setTimeout(resolve, 300));
+
+        setLoadingStates(prev => ({ ...prev, componentJson: true }));
+        const loadComponentJson = async () => {
+          try {
+            const response = await fetch(`/r/${registryName}.json`);
+            const data = await response.json();
+            if (data.customUsage) {
+              setCustomUsage(data.customUsage);
+            }
+          } catch (error) {
+            console.error("Erreur lors du chargement du fichier JSON du composant", error);
+          }
+        };
+        await loadComponentJson();
+        
+        setLoadingStates(prev => ({ ...prev, codeBlocks: true }));
+        await new Promise(resolve => setTimeout(resolve, 400));
+        
+        setLoadingStates(prev => ({ ...prev, dependencies: true }));
+        await new Promise(resolve => setTimeout(resolve, 200));
+        
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    loadAllResources();
+  }, [registryName]);
+
+  if (isLoading) {
+    return <ComponentPreviewSkeleton />;
+  }
 
   const previews = [
     {
@@ -70,14 +192,15 @@ export function ComponentPreview({
           title={name}
           tabs={previews}
           activeTab="preview"
-          componentName={registryName} // Ajout du nom du composant
+          collapsible
+          componentName={registryName}
         />
       </div>
 
       <div className="mt-12 space-y-4">
         <h2 className="text-2xl font-bold tracking-tight">Installation</h2>
         <p className="text-muted-foreground">
-          Install the {name.toLowerCase()} component using the NativeUI CLI or
+          Install the {name.toLowerCase()} component using the shadcn/UI CLI or
           install it manually.
         </p>
 
@@ -198,12 +321,11 @@ export function ComponentPreview({
             {activeInstallTab === "cli" ? (
               <div>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Install the {name.toLowerCase()} component using the NativeUI
+                  Install the {name.toLowerCase()} component using the shadcn
                   CLI.
                 </p>
                 <InstallationTabs
-                  command={`add ${registryName}`}
-                  packageName={packageName}
+                  command={`shadcn@latest add https://nativeui.io/registry/${registryName}`}
                 />
               </div>
             ) : (
@@ -230,6 +352,16 @@ export function ComponentPreview({
           variants and sizes.
         </p>
 
+        {customUsage ? (
+        <div className="relative">
+          <CodeBlock
+            language="tsx"
+            code={customUsage}
+            title="Usage Examples"
+            showLineNumbers={showLineNumbers}
+          />
+        </div>
+        ) : (
         <CodeBlock
           language="tsx"
           code=""
@@ -237,6 +369,7 @@ export function ComponentPreview({
           tabs={examples}
           activeTab={examples[0]?.value}
         />
+        )}
       </div>
       
       {changelog.length > 0 && (

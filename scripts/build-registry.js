@@ -32,7 +32,7 @@ componentDirs.forEach(componentName => {
   
   // Extract component description from JSDoc comments if present
   let description = `A ${componentName} component for React Native applications.`;
-  const descriptionMatch = componentContent.match(/\/\*\*\s*\n\s*\*\s*(.*?)\s*\n/);
+  const descriptionMatch = componentContent.match(/\/\*\*\s*\n\s*\*\s*(.*)\s*\n/);
   if (descriptionMatch && descriptionMatch[1]) {
     description = descriptionMatch[1];
   }
@@ -77,6 +77,20 @@ componentDirs.forEach(componentName => {
     });
   }
   
+  // Read customUsage from component.usage.tsx if it exists
+  let customUsage = null;
+  const usageFile = path.join(componentDir, `${componentName}.usage.tsx`);
+  if (fs.existsSync(usageFile)) {
+    customUsage = fs.readFileSync(usageFile, 'utf8');
+  }
+  
+  // Read customPreview from component.preview.tsx if it exists
+  let customPreview = null;
+  const previewFile = path.join(componentDir, `${componentName}.preview.tsx`);
+  if (fs.existsSync(previewFile)) {
+    customPreview = fs.readFileSync(previewFile, 'utf8');
+  }
+  
   // Create registry item
   const registryItem = {
     "$schema": REGISTRY_SCHEMA,
@@ -95,6 +109,15 @@ componentDirs.forEach(componentName => {
     ],
     "changelog": changelog
   };
+  
+  // Add customUsage and customPreview if they exist
+  if (customUsage) {
+    registryItem.customUsage = customUsage;
+  }
+  
+  if (customPreview) {
+    registryItem.customPreview = customPreview;
+  }
   
   // Write to output file
   const outputFile = path.join(OUTPUT_DIR, `${componentName}.json`);

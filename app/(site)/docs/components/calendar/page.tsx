@@ -830,7 +830,6 @@ export default function CalendarDemo() {
       packageName="@nativeui/ui"
       dependencies={["react-native","date-fns","@expo/vector-icons","@react-native-community/datetimepicker"]}
       changelog={[]}
-      customUsage={``}
     />
   );
 }

@@ -1,11 +1,10 @@
 "use client";
 
 import React from "react";
-import { CollapsibleCodeBlock } from "@/components/ui/collapsible-code-block";
+import { CodeBlock } from "@/components/ui/code-block";
 import { InstallationTabs } from "@/components/docs/installation-tabs";
 import Image from "next/image";
 import { useTheme } from "next-themes";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function InstallationPage() {
   const [selectedPlatform, setSelectedPlatform] = React.useState("expo");
@@ -77,9 +76,8 @@ export default function InstallationPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <button
             onClick={() => setSelectedPlatform("expo")}
-            className={`relative overflow-hidden rounded-lg border p-6 transition-all hover:border-foreground/10 ${
-              selectedPlatform === "expo" ? "border-primary bg-primary/5" : ""
-            }`}
+            className={`relative overflow-hidden rounded-lg border p-6 transition-all hover:border-foreground/10 ${selectedPlatform === "expo" ? "border-primary bg-primary/5" : ""
+              }`}
           >
             <div className="flex flex-col items-center space-y-4">
               <div className="h-16 w-16 relative">
@@ -101,9 +99,8 @@ export default function InstallationPage() {
 
           <button
             onClick={() => setSelectedPlatform("react-native")}
-            className={`relative overflow-hidden rounded-lg border p-6 transition-all ${
-              selectedPlatform === "react-native" ? "border-primary bg-primary/5" : "opacity-50 cursor-not-allowed"
-            }`}
+            className={`relative overflow-hidden rounded-lg border p-6 transition-all ${selectedPlatform === "react-native" ? "border-primary bg-primary/5" : "opacity-50 cursor-not-allowed"
+              }`}
             disabled
           >
             <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm">
@@ -159,8 +156,9 @@ export default function InstallationPage() {
                   <p className="text-sm text-muted-foreground mt-4 mb-4">
                     Then, replace the entire content of tailwind.config.js with:
                   </p>
-                  <CollapsibleCodeBlock
+                  <CodeBlock
                     language="javascript"
+                    collapsible
                     title="tailwind.config.js"
                     code={`/** @type {import('tailwindcss').Config} */
 
@@ -256,8 +254,9 @@ module.exports = {
                   <p className="text-sm text-muted-foreground mb-4">
                     Create theme.ts in /lib directory:
                   </p>
-                  <CollapsibleCodeBlock
+                  <CodeBlock
                     language="css"
+                    collapsible
                     title="theme.ts"
                     code={`import { vars } from "nativewind";
 
@@ -358,8 +357,9 @@ export const themes = {
                   <p className="text-sm text-muted-foreground mb-4">
                     Create global.css in /app directory:
                   </p>
-                  <CollapsibleCodeBlock
+                  <CodeBlock
                     language="css"
+                    collapsible
                     title="app/global.css"
                     code={`@tailwind base;
 @tailwind components;
@@ -372,8 +372,9 @@ export const themes = {
                   <p className="text-sm text-muted-foreground mb-4">
                     Create a new declaration file for NativeWind types:
                   </p>
-                  <CollapsibleCodeBlock
+                  <CodeBlock
                     language="typescript"
+                    collapsible
                     title="nativewind-env.d.ts"
                     code={`/// <reference types="nativewind/types" />`}
                   />
@@ -384,8 +385,9 @@ export const themes = {
                   <p className="text-sm text-muted-foreground mb-4">
                     Update your tsconfig.json:
                   </p>
-                  <CollapsibleCodeBlock
+                  <CodeBlock
                     language="json"
+                    collapsible
                     title="tsconfig.json"
                     code={`{
   "extends": "expo/tsconfig.base",
@@ -414,9 +416,10 @@ export const themes = {
                   <p className="text-sm text-muted-foreground mb-4">
                     Update or create babel.config.js:
                   </p>
-                  <CollapsibleCodeBlock
+                  <CodeBlock
                     language="javascript"
                     title="babel.config.js"
+                    collapsible
                     code={`module.exports = function (api) {
   api.cache(true);
   return {
@@ -437,8 +440,9 @@ export const themes = {
                   <p className="text-sm text-muted-foreground mb-4">
                     Create metro.config.js:
                   </p>
-                  <CollapsibleCodeBlock
+                  <CodeBlock
                     language="javascript"
+                    collapsible
                     title="metro.config.js"
                     code={`// Learn more https://docs.expo.io/guides/customizing-metro
 const { getDefaultConfig } = require('expo/metro-config');
@@ -458,8 +462,9 @@ module.exports = withNativeWind(config, {
                   <p className="text-sm text-muted-foreground mb-4">
                     Update _layout.tsx:
                   </p>
-                  <CollapsibleCodeBlock
+                  <CodeBlock
                     language="typescript"
+                    collapsible
                     title="app/_layout.tsx"
                     code={`import { View } from 'react-native';
 import { useState } from 'react';
@@ -491,8 +496,9 @@ function AppContent() {
                   <p className="text-sm text-muted-foreground mb-4">
                     Update app.json:
                   </p>
-                  <CollapsibleCodeBlock
+                  <CodeBlock
                     language="json"
+                    collapsible
                     title="app.json"
                     code={`{
   "expo": {
@@ -509,8 +515,9 @@ function AppContent() {
                   <p className="text-sm text-muted-foreground mb-4">
                     Create components.json in your project root:
                   </p>
-                  <CollapsibleCodeBlock
+                  <CodeBlock
                     language="json"
+                    collapsible
                     title="components.json"
                     code={`{
   "$schema": "https://ui.shadcn.com/schema.json",
@@ -550,8 +557,9 @@ function AppContent() {
                   <p className="text-sm text-muted-foreground mb-4">
                     Add this code in any of your components to test that everything is working:
                   </p>
-                  <CollapsibleCodeBlock
+                  <CodeBlock
                     language="typescript"
+                    collapsible
                     title="app/components/TestComponent.tsx"
                     code={`import { Button } from '@/components/ui/button';
 import { Text } from 'react-native';
