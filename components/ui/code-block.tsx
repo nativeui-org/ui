@@ -24,7 +24,6 @@ interface CodeBlockProps {
   onTabChange?: (value: string) => void;
   children?: React.ReactNode;
   componentName?: string;
-  // Nouvelles props pour la fonctionnalité collapsible
   collapsible?: boolean;
   maxVisibleLines?: number;
   defaultExpanded?: boolean;
@@ -78,7 +77,6 @@ export function CodeBlock({
     ? tabs.find(tab => tab.value === localActiveTab)?.language || language
     : language;
 
-  // Logique pour le collapsible
   const codeLines = activeContent.split("\n");
   const shouldCollapse = collapsible && codeLines.length > maxVisibleLines;
   const displayedCode = shouldCollapse && !isExpanded 
@@ -335,14 +333,12 @@ export function CodeBlock({
               )}
             </Highlight>
             
-            {/* Gradient overlay et bouton collapsible */}
             {shouldCollapse && !isExpanded && (
               <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-background to-transparent pointer-events-none" />
             )}
           </div>
         )}
 
-        {/* Bouton Show More/Less pour le collapsible */}
         {shouldCollapse && localActiveTab !== "preview" && (
           <div className="relative flex justify-center border-t border-border bg-muted/30">
             <button
