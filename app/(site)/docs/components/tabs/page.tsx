@@ -165,6 +165,8 @@ export default function TabsDemo() {
       registryName="tabs"
       packageName="@nativeui/ui"
       dependencies={["react-native"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

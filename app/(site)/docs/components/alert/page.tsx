@@ -4,7 +4,7 @@ export default function AlertPage() {
   return (
     <ComponentPreview
       name="Alert"
-      description="An alert component for React Native applications."
+      description="A alert component for React Native applications."
       examples={[
   {
     "title": "Default",
@@ -114,6 +114,8 @@ export default function AlertDemo() {
       registryName="alert"
       packageName="@nativeui/ui"
       dependencies={["react-native","class-variance-authority"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

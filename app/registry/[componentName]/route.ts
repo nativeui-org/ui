@@ -3,17 +3,11 @@ import { join } from 'path';
 import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
 
-type RouteParams = {
-  params: {
-    componentName: string
-  }
-}
-
 export async function GET(
   request: NextRequest,
-  context: RouteParams
+  { params }: { params: Record<string, string> }
 ) {
-  const { componentName } = context.params;
+  const componentName = params.componentName;
   
   try {
     const filePath = join(process.cwd(), 'public', 'r', `${componentName}.json`);
@@ -27,11 +21,12 @@ export async function GET(
       const legacyFilePath = join(process.cwd(), 'registry', 'ui', `${componentName}.json`);
       const legacyFileContent = readFileSync(legacyFilePath, 'utf-8');
       const legacyComponentData = JSON.parse(legacyFileContent);
+      console.error(error)
       
       return NextResponse.json(legacyComponentData);
     } catch (legacyError) {
       return new NextResponse(
-        JSON.stringify({ error: `Component ${componentName} not found` }),
+        JSON.stringify({ error: `Component ${componentName} not found, ${legacyError}` }),
         { status: 404, headers: { 'content-type': 'application/json' } }
       );
     }

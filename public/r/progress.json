@@ -1,18 +1,19 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "progress",
-  "type": "registry:ui",
+  "type": "registry:component",
   "title": "Progress",
   "description": "A progress component for React Native applications.",
-  "dependencies": [
-    "react-native"
-  ],
+  "dependencies": [],
   "registryDependencies": [],
   "files": [
     {
       "path": "registry/progress/progress.tsx",
       "content": "import * as React from \"react\";\nimport { View, Animated, Easing } from \"react-native\";\nimport { cn } from \"@/lib/utils\";\n\ninterface ProgressProps {\n  value?: number;\n  max?: number;\n  className?: string;\n  indicatorClassName?: string;\n}\n\nconst Progress = React.forwardRef<View, ProgressProps>(\n  ({ value = 0, max = 100, className, indicatorClassName, ...props }, ref) => {\n    const animatedValue = React.useRef(new Animated.Value(0)).current;\n\n    React.useEffect(() => {\n      Animated.timing(animatedValue, {\n        toValue: value,\n        duration: 500,\n        easing: Easing.bezier(0.4, 0.0, 0.2, 1),\n        useNativeDriver: false,\n      }).start();\n    }, [value, animatedValue]);\n\n    const width = animatedValue.interpolate({\n      inputRange: [0, max],\n      outputRange: [\"0%\", \"100%\"],\n      extrapolate: \"clamp\",\n    });\n\n    return (\n      <View\n        ref={ref}\n        className={cn(\n          \"relative h-3 w-full overflow-hidden rounded-full bg-primary/20\",\n          className\n        )}\n        {...props}\n      >\n        <Animated.View\n          className={cn(\n            \"absolute left-0 top-0 h-full bg-primary\",\n            indicatorClassName\n          )}\n          style={{ width }}\n        />\n      </View>\n    );\n  }\n);\n\nProgress.displayName = \"Progress\";\n\nexport { Progress };\n",
-      "type": "registry:ui"
+      "type": "registry:component"
     }
-  ]
+  ],
+  "changelog": [],
+  "customUsage": "",
+  "customPreview": ""
 }

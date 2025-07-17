@@ -298,6 +298,8 @@ export default function PopoverDemo() {
       registryName="popover"
       packageName="@nativeui/ui"
       dependencies={["react-native"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

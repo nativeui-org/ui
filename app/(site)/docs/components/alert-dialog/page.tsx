@@ -4,7 +4,7 @@ export default function AlertDialogPage() {
   return (
     <ComponentPreview
       name="AlertDialog"
-      description="An alert dialog component for React Native applications."
+      description="A alert-dialog component for React Native applications."
       examples={[
   {
     "title": "Default",
@@ -393,6 +393,8 @@ export default function AlertDialogDemo() {
       registryName="alert-dialog"
       packageName="@nativeui/ui"
       dependencies={["react-native"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

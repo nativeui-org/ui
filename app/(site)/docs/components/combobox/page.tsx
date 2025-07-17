@@ -523,6 +523,8 @@ export default function ComboboxDemo() {
       registryName="combobox"
       packageName="@nativeui/ui"
       dependencies={["react-native","@expo/vector-icons","@nativeui/ui/drawer","@nativeui/ui/input"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

@@ -4,7 +4,7 @@ export default function DateTimePickerPage() {
   return (
     <ComponentPreview
       name="DateTimePicker"
-      description="A date time picker component for React Native applications."
+      description="A date-time-picker component for React Native applications."
       examples={[
   {
     "title": "Default",
@@ -334,6 +334,8 @@ export default function DateTimePickerDemo() {
       registryName="date-time-picker"
       packageName="@nativeui/ui"
       dependencies={["react-native","date-fns","@expo/vector-icons","@nativeui/ui/calendar"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

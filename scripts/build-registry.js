@@ -48,6 +48,35 @@ componentDirs.forEach(componentName => {
     dependencies.push('@radix-ui/react-slot');
   }
   
+  // Extract changelog information if available
+  let changelog = [];
+  const changelogFile = path.join(componentDir, 'CHANGELOG.md');
+  
+  if (fs.existsSync(changelogFile)) {
+    const changelogContent = fs.readFileSync(changelogFile, 'utf8');
+    // Parse changelog content - exemple simple
+    const versions = changelogContent.split('## ');
+    versions.shift(); // Ignorer le premier élément (vide ou titre)
+    
+    changelog = versions.map(version => {
+      const lines = version.split('\n');
+      const versionLine = lines[0]; // Ex: "1.1.0 (2023-10-15)"
+      const [versionNumber, datePart] = versionLine.split(' ');
+      const date = datePart ? datePart.replace(/[()]/g, '') : '';
+      
+      // Extraire les changements (lignes commençant par -)
+      const changes = lines
+        .filter(line => line.trim().startsWith('-'))
+        .map(line => line.trim().substring(1).trim());
+      
+      return {
+        version: versionNumber,
+        date,
+        changes
+      };
+    });
+  }
+  
   // Create registry item
   const registryItem = {
     "$schema": REGISTRY_SCHEMA,
@@ -63,7 +92,8 @@ componentDirs.forEach(componentName => {
         "content": componentContent,
         "type": "registry:component"
       }
-    ]
+    ],
+    "changelog": changelog
   };
   
   // Write to output file
@@ -73,4 +103,4 @@ componentDirs.forEach(componentName => {
   console.log(`✅ Generated registry item for ${componentName}`);
 });
 
-console.log(`\n🎉 Registry build complete! Generated ${componentDirs.length} components.`); 
+console.log(`\n🎉 Registry build complete! Generated ${componentDirs.length} components.`);

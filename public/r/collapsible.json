@@ -1,19 +1,19 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "collapsible",
-  "type": "registry:ui",
+  "type": "registry:component",
   "title": "Collapsible",
   "description": "A collapsible component for React Native applications.",
-  "dependencies": [
-    "react-native",
-    "@expo/vector-icons"
-  ],
+  "dependencies": [],
   "registryDependencies": [],
   "files": [
     {
       "path": "registry/collapsible/collapsible.tsx",
       "content": "import * as React from \"react\";\nimport {\n  View,\n  Pressable,\n  LayoutAnimation,\n  Platform,\n  UIManager,\n} from \"react-native\";\nimport { cn } from \"@/lib/utils\";\nimport { Feather } from \"@expo/vector-icons\";\n\n// Enable layout animation for Android\nif (Platform.OS === \"android\") {\n  if (UIManager.setLayoutAnimationEnabledExperimental) {\n    UIManager.setLayoutAnimationEnabledExperimental(true);\n  }\n}\n\ninterface CollapsibleContextValue {\n  open: boolean;\n  toggle: () => void;\n}\n\nconst CollapsibleContext = React.createContext<CollapsibleContextValue | null>(\n  null\n);\n\ninterface CollapsibleProps {\n  children: React.ReactNode;\n  open?: boolean;\n  onOpenChange?: (open: boolean) => void;\n  defaultOpen?: boolean;\n  className?: string;\n  disabled?: boolean;\n}\n\nconst Collapsible = React.forwardRef<View, CollapsibleProps>(\n  (\n    {\n      children,\n      className,\n      open,\n      onOpenChange,\n      defaultOpen = false,\n      disabled = false,\n      ...props\n    },\n    ref\n  ) => {\n    const [isOpen, setIsOpen] = React.useState(\n      open !== undefined ? open : defaultOpen\n    );\n\n    const isControlled = open !== undefined;\n    const currentOpen = isControlled ? open : isOpen;\n\n    const toggle = React.useCallback(() => {\n      if (!disabled) {\n        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);\n\n        if (!isControlled) {\n          setIsOpen(!currentOpen);\n        }\n\n        if (onOpenChange) {\n          onOpenChange(!currentOpen);\n        }\n      }\n    }, [currentOpen, isControlled, onOpenChange, disabled]);\n\n    React.useEffect(() => {\n      if (isControlled) {\n        setIsOpen(open || false);\n      }\n    }, [open, isControlled]);\n\n    return (\n      <CollapsibleContext.Provider value={{ open: currentOpen, toggle }}>\n        <View\n          ref={ref}\n          className={cn(\"overflow-hidden\", disabled && \"opacity-50\", className)}\n          {...props}\n        >\n          {children}\n        </View>\n      </CollapsibleContext.Provider>\n    );\n  }\n);\n\nCollapsible.displayName = \"Collapsible\";\n\ninterface CollapsibleTriggerProps {\n  children: React.ReactNode;\n  className?: string;\n  asChild?: boolean;\n  icon?: boolean;\n}\n\nconst CollapsibleTrigger = React.forwardRef<View, CollapsibleTriggerProps>(\n  ({ children, className, asChild, icon = true, ...props }, ref) => {\n    const context = React.useContext(CollapsibleContext);\n\n    if (!context) {\n      throw new Error(\"CollapsibleTrigger must be used within a Collapsible\");\n    }\n\n    const { open, toggle } = context;\n\n    if (asChild && React.isValidElement(children)) {\n      return React.cloneElement(children, {\n        ...props,\n        onPress: toggle,\n        accessibilityRole: \"button\",\n        accessibilityState: { expanded: open },\n      } as any);\n    }\n\n    return (\n      <Pressable\n        ref={ref as any}\n        className={cn(\n          \"flex-row items-center justify-between p-4 active:opacity-70\",\n          className\n        )}\n        onPress={toggle}\n        accessibilityRole=\"button\"\n        accessibilityState={{ expanded: open }}\n        accessibilityHint=\"Toggle collapsible section\"\n        {...props}\n      >\n        <View className=\"flex-row items-center flex-1\">{children}</View>\n        {icon && (\n          <View style={{ transform: [{ rotate: open ? \"180deg\" : \"0deg\" }] }}>\n            <Feather name=\"chevron-down\" size={20} color=\"#888\" />\n          </View>\n        )}\n      </Pressable>\n    );\n  }\n);\n\nCollapsibleTrigger.displayName = \"CollapsibleTrigger\";\n\ninterface CollapsibleContentProps {\n  children: React.ReactNode;\n  className?: string;\n}\n\nconst CollapsibleContent = React.forwardRef<View, CollapsibleContentProps>(\n  ({ children, className, ...props }, ref) => {\n    const context = React.useContext(CollapsibleContext);\n\n    if (!context) {\n      throw new Error(\"CollapsibleContent must be used within a Collapsible\");\n    }\n\n    const { open } = context;\n\n    if (!open) {\n      return null;\n    }\n\n    return (\n      <View ref={ref} className={cn(\"overflow-hidden\", className)} {...props}>\n        {children}\n      </View>\n    );\n  }\n);\n\nCollapsibleContent.displayName = \"CollapsibleContent\";\n\nexport { Collapsible, CollapsibleTrigger, CollapsibleContent };\n",
-      "type": "registry:ui"
+      "type": "registry:component"
     }
-  ]
+  ],
+  "changelog": [],
+  "customUsage": "",
+  "customPreview": ""
 }

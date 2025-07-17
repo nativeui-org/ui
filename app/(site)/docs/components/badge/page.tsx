@@ -151,6 +151,8 @@ export default function BadgeDemo() {
       registryName="badge"
       packageName="@nativeui/ui"
       dependencies={["react-native","class-variance-authority"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

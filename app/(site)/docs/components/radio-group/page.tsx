@@ -4,7 +4,7 @@ export default function RadioGroupPage() {
   return (
     <ComponentPreview
       name="RadioGroup"
-      description="A radio group component for React Native applications."
+      description="A radio-group component for React Native applications."
       examples={[
   {
     "title": "Default",
@@ -156,6 +156,8 @@ export default function RadioGroupDemo() {
       registryName="radio-group"
       packageName="@nativeui/ui"
       dependencies={["react-native"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

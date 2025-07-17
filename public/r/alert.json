@@ -1,11 +1,10 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "alert",
-  "type": "registry:ui",
+  "type": "registry:component",
   "title": "Alert",
-  "description": "An alert component for React Native applications.",
+  "description": "A alert component for React Native applications.",
   "dependencies": [
-    "react-native",
     "class-variance-authority"
   ],
   "registryDependencies": [],
@@ -13,7 +12,10 @@
     {
       "path": "registry/alert/alert.tsx",
       "content": "import * as React from \"react\";\nimport { View, Text } from \"react-native\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\n\nimport { cn } from \"@/lib/utils\";\n\nconst alertVariants = cva(\"w-full rounded-xl border p-4 mb-4\", {\n  variants: {\n    variant: {\n      default: \"bg-background border-input\",\n      destructive:\n        \"border-destructive/50 bg-destructive/10 text-destructive dark:border-destructive\",\n      success:\n        \"border-green-500/50 bg-green-500/10 text-green-700 dark:text-green-500 dark:border-green-500\",\n      warning:\n        \"border-yellow-500/50 bg-yellow-500/10 text-yellow-700 dark:text-yellow-500 dark:border-yellow-500\",\n      info: \"border-blue-500/50 bg-blue-500/10 text-blue-700 dark:text-blue-500 dark:border-blue-500\",\n    },\n  },\n  defaultVariants: {\n    variant: \"default\",\n  },\n});\n\ninterface AlertProps\n  extends React.ComponentPropsWithoutRef<typeof View>,\n  VariantProps<typeof alertVariants> {\n  icon?: React.ReactNode;\n}\n\nfunction Alert({ className, variant, icon, children, ...props }: AlertProps) {\n  return (\n    <View\n      className={cn(alertVariants({ variant }), className)}\n      accessibilityRole=\"alert\"\n      {...props}\n    >\n      {icon && <View className=\"mb-2\">{icon}</View>}\n      <View className={cn(icon ? \"pl-0\" : \"pl-0\")}>{children}</View>\n    </View>\n  );\n}\n\ninterface AlertTitleProps extends React.ComponentPropsWithoutRef<typeof Text> { }\n\nfunction AlertTitle({ className, ...props }: AlertTitleProps) {\n  return (\n    <Text\n      className={cn(\n        \"text-lg font-semibold leading-none tracking-tight text-foreground mb-2\",\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\ninterface AlertDescriptionProps\n  extends React.ComponentPropsWithoutRef<typeof Text> { }\n\nfunction AlertDescription({ className, ...props }: AlertDescriptionProps) {\n  return (\n    <Text\n      className={cn(\"text-base text-foreground opacity-90\", className)}\n      {...props}\n    />\n  );\n}\n\nexport {\n  Alert,\n  AlertTitle,\n  AlertDescription,\n  type AlertProps,\n  type AlertTitleProps,\n  type AlertDescriptionProps,\n};\n",
-      "type": "registry:ui"
+      "type": "registry:component"
     }
-  ]
+  ],
+  "changelog": [],
+  "customUsage": "",
+  "customPreview": ""
 }

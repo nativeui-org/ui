@@ -4,7 +4,7 @@ export default function InputOtpPage() {
   return (
     <ComponentPreview
       name="InputOtp"
-      description="An input OTP component for React Native applications."
+      description="A input-otp component for React Native applications."
       examples={[
   {
     "title": "Default",
@@ -269,6 +269,8 @@ export default function InputOtpDemo() {
       registryName="input-otp"
       packageName="@nativeui/ui"
       dependencies={["react-native"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

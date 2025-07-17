@@ -1,14 +1,19 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "skeleton",
-  "type": "registry:ui",
+  "type": "registry:component",
   "title": "Skeleton",
   "description": "A skeleton component for React Native applications.",
+  "dependencies": [],
+  "registryDependencies": [],
   "files": [
     {
       "path": "registry/skeleton/skeleton.tsx",
       "content": "import React from \"react\";\nimport { View } from \"react-native\";\nimport { cn } from \"@/lib/utils\";\n\ninterface SkeletonProps extends React.ComponentPropsWithoutRef<typeof View> {\n  className?: string;\n}\n\nfunction Skeleton({ className, ...props }: SkeletonProps) {\n  return (\n    <View\n      className={cn(\"animate-pulse rounded-md bg-primary/10\", className)}\n      {...props}\n    />\n  );\n}\n\nexport { Skeleton };\n",
-      "type": "registry:ui"
+      "type": "registry:component"
     }
-  ]
+  ],
+  "changelog": [],
+  "customUsage": "",
+  "customPreview": ""
 }

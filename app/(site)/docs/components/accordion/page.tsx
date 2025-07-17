@@ -4,7 +4,7 @@ export default function AccordionPage() {
   return (
     <ComponentPreview
       name="Accordion"
-      description="An accordion component for React Native applications."
+      description="A accordion component for React Native applications."
       examples={[
   {
     "title": "Default",
@@ -226,6 +226,8 @@ export default function AccordionDemo() {
       registryName="accordion"
       packageName="@nativeui/ui"
       dependencies={["react-native","@expo/vector-icons"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

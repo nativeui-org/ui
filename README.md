@@ -380,3 +380,23 @@ npx shadcn@latest add http://127.0.0.1:3000/registry/tooltip
 ```
 Description : Un composant tooltip pour les applications React Native.
 Dépendances : react-native
+
+
+# How to add changelog to components
+in registry.json
+"changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2023-10-15",
+      "changes": [
+        "my changes'",
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "2023-09-01",
+      "changes": [
+        "Version initiale"
+      ]
+    }
+  ]

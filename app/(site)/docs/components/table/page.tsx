@@ -216,6 +216,8 @@ export default function TableDemo() {
       registryName="table"
       packageName="@nativeui/ui"
       dependencies={["react-native"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

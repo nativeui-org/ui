@@ -560,6 +560,8 @@ export default function DrawerDemo() {
       registryName="drawer"
       packageName="@nativeui/ui"
       dependencies={["react-native","react-native-safe-area-context"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

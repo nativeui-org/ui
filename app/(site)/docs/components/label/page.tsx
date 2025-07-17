@@ -101,6 +101,8 @@ export default function LabelDemo() {
       registryName="label"
       packageName="@nativeui/ui"
       dependencies={["react-native"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

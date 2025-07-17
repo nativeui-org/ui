@@ -1,18 +1,19 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "toggle",
-  "type": "registry:ui",
+  "type": "registry:component",
   "title": "Toggle",
   "description": "A toggle component for React Native applications.",
-  "dependencies": [
-    "react-native"
-  ],
+  "dependencies": [],
   "registryDependencies": [],
   "files": [
     {
       "path": "registry/toggle/toggle.tsx",
       "content": "import { cn } from \"@/lib/utils\";\nimport * as React from \"react\";\nimport { Platform, Pressable, View } from \"react-native\";\n\ninterface ToggleProps {\n  pressed?: boolean;\n  onPressedChange?: (pressed: boolean) => void;\n  disabled?: boolean;\n  children?: React.ReactNode;\n  className?: string;\n  variant?: \"default\" | \"outline\";\n  size?: \"default\" | \"sm\" | \"lg\";\n}\n\nconst Toggle = React.forwardRef<View, ToggleProps>(\n  (\n    {\n      pressed,\n      onPressedChange,\n      disabled,\n      children,\n      className,\n      variant = \"default\",\n      size = \"default\",\n      ...props\n    },\n    ref\n  ) => {\n    const [isPressed, setIsPressed] = React.useState(pressed);\n\n    React.useEffect(() => {\n      setIsPressed(pressed);\n    }, [pressed]);\n\n    const handlePress = () => {\n      if (disabled) return;\n      const newValue = !isPressed;\n      setIsPressed(newValue);\n      onPressedChange?.(newValue);\n    };\n\n    const getSizeStyles = () => {\n      switch (size) {\n        case \"sm\":\n          return Platform.OS === \"ios\" ? \"h-10 px-3\" : \"h-12 px-3\";\n        case \"lg\":\n          return Platform.OS === \"ios\" ? \"h-12 px-4\" : \"h-14 px-4\";\n        default:\n          return Platform.OS === \"ios\" ? \"h-11 px-3.5\" : \"h-13 px-3.5\";\n      }\n    };\n\n    const getVariantStyles = () => {\n      switch (variant) {\n        case \"outline\":\n          return isPressed\n            ? \"border border-toggle-border bg-toggle-active/20\"\n            : \"border border-toggle-border bg-background/10\";\n        default:\n          return isPressed\n            ? \"bg-toggle-active/20\"\n            : \"bg-background/10\";\n      }\n    };\n\n    return (\n      <Pressable\n        ref={ref}\n        onPress={handlePress}\n        disabled={disabled}\n        className={cn(\n          \"flex-row items-center justify-center rounded-lg\",\n          getSizeStyles(),\n          getVariantStyles(),\n          isPressed\n            ? \"text-toggle-active-foreground\"\n            : \"text-foreground\",\n          disabled && \"opacity-50 bg-muted text-muted-foreground\",\n          className\n        )}\n        {...props}\n      >\n        {children}\n      </Pressable>\n    );\n  }\n);\n\nToggle.displayName = \"Toggle\";\n\nexport { Toggle };\n",
-      "type": "registry:ui"
+      "type": "registry:component"
     }
-  ]
+  ],
+  "changelog": [],
+  "customUsage": "",
+  "customPreview": ""
 }

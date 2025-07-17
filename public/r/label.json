@@ -1,18 +1,19 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "label",
-  "type": "registry:ui",
+  "type": "registry:component",
   "title": "Label",
   "description": "A label component for React Native applications.",
-  "dependencies": [
-    "react-native"
-  ],
+  "dependencies": [],
   "registryDependencies": [],
   "files": [
     {
       "path": "registry/label/label.tsx",
       "content": "import * as React from \"react\";\nimport { Text, Pressable } from \"react-native\";\nimport { cn } from \"@/lib/utils\";\n\ninterface LabelProps {\n  children: React.ReactNode;\n  className?: string;\n  disabled?: boolean;\n  required?: boolean;\n  nativeID?: string;\n  onPress?: () => void;\n}\n\nconst Label = React.forwardRef<Text, LabelProps>(\n  (\n    { className, disabled, required, children, nativeID, onPress, ...props },\n    ref\n  ) => {\n    const content = (\n      <>\n        {children}\n        {required && <Text className=\"text-destructive ml-1\">*</Text>}\n      </>\n    );\n\n    if (onPress) {\n      return (\n        <Pressable\n          disabled={disabled}\n          onPress={onPress}\n          className={cn(\"group\", disabled && \"opacity-50\")}\n        >\n          <Text\n            ref={ref}\n            nativeID={nativeID}\n            className={cn(\n              \"text-base font-medium text-foreground select-none\",\n              \"ios:text-[17px] android:text-[16px]\",\n              \"group-disabled:opacity-50\",\n              className\n            )}\n            {...props}\n          >\n            {content}\n          </Text>\n        </Pressable>\n      );\n    }\n\n    return (\n      <Text\n        ref={ref}\n        nativeID={nativeID}\n        className={cn(\n          \"text-base font-medium text-foreground select-none\",\n          \"ios:text-[17px] android:text-[16px]\",\n          disabled && \"opacity-50\",\n          className\n        )}\n        {...props}\n      >\n        {content}\n      </Text>\n    );\n  }\n);\n\nLabel.displayName = \"Label\";\n\nexport { Label };\n",
-      "type": "registry:ui"
+      "type": "registry:component"
     }
-  ]
+  ],
+  "changelog": [],
+  "customUsage": "",
+  "customPreview": ""
 }

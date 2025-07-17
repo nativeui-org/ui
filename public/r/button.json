@@ -1,11 +1,10 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "button",
-  "type": "registry:ui",
+  "type": "registry:component",
   "title": "Button",
-  "description": "A button component with multiple variants for React Native applications.",
+  "description": "A button component for React Native applications.",
   "dependencies": [
-    "react-native",
     "class-variance-authority"
   ],
   "registryDependencies": [],
@@ -13,7 +12,10 @@
     {
       "path": "registry/button/button.tsx",
       "content": "import * as React from \"react\";\nimport {\n  Pressable,\n  PressableProps as RNPressableProps,\n  View,\n  ViewStyle,\n  PressableStateCallbackType,\n} from \"react-native\";\nimport { cn } from \"@/lib/utils\";\n\nimport { cva, type VariantProps } from \"class-variance-authority\";\n\nexport const buttonVariants = cva(\n  \"flex-row items-center justify-center rounded-md\",\n  {\n    variants: {\n      variant: {\n        default:\n          \"bg-primary text-primary-foreground dark:bg-primary dark:text-primary-foreground shadow\",\n        destructive:\n          \"bg-destructive text-destructive-foreground dark:bg-destructive dark:text-destructive-foreground shadow-sm\",\n        outline:\n          \"border border-input bg-background text-foreground dark:border-input dark:bg-background dark:text-foreground shadow-sm\",\n        secondary:\n          \"bg-secondary text-secondary-foreground dark:bg-secondary dark:text-secondary-foreground shadow-sm\",\n        ghost: \"text-foreground dark:text-foreground\",\n        link: \"text-primary dark:text-primary underline\",\n      },\n      size: {\n        default: \"h-12 px-6\",\n        sm: \"h-10 px-4\",\n        lg: \"h-14 px-8\",\n        icon: \"h-12 w-12\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n      size: \"default\",\n    },\n  }\n);\n\nexport interface ButtonProps\n  extends Omit<RNPressableProps, \"style\">,\n  VariantProps<typeof buttonVariants> {\n  className?: string;\n  style?: ViewStyle;\n  asChild?: boolean;\n}\n\nconst Button = React.forwardRef<View, ButtonProps>(\n  ({ className, variant, size, asChild = false, children, ...props }, ref) => {\n    return (\n      <Pressable\n        className={cn(buttonVariants({ variant, size, className }))}\n        ref={ref}\n        {...props}\n      >\n        {(state: PressableStateCallbackType) => (\n          <View\n            className={`flex-row items-center justify-center gap-2 ${state.pressed ? \"opacity-80\" : \"\"\n              }`}\n          >\n            {typeof children === \"function\" ? children(state) : children}\n          </View>\n        )}\n      </Pressable>\n    );\n  }\n);\n\nButton.displayName = \"Button\";\n\nexport { Button };\n",
-      "type": "registry:ui"
+      "type": "registry:component"
     }
-  ]
+  ],
+  "changelog": [],
+  "customUsage": "## Utilisation de base\n\n```tsx\nimport { Button } from \"@nativeui/ui\";\n\nexport default function ButtonDemo() {\n  return <Button>Cliquez-moi</Button>;\n}\n```\n\n## Variantes\n\nLe composant Button prend en charge plusieurs variantes :\n\n```tsx\nimport { Button } from \"@nativeui/ui\";\n\nexport default function ButtonVariants() {\n  return (\n    <div className=\"flex flex-col gap-4\">\n      <Button variant=\"default\">Default</Button>\n      <Button variant=\"destructive\">Destructive</Button>\n      <Button variant=\"outline\">Outline</Button>\n      <Button variant=\"secondary\">Secondary</Button>\n      <Button variant=\"ghost\">Ghost</Button>\n      <Button variant=\"link\">Link</Button>\n    </div>\n  );\n}\n```",
+  "customPreview": "import { Button } from \"@nativeui/ui\";\n\nexport default function ButtonPreview() {\n  return (\n    <div className=\"flex flex-col gap-4\">\n      <Button>Bouton par défaut</Button>\n      <Button variant=\"destructive\">Supprimer</Button>\n      <Button variant=\"outline\">Contour</Button>\n      <Button variant=\"secondary\">Secondaire</Button>\n    </div>\n  );\n}"
 }

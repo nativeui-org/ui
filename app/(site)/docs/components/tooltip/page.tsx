@@ -424,6 +424,8 @@ export default function TooltipDemo() {
       registryName="tooltip"
       packageName="@nativeui/ui"
       dependencies={["react-native"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

@@ -4,7 +4,7 @@ export default function ToggleGroupPage() {
   return (
     <ComponentPreview
       name="ToggleGroup"
-      description="A toggle group component for React Native applications."
+      description="A toggle-group component for React Native applications."
       examples={[
   {
     "title": "Default",
@@ -180,6 +180,8 @@ export default function ToggleGroupDemo() {
       registryName="toggle-group"
       packageName="@nativeui/ui"
       dependencies={["react-native"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

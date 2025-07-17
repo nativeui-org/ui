@@ -1,19 +1,19 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "pagination",
-  "type": "registry:ui",
+  "type": "registry:component",
   "title": "Pagination",
   "description": "A pagination component for React Native applications.",
-  "dependencies": [
-    "react-native",
-    "@expo/vector-icons"
-  ],
+  "dependencies": [],
   "registryDependencies": [],
   "files": [
     {
       "path": "registry/pagination/pagination.tsx",
       "content": "import * as React from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\nimport { Feather } from \"@expo/vector-icons\";\nimport { cn } from \"@/lib/utils\";\n\nconst Pagination = ({\n  className,\n  ...props\n}: React.ComponentProps<typeof View>) => (\n  <View\n    accessibilityRole=\"none\"\n    accessibilityLabel=\"pagination\"\n    className={cn(\"w-full justify-center items-center\", className)}\n    {...props}\n  />\n);\nPagination.displayName = \"Pagination\";\n\nconst PaginationContent = React.forwardRef<\n  View,\n  React.ComponentProps<typeof View>\n>(({ className, ...props }, ref) => (\n  <View\n    ref={ref}\n    className={cn(\"flex-row items-center justify-center gap-2\", className)}\n    {...props}\n  />\n));\nPaginationContent.displayName = \"PaginationContent\";\n\nconst PaginationItem = React.forwardRef<\n  View,\n  React.ComponentProps<typeof View>\n>(({ className, ...props }, ref) => (\n  <View ref={ref} className={cn(\"\", className)} {...props} />\n));\nPaginationItem.displayName = \"PaginationItem\";\n\ntype PaginationLinkProps = {\n  isActive?: boolean;\n  size?: \"default\" | \"sm\" | \"lg\" | \"icon\";\n  onPress?: () => void;\n  disabled?: boolean;\n} & React.ComponentProps<typeof Pressable>;\n\nconst PaginationLink = ({\n  className,\n  isActive,\n  size = \"icon\",\n  onPress,\n  disabled = false,\n  children,\n  ...props\n}: PaginationLinkProps) => {\n  // Different size variants for better touch targets on mobile\n  const getSizeStyles = () => {\n    switch (size) {\n      case \"sm\":\n        return \"h-8 min-w-8 px-2\";\n      case \"lg\":\n        return \"h-12 min-w-12 px-3\";\n      case \"icon\":\n        return \"h-10 w-10\";\n      default:\n        return \"h-10 min-w-10 px-2.5\";\n    }\n  };\n\n  return (\n    <Pressable\n      accessibilityRole=\"button\"\n      accessibilityState={{\n        selected: isActive,\n        disabled: disabled,\n      }}\n      className={cn(\n        \"items-center justify-center rounded-md\",\n        getSizeStyles(),\n        isActive\n          ? \"bg-primary text-primary-foreground\"\n          : \"bg-background text-foreground\",\n        isActive && \"font-medium\",\n        disabled && \"opacity-50\",\n        className\n      )}\n      onPress={disabled ? undefined : onPress}\n      disabled={disabled}\n      {...props}\n    >\n      {children}\n    </Pressable>\n  );\n};\nPaginationLink.displayName = \"PaginationLink\";\n\nconst PaginationPrevious = ({\n  className,\n  ...props\n}: React.ComponentProps<typeof PaginationLink>) => (\n  <PaginationLink size=\"default\" className={cn(\"gap-1\", className)} {...props}>\n    <View className=\"flex-row items-center\">\n      <Feather name=\"chevron-left\" size={16} className=\"text-foreground\" />\n      <Text className=\"ml-0.5 text-sm text-foreground\">Prev</Text>\n    </View>\n  </PaginationLink>\n);\nPaginationPrevious.displayName = \"PaginationPrevious\";\n\nconst PaginationNext = ({\n  className,\n  ...props\n}: React.ComponentProps<typeof PaginationLink>) => (\n  <PaginationLink size=\"default\" className={cn(\"gap-1\", className)} {...props}>\n    <View className=\"flex-row items-center\">\n      <Text className=\"mr-0.5 text-sm text-foreground\">Next</Text>\n      <Feather name=\"chevron-right\" size={16} className=\"text-foreground\" />\n    </View>\n  </PaginationLink>\n);\nPaginationNext.displayName = \"PaginationNext\";\n\nconst PaginationEllipsis = ({\n  className,\n  ...props\n}: React.ComponentProps<typeof View>) => (\n  <View\n    className={cn(\"flex h-10 w-10 items-center justify-center\", className)}\n    {...props}\n  >\n    <Feather name=\"more-horizontal\" size={16} className=\"text-foreground\" />\n    <Text className=\"sr-only\">More pages</Text>\n  </View>\n);\nPaginationEllipsis.displayName = \"PaginationEllipsis\";\n\nexport {\n  Pagination,\n  PaginationContent,\n  PaginationLink,\n  PaginationItem,\n  PaginationPrevious,\n  PaginationNext,\n  PaginationEllipsis,\n};\n",
-      "type": "registry:ui"
+      "type": "registry:component"
     }
-  ]
+  ],
+  "changelog": [],
+  "customUsage": "",
+  "customPreview": ""
 }

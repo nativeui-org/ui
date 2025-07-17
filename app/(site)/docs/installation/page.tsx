@@ -5,6 +5,7 @@ import { CollapsibleCodeBlock } from "@/components/ui/collapsible-code-block";
 import { InstallationTabs } from "@/components/docs/installation-tabs";
 import Image from "next/image";
 import { useTheme } from "next-themes";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function InstallationPage() {
   const [selectedPlatform, setSelectedPlatform] = React.useState("expo");
@@ -27,9 +28,19 @@ export default function InstallationPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="relative overflow-hidden rounded-lg border p-6">
             <div className="flex flex-col items-center space-y-4">
-              <div className="h-16 w-16 relative bg-gray-100 rounded-lg" />
+              <div className="h-16 w-16 relative">
+                <Image
+                  src={resolvedTheme === 'dark' ? "/images/expo-logo-dark.svg" : "/images/expo-logo.svg"}
+                  alt="Expo"
+                  fill
+                  className="object-contain"
+                />
+              </div>
               <div className="text-center">
-                <h3 className="font-bold text-xl">Loading...</h3>
+                <h3 className="font-bold text-xl">Expo (Recommended)</h3>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Quick setup with better developer experience
+                </p>
               </div>
             </div>
           </div>
@@ -332,7 +343,9 @@ export const themes = {
 
       // Borders, inputs and "rings"
       "--border":             " 38  38  38",
+      "--border-foreground": "250 250 250",
       "--input":              " 38  38  38",
+      "--input-foreground": "250 250 250",
       "--ring":               "212 212 212",
     }),
 } as const;
@@ -380,7 +393,7 @@ export const themes = {
     "strict": true,
     "paths": {
       "@/*": [
-        "./*"
+        "./"
       ]
     }
   },
@@ -448,12 +461,22 @@ module.exports = withNativeWind(config, {
                   <CollapsibleCodeBlock
                     language="typescript"
                     title="app/_layout.tsx"
-                    code={`
+                    code={`import { View } from 'react-native';
+import { useState } from 'react';
 import { themes } from "@/lib/theme";
+import { ThemeProvider, useTheme } from '@/lib/ThemeProvider';
 import './global.css';
 
 export default function RootLayout() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  return (
+    <ThemeProvider defaultTheme="system">
+      <AppContent />
+    </ThemeProvider>
+  );
+}
+
+function AppContent() {
+  const { activeTheme } = useTheme();
   return (
     <View style={activeTheme} className="flex-1 bg-background">
       {/* Your App */}
@@ -482,27 +505,7 @@ export default function RootLayout() {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">12. Create Utility Functions</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    First, create the lib directory at the root of your project:
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-4 mb-4">
-                    Then create lib/utils.ts with the following content:
-                  </p>
-                  <CollapsibleCodeBlock
-                    language="typescript"
-                    title="lib/utils.ts"
-                    code={`import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}`}
-                  />
-                </div>
-
-                <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">13. Configure shadcn</h3>
+                  <h3 className="text-xl font-semibold mt-8">12. Configure shadcn</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Create components.json in your project root:
                   </p>
@@ -538,12 +541,12 @@ export function cn(...inputs: ClassValue[]) {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">14. Start Development</h3>
+                  <h3 className="text-xl font-semibold mt-8">13. Start Development</h3>
                   <InstallationTabs command="expo start" />
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">15. Test Your Setup</h3>
+                  <h3 className="text-xl font-semibold mt-8">14. Test Your Setup</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Add this code in any of your components to test that everything is working:
                   </p>

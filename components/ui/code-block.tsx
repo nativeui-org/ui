@@ -23,6 +23,7 @@ interface CodeBlockProps {
   activeTab?: string;
   onTabChange?: (value: string) => void;
   children?: React.ReactNode;
+  componentName?: string; // Ajout du paramètre componentName
 }
 
 export function CodeBlock({
@@ -37,6 +38,7 @@ export function CodeBlock({
   activeTab,
   onTabChange,
   children,
+  componentName,
 }: CodeBlockProps) {
   const { theme: applicationTheme } = useTheme();
   const [copied, setCopied] = React.useState(false);
@@ -46,7 +48,7 @@ export function CodeBlock({
     const textToCopy = tabs && localActiveTab
       ? tabs.find(tab => tab.value === localActiveTab)?.content || code
       : code;
-    
+
     navigator.clipboard.writeText(textToCopy);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -63,7 +65,7 @@ export function CodeBlock({
   const activeContent = tabs && localActiveTab
     ? tabs.find(tab => tab.value === localActiveTab)?.content || code
     : code;
-  
+
   const activeLanguage = tabs && localActiveTab
     ? tabs.find(tab => tab.value === localActiveTab)?.language || language
     : language;
@@ -199,59 +201,83 @@ export function CodeBlock({
           </button>
         </div>
       )}
-      
-      {/* Special handling for Preview tab */}
-      {localActiveTab === "preview" && (
-        <div className="p-6 border-b">
-          <div className="h-[250px] w-full flex items-center justify-center bg-slate-100 dark:bg-slate-900 rounded-md">
-            <div className="flex flex-col items-center gap-2">
-              <p className="text-sm text-muted-foreground">
-                Expo Snack or video preview will load here
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-      
-      {children}
-      
-      {localActiveTab !== "preview" && (
-        <Highlight
-          theme={theme}
-          code={activeContent.trim()}
-          language={activeLanguage}
-        >
-          {({ className, style, tokens, getLineProps, getTokenProps }) => (
-            <pre
-              className={cn(
-                "text-sm p-4 overflow-x-auto",
-                className
-              )}
-              style={{
-                ...style,
-                backgroundColor: applicationTheme === "dark" ? "#1a1a1a" : style.backgroundColor,
-              }}
-            >
-              {tokens.map((line, i) => {
-                const lineProps = getLineProps({ line });
-                return (
-                  <div key={i} {...lineProps}>
-                    {showLineNumbers && (
-                      <span className="mr-4 inline-block w-6 text-right text-muted-foreground">
-                        {i + 1}
-                      </span>
-                    )}
-                    {line.map((token, key) => {
-                      const tokenProps = getTokenProps({ token });
-                      return <span key={key} {...tokenProps} />;
-                    })}
+
+      <div className={cn("relative group rounded-md overflow-hidden border border-border", className)}>
+        {localActiveTab === "preview" && (
+          <div className="p-6 border-b">
+            {componentName ? (
+              <div className="flex items-center justify-center">
+                <div className="w-[350px] h-[700px] bg-slate-100 dark:bg-slate-900 rounded-[40px] overflow-hidden border-8 border-slate-300 dark:border-slate-700 shadow-xl relative">
+                  <div className="relative w-full h-[calc(100%-24px)]">
+                    <video
+                      className="w-full h-full object-cover"
+                      src={`https://xbu6gsnzqpqao6cm.public.blob.vercel-storage.com/ui/${componentName}.mp4`}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      controls
+                      controlsList="nodownload"
+                      preload="auto"
+                      style={{ objectFit: 'cover' }}
+                    >
+                      Your browser does not support video playback.
+                    </video>
                   </div>
-                );
-              })}
-            </pre>
-          )}
-        </Highlight>
-      )}
+                </div>
+              </div>
+            ) : (
+              <div className="h-[250px] w-full flex items-center justify-center bg-slate-100 dark:bg-slate-900 rounded-md">
+                <div className="flex flex-col items-center gap-2">
+                  <p className="text-sm text-muted-foreground">
+                    Video preview will load here
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {children}
+
+        {localActiveTab !== "preview" && (
+          <Highlight
+            theme={theme}
+            code={activeContent.trim()}
+            language={activeLanguage}
+          >
+            {({ className, style, tokens, getLineProps, getTokenProps }) => (
+              <pre
+                className={cn(
+                  "text-sm p-4 overflow-x-auto",
+                  className
+                )}
+                style={{
+                  ...style,
+                  backgroundColor: applicationTheme === "dark" ? "#1a1a1a" : style.backgroundColor,
+                }}
+              >
+                {tokens.map((line, i) => {
+                  const lineProps = getLineProps({ line });
+                  return (
+                    <div key={i} {...lineProps}>
+                      {showLineNumbers && (
+                        <span className="mr-4 inline-block w-6 text-right text-muted-foreground">
+                          {i + 1}
+                        </span>
+                      )}
+                      {line.map((token, key) => {
+                        const tokenProps = getTokenProps({ token });
+                        return <span key={key} {...tokenProps} />;
+                      })}
+                    </div>
+                  );
+                })}
+              </pre>
+            )}
+          </Highlight>
+        )}
+      </div>
     </div>
   );
-} 
+}

@@ -174,6 +174,7 @@ function generatePageContent(componentName, description, examples, componentCode
   // Get component dependencies from registry.json
   const registryContent = JSON.parse(fs.readFileSync('registry.json', 'utf8'));
   const componentInfo = registryContent.items.find(item => item.name === componentName);
+  const changelog = componentInfo?.changelog || [];
   
   // Combine both types of dependencies
   const directDependencies = componentInfo?.dependencies || [];
@@ -230,6 +231,7 @@ export default function ${formattedComponentName}Page() {
       registryName="${componentName}"
       packageName="@nativeui/ui"
       dependencies={${JSON.stringify(allDependencies)}}
+      changelog={${JSON.stringify(changelog)}}
     />
   );
 }

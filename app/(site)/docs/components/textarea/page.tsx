@@ -64,6 +64,8 @@ export default function TextareaDemo() {
       registryName="textarea"
       packageName="@nativeui/ui"
       dependencies={["react-native"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

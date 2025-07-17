@@ -428,6 +428,8 @@ export default function DropdownDemo() {
       registryName="dropdown"
       packageName="@nativeui/ui"
       dependencies={["react-native","@expo/vector-icons"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

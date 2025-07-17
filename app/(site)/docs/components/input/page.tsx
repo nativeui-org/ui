@@ -4,7 +4,7 @@ export default function InputPage() {
   return (
     <ComponentPreview
       name="Input"
-      description="An input component for React Native applications."
+      description="A input component for React Native applications."
       examples={[
   {
     "title": "Default",
@@ -62,6 +62,8 @@ export default function InputDemo() {
       registryName="input"
       packageName="@nativeui/ui"
       dependencies={["react-native"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

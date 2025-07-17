@@ -20,6 +20,11 @@ export interface ComponentPreviewProps {
   registryName: string;
   packageName: string;
   dependencies?: string[];
+  changelog?: Array<{
+    version: string;
+    date: string;
+    changes: string[];
+  }>;
 }
 
 export function ComponentPreview({
@@ -31,6 +36,7 @@ export function ComponentPreview({
   registryName,
   packageName,
   dependencies = [],
+  changelog = [],
 }: ComponentPreviewProps) {
   const [showLineNumbers,] = useState(false); 
   const [activeInstallTab, setActiveInstallTab] = useState("cli");
@@ -39,7 +45,7 @@ export function ComponentPreview({
     {
       title: "Preview",
       value: "preview",
-      content: "// This is a placeholder for the Expo Snack preview",
+      content: "Thanks to support NativeUI :)",
       language: "tsx",
     },
     {
@@ -64,6 +70,7 @@ export function ComponentPreview({
           title={name}
           tabs={previews}
           activeTab="preview"
+          componentName={registryName} // Ajout du nom du composant
         />
       </div>
 
@@ -231,6 +238,35 @@ export function ComponentPreview({
           activeTab={examples[0]?.value}
         />
       </div>
+      
+      {changelog.length > 0 && (
+        <div className="mt-12 space-y-4">
+          <h2 className="text-2xl font-bold tracking-tight">Changelog</h2>
+          <p className="text-muted-foreground mb-6">
+            Historique des modifications du composant {name}.
+          </p>
+          
+          <div className="space-y-6">
+            {changelog.map((entry) => (
+              <div key={entry.version} className="border-b pb-4 last:border-0">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-lg font-semibold">Version {entry.version}</h3>
+                  {entry.date && (
+                    <span className="text-sm text-muted-foreground">
+                      {entry.date}
+                    </span>
+                  )}
+                </div>
+                <ul className="list-disc list-inside space-y-1">
+                  {entry.changes.map((change, i) => (
+                    <li key={i} className="text-sm">{change}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

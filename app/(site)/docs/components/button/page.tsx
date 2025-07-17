@@ -4,7 +4,7 @@ export default function ButtonPage() {
   return (
     <ComponentPreview
       name="Button"
-      description="A button component with multiple variants for React Native applications."
+      description="A button component for React Native applications."
       examples={[
   {
     "title": "Default",
@@ -116,6 +116,8 @@ export default function ButtonDemo() {
       registryName="button"
       packageName="@nativeui/ui"
       dependencies={["react-native","class-variance-authority"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }

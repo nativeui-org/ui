@@ -4,7 +4,7 @@ export default function AvatarPage() {
   return (
     <ComponentPreview
       name="Avatar"
-      description="An avatar component for React Native applications."
+      description="A avatar component for React Native applications."
       examples={[
   {
     "title": "Default",
@@ -190,6 +190,8 @@ export default function AvatarDemo() {
       registryName="avatar"
       packageName="@nativeui/ui"
       dependencies={["react-native"]}
+      changelog={[]}
+      customUsage={``}
     />
   );
 }
