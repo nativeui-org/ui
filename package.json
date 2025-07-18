@@ -7,11 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "registry:build": "shadcn build",
     "build:registry": "node scripts/build-registry.js",
     "generate:docs": "node scripts/generate-component-docs.js",
-    "update:components": "node scripts/update-components.js",
-    "create:component": "node scripts/create-component.js"
+    "update:components": "node scripts/update-components.js"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",

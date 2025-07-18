@@ -78,7 +78,7 @@ const formatDisplayValue = (
       if (isDateRange(value)) {
         const fromFormatted = format(value.from, "PP", { locale: enUS });
         const toFormatted = format(value.to, "PP", { locale: enUS });
-        return \`"" - ""\`;
+        return \`\${fromFormatted} - \${toFormatted}\`;
       }
       break;
   }
@@ -370,14 +370,14 @@ export default function DateTimePickerExample() {
     };
 
     const showSelectedValue = (label: string, value: any) => {
-        let message = \`${label}:\n\`;
+        let message = \`\${label}:\\n\`;
 
         if (!value) {
             message += "No date selected";
         } else if (value instanceof Date) {
             message += format(value, "PPP 'at' HH:mm");
         } else if (value.from && value.to) {
-            message += \`From: ${format(value.from, "PPP")}\nTo: ${format(
+            message += \`From: \${format(value.from, "PPP")}\\nTo: \${format(
                 value.to,
                 "PPP"
             )}\`;

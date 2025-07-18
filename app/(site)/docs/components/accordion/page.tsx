@@ -166,7 +166,7 @@ const AccordionTrigger = ({
           children
         )}
       </View>
-      <View style={{ transform: [{ rotate: \`""deg\` }] }}>
+      <View style={{ transform: [{ rotate: \`\${iconRotation}deg\` }] }}>
         <Feather name="chevron-down" size={20} color="#888" />
       </View>
     </Pressable>

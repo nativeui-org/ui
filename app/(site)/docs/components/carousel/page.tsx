@@ -110,7 +110,7 @@ const Carousel = React.forwardRef<View, CarouselProps>(
         setCurrentIndex(targetIndex);
         onIndexChange?.(targetIndex);
         AccessibilityInfo.announceForAccessibility(
-          \`Image "" of ""\`
+          \`Image \${targetIndex + 1} of \${itemsCount}\`
         );
       },
       [orientation, dimensions, itemsCount, onIndexChange, loop]
@@ -175,7 +175,7 @@ const Carousel = React.forwardRef<View, CarouselProps>(
                   key={index}
                   onPress={() => scrollTo(index)}
                   accessibilityRole="button"
-                  accessibilityLabel={\`Go to image ""\`}
+                  accessibilityLabel={\`Go to image \${index + 1}\`}
                   accessibilityState={{ selected: currentIndex === index }}
                   style={[
                     {
@@ -241,7 +241,7 @@ const Carousel = React.forwardRef<View, CarouselProps>(
                   key={index}
                   onPress={() => scrollTo(index)}
                   accessibilityRole="button"
-                  accessibilityLabel={\`Go to image ""\`}
+                  accessibilityLabel={\`Go to image \${index + 1}\`}
                   accessibilityState={{ selected: currentIndex === index }}
                   style={[
                     {

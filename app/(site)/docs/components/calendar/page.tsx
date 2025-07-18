@@ -442,7 +442,7 @@ const YearPicker = React.memo(({
             <Ionicons name="chevron-back" size={24} className="text-black" />
           </Pressable>
           <Text className="text-xl font-semibold text-black">
-            {\`"" - ""\`}
+            {\`\${startYear} - \${startYear + 19}\`}
           </Text>
           <Pressable
             onPress={() => onYearNavigate(startYear + 20)}
@@ -897,7 +897,7 @@ export default function CalendarExample() {
                         <Text className="mt-2 text-sm text-muted-foreground">
                             Selected range:{" "}
                             {dateRange
-                                ? \`${dateRange.from.toLocaleDateString()} - ${dateRange.to.toLocaleDateString()}\`
+                                ? \`\${dateRange.from.toLocaleDateString()} - \${dateRange.to.toLocaleDateString()}\`
                                 : "No range selected"}
                         </Text>
                     </View>
@@ -917,7 +917,7 @@ export default function CalendarExample() {
                         <Text className="mt-2 text-sm text-muted-foreground">
                             Selected date & time:{" "}
                             {dateTime
-                                ? \`${dateTime.toLocaleDateString()} ${dateTime.toLocaleTimeString()}\`
+                                ? \`\${dateTime.toLocaleDateString()} \${dateTime.toLocaleTimeString()}\`
                                 : "No date/time selected"}
                         </Text>
                     </View>
@@ -940,7 +940,7 @@ export default function CalendarExample() {
                         <Text className="mt-2 text-sm text-muted-foreground">
                             Selected date & time:{" "}
                             {dateTime5min
-                                ? \`${dateTime5min.toLocaleDateString()} ${dateTime5min.toLocaleTimeString()}\`
+                                ? \`\${dateTime5min.toLocaleDateString()} \${dateTime5min.toLocaleTimeString()}\`
                                 : "No date/time selected"}
                         </Text>
                     </View>

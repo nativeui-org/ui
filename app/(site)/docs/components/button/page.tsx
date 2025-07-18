@@ -85,7 +85,8 @@ const Button = React.forwardRef<View, ButtonProps>(
       >
         {(state: PressableStateCallbackType) => (
           <View
-            className={\`flex-row items-center justify-center gap-2 ""\`}
+            className={\`flex-row items-center justify-center gap-2 \${state.pressed ? "opacity-80" : ""
+              }\`}
           >
             {typeof children === "function" ? children(state) : children}
           </View>

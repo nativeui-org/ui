@@ -53,7 +53,7 @@ const ComponentPreviewSkeleton = () => {
         <div className="h-8 bg-muted rounded-md w-1/3"></div>
         <div className="h-5 bg-muted rounded-md w-full"></div>
         <div className="h-5 bg-muted rounded-md w-3/4"></div>
-        
+
         <div className="mt-6">
           <div className="flex border-b">
             <div className="h-10 bg-muted w-16 border-r"></div>
@@ -79,24 +79,6 @@ const ComponentPreviewSkeleton = () => {
   );
 };
 
-// Composant de loading avec spinner élégant
-const LoadingSpinner = () => {
-  return (
-    <div className="flex items-center justify-center min-h-[400px]">
-      <div className="flex flex-col items-center space-y-4">
-        <div className="relative">
-          <div className="w-12 h-12 border-4 border-muted rounded-full"></div>
-          <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin absolute top-0 left-0"></div>
-        </div>
-        <div className="text-center space-y-2">
-          <p className="text-sm font-medium text-foreground">Chargement du composant...</p>
-          <p className="text-xs text-muted-foreground">Préparation de la documentation</p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 export function ComponentPreview({
   name,
   description,
@@ -104,17 +86,16 @@ export function ComponentPreview({
   componentCode,
   previewCode,
   registryName,
-  packageName,
   dependencies = [],
   changelog = [],
 }: ComponentPreviewProps) {
-  const [showLineNumbers,] = useState(false); 
+  const [showLineNumbers,] = useState(false);
   const [activeInstallTab, setActiveInstallTab] = useState("cli");
   const [customUsage, setCustomUsage] = useState<string | null>(null);
-  
+
   // États de chargement
   const [isLoading, setIsLoading] = useState(true);
-  const [loadingStates, setLoadingStates] = useState({
+  const [, setLoadingStates] = useState({
     componentJson: false,
     theme: false,
     codeBlocks: false,
@@ -124,7 +105,7 @@ export function ComponentPreview({
   useEffect(() => {
     const loadAllResources = async () => {
       setIsLoading(true);
-      
+
       try {
         setLoadingStates(prev => ({ ...prev, theme: true }));
         await new Promise(resolve => setTimeout(resolve, 300));
@@ -142,20 +123,20 @@ export function ComponentPreview({
           }
         };
         await loadComponentJson();
-        
+
         setLoadingStates(prev => ({ ...prev, codeBlocks: true }));
         await new Promise(resolve => setTimeout(resolve, 400));
-        
+
         setLoadingStates(prev => ({ ...prev, dependencies: true }));
         await new Promise(resolve => setTimeout(resolve, 200));
-        
+
         await new Promise(resolve => setTimeout(resolve, 300));
-        
+
       } finally {
         setIsLoading(false);
       }
     };
-    
+
     loadAllResources();
   }, [registryName]);
 
@@ -248,7 +229,7 @@ export function ComponentPreview({
                     </ul>
                   </div>
                 )}
-                
+
                 {/* Registry Dependencies */}
                 {dependencies.filter(dep => dep.startsWith('@nativeui/ui/')).length > 0 && (
                   <div>
@@ -297,21 +278,19 @@ export function ComponentPreview({
           <div className="flex items-center border-b">
             <button
               onClick={() => setActiveInstallTab("cli")}
-              className={`px-4 py-2 text-sm font-medium ${
-                activeInstallTab === "cli"
+              className={`px-4 py-2 text-sm font-medium ${activeInstallTab === "cli"
                   ? "border-b-2 border-primary text-primary"
                   : "text-muted-foreground hover:text-foreground"
-              }`}
+                }`}
             >
               CLI
             </button>
             <button
               onClick={() => setActiveInstallTab("manual")}
-              className={`px-4 py-2 text-sm font-medium ${
-                activeInstallTab === "manual"
+              className={`px-4 py-2 text-sm font-medium ${activeInstallTab === "manual"
                   ? "border-b-2 border-primary text-primary"
                   : "text-muted-foreground hover:text-foreground"
-              }`}
+                }`}
             >
               Manual
             </button>
@@ -353,32 +332,32 @@ export function ComponentPreview({
         </p>
 
         {customUsage ? (
-        <div className="relative">
+          <div className="relative">
+            <CodeBlock
+              language="tsx"
+              code={customUsage}
+              title="Usage Examples"
+              showLineNumbers={showLineNumbers}
+            />
+          </div>
+        ) : (
           <CodeBlock
             language="tsx"
-            code={customUsage}
-            title="Usage Examples"
-            showLineNumbers={showLineNumbers}
+            code=""
+            title="Examples"
+            tabs={examples}
+            activeTab={examples[0]?.value}
           />
-        </div>
-        ) : (
-        <CodeBlock
-          language="tsx"
-          code=""
-          title="Examples"
-          tabs={examples}
-          activeTab={examples[0]?.value}
-        />
         )}
       </div>
-      
+
       {changelog.length > 0 && (
         <div className="mt-12 space-y-4">
           <h2 className="text-2xl font-bold tracking-tight">Changelog</h2>
           <p className="text-muted-foreground mb-6">
             Historique des modifications du composant {name}.
           </p>
-          
+
           <div className="space-y-6">
             {changelog.map((entry) => (
               <div key={entry.version} className="border-b pb-4 last:border-0">

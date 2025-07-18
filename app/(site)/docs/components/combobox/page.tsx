@@ -237,7 +237,7 @@ const Combobox = React.forwardRef<View, ComboboxProps>(
         if (selectedValues.length === 1) {
           return selectedLabels[0];
         }
-        return \`"" items selected\`;
+        return \`\${selectedValues.length} items selected\`;
       }
 
       return selectedLabels[0];
@@ -639,7 +639,7 @@ export default function ComboboxExample() {
                                 items={fruits}
                             />
                             <Text className="text-sm mt-2 text-muted-foreground">
-                                {fruit ? \`You selected: ${fruit}\` : "No fruit selected"}
+                                {fruit ? \`You selected: \${fruit}\` : "No fruit selected"}
                             </Text>
                         </View>
 
@@ -657,7 +657,7 @@ export default function ComboboxExample() {
                             />
                             <Text className="text-sm mt-2 text-muted-foreground">
                                 {selectedLanguages.length > 0
-                                    ? \`Selected: ${selectedLanguages.map(lang =>
+                                    ? \`Selected: \${selectedLanguages.map(lang =>
                                         programmingLanguages.find(l => l.value === lang)?.label).join(', ')}\`
                                     : "No languages selected"}
                             </Text>
@@ -677,7 +677,7 @@ export default function ComboboxExample() {
                             />
                             <Text className="text-sm mt-2 text-muted-foreground">
                                 {selectedColors.length > 0
-                                    ? \`Selected: ${selectedColors.map(color =>
+                                    ? \`Selected: \${selectedColors.map(color =>
                                         colors.find(c => c.value === color)?.label).join(', ')}\`
                                     : "No colors selected"}
                             </Text>
@@ -773,8 +773,8 @@ export default function ComboboxExample() {
                                 placeholder="Select a number"
                                 searchPlaceholder="Search numbers..."
                                 items={Array.from({ length: 100 }, (_, i) => ({
-                                    value: \`num-${i + 1}\`,
-                                    label: \`Number ${i + 1}\`
+                                    value: \`num-\${i + 1}\`,
+                                    label: \`Number \${i + 1}\`
                                 }))}
                                 emptyText="No numbers found"
                             />

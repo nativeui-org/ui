@@ -1,28 +1,27 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { NextResponse } from 'next/server';
-import { NextRequest } from 'next/server';
 
 export async function GET(
-  request: NextRequest,
-  { params }: { params: Record<string, string> }
+  request: Request,
+  { params }: { params: Promise<{ componentName: string }> }
+
 ) {
-  const componentName = params.componentName;
-  
+  const { componentName } = await params;
+
   try {
     const filePath = join(process.cwd(), 'public', 'r', `${componentName}.json`);
-    
     const fileContent = readFileSync(filePath, 'utf-8');
     const componentData = JSON.parse(fileContent);
-    
+
     return NextResponse.json(componentData);
   } catch (error) {
     try {
       const legacyFilePath = join(process.cwd(), 'registry', 'ui', `${componentName}.json`);
       const legacyFileContent = readFileSync(legacyFilePath, 'utf-8');
       const legacyComponentData = JSON.parse(legacyFileContent);
-      console.error(error)
-      
+      console.error(error);
+
       return NextResponse.json(legacyComponentData);
     } catch (legacyError) {
       return new NextResponse(

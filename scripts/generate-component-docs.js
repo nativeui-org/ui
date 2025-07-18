@@ -145,7 +145,7 @@ export default function ${formattedComponentName}Variants() {
     examples.push({
       title: "Sizes",
       value: "sizes",
-      content: `import { ${formattedComponentName} } from "@nativeui/ui";
+      content: `import { ${formattedComponentName} } from "@components/ui";
 
 export default function ${formattedComponentName}Sizes() {
   return (
@@ -216,12 +216,21 @@ export default function ${formattedComponentName}Demo() {
   );
 }`;
 
-  // Safely escape component code to avoid eval errors
+  // Safely escape component code using a different approach
+  // Instead of trying to fix template literals, we'll escape them properly
   const safeComponentCode = componentCode
-    // Remove dynamic expressions that might reference undefined variables
-    .replace(/\${([^}]*)}/g, '""')
-    // Ensure proper string escaping
-    .replace(/`/g, '\\`');
+    // Escape backslashes first
+    .replace(/\\/g, '\\\\')
+    // Escape backticks
+    .replace(/`/g, '\\`')
+    // Escape dollar signs that are part of template literals
+    .replace(/\$\{/g, '\\${');
+
+  // Also safely escape the preview code
+  const safePreviewCode = previewCode
+    .replace(/\\/g, '\\\\')
+    .replace(/`/g, '\\`')
+    .replace(/\$\{/g, '\\${');
 
   return `import { ComponentPreview } from "@/components/docs/component-preview";
 
@@ -232,7 +241,7 @@ export default function ${formattedComponentName}Page() {
       description="${description}"
       examples={${JSON.stringify(examples, null, 2)}}
       componentCode={\`${safeComponentCode}\`}
-      previewCode={\`${previewCode.replace(/`/g, '\\`')}\`}
+      previewCode={\`${safePreviewCode}\`}
       registryName="${componentName}"
       packageName="@nativeui/ui"
       dependencies={${JSON.stringify(allDependencies)}}

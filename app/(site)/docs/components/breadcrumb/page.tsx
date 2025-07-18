@@ -77,7 +77,7 @@ const BreadcrumbLink = React.forwardRef<View, BreadcrumbLinkProps>(
   ) => {
     const handlePress = (e: GestureResponderEvent) => {
       if (href) {
-        console.log(\`Navigation to: ""\`);
+        console.log(\`Navigation to: \${href}\`);
       }
       if (onPress) {
         onPress(e);
@@ -196,7 +196,7 @@ import {
 export default function BreadcrumbExample() {
     // Simple custom navigation function that you could replace with your actual navigation logic
     const handleNavigation = (path: string) => {
-        Alert.alert("Navigation", \`Navigating to: ${path}\`);
+        Alert.alert("Navigation", \`Navigating to: \${path}\`);
         // Your navigation code here, for example:
         // router.push(path);
     };
