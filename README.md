@@ -16,7 +16,7 @@
 
 ## Installation
 
-Visit [nativeui.org](https://nativeui.io/docs) to get started.
+Visit [nativeui.io](https://nativeui.io/docs) to get started.
 
 ## Usage
 
