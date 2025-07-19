@@ -81,7 +81,7 @@ export default function UsagePage() {
             <div className="space-y-4">
               <h3 className="text-xl font-semibold">Contributing</h3>
               <p className="text-muted-foreground">
-                We welcome contributions to the <a href="https://github.com/nativeui-org/playground" className="text-primary hover:underline">playground project</a>! Whether it's bug fixes, new features,
+                We welcome contributions to the <a href="https://github.com/nativeui-org/playground" className="text-primary hover:underline">playground project</a>! Whether it&apos;s bug fixes, new features,
                 documentation improvements, or component enhancements.
               </p>
             </div>
