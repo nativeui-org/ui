@@ -9,7 +9,7 @@
   [![GitHub forks](https://img.shields.io/github/forks/nativeui-org/ui?style=social)](https://github.com/nativeui-org/ui/network/members)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-  [Documentation](https://nativeui.io) • [Components](https://nativeui.io/docs/components) • [Playground](https://github.com/nativeui-org/playground)
+  [Documentation](https://nativeui.io) • [Components](https://nativeui.io/components) • [Playground](https://github.com/nativeui-org/playground)
 </div>
 
 ---
