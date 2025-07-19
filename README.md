@@ -72,4 +72,4 @@ Please read our [contributing guide](./registry/CONTRIBUTING.md).
 
 ## License
 
-Licensed under the [MIT license](https://github.com/nativeui-org/ui/blob/main/LICENSE.md).
+Licensed under the [MIT license](https://github.com/nativeui-org/ui/blob/main/LICENSE).
