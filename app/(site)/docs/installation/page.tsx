@@ -250,14 +250,14 @@ module.exports = {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">4. Create theme File</h3>
+                  <h3 className="text-xl font-semibold mt-8">4. Create Theme File</h3>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Create theme.ts in /lib directory:
+                    Create /lib directory and create theme.ts in it:
                   </p>
                   <CodeBlock
-                    language="css"
+                    language="typescript"
                     collapsible
-                    title="theme.ts"
+                    title="lib/theme.ts"
                     code={`import { vars } from "nativewind";
 
 export const themes = {
@@ -353,7 +353,85 @@ export const themes = {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">5. Create global.css</h3>
+                  <h3 className="text-xl font-semibold mt-8">5. Create Theme Provider</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Create the theme provider in lib/theme-context.tsx:
+                  </p>
+                  <CodeBlock
+                    language="typescript"
+                    collapsible
+                    title="lib/theme-context.tsx"
+                    code={`import { useColorScheme as useNativewindColorScheme } from 'nativewind';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useColorScheme as useNativeColorScheme } from 'react-native';
+import { themes } from './theme';
+
+type ThemeType = 'light' | 'dark';
+
+interface ThemeContextType {
+    theme: ThemeType;
+    setTheme: (theme: ThemeType) => void;
+    activeTheme: any;
+}
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+export function ThemeProvider({ 
+  children, 
+  defaultTheme = 'system' 
+}: { 
+  children: React.ReactNode;
+  defaultTheme?: 'light' | 'dark' | 'system';
+}) {
+    const systemColorScheme = useNativeColorScheme() as ThemeType || 'light';
+    const [theme, setTheme] = useState<ThemeType>(
+      defaultTheme === 'system' ? systemColorScheme : defaultTheme as ThemeType
+    );
+    const { setColorScheme } = useNativewindColorScheme();
+
+    useEffect(() => {
+        setColorScheme(theme);
+    }, [theme, setColorScheme]);
+
+    const activeTheme = themes[theme];
+
+    return (
+        <ThemeContext.Provider value={{ theme, setTheme, activeTheme }}>
+            {children}
+        </ThemeContext.Provider>
+    );
+}
+
+export function useTheme() {
+    const context = useContext(ThemeContext);
+    if (context === undefined) {
+        throw new Error('useTheme must be used within a ThemeProvider');
+    }
+    return context;
+}`}
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold mt-8">6. Create Utility Functions</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Create utils.ts in /lib directory for class merging utilities:
+                  </p>
+                  <CodeBlock
+                    language="typescript"
+                    collapsible
+                    title="lib/utils.ts"
+                    code={`import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}`}
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold mt-8">7. Create global.css</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Create global.css in /app directory:
                   </p>
@@ -368,7 +446,7 @@ export const themes = {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">6. Configure TypeScript</h3>
+                  <h3 className="text-xl font-semibold mt-8">8. Configure TypeScript</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Create a new declaration file for NativeWind types:
                   </p>
@@ -381,7 +459,7 @@ export const themes = {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">7. Configure TypeScript Paths</h3>
+                  <h3 className="text-xl font-semibold mt-8">9. Configure TypeScript Paths</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Update your tsconfig.json:
                   </p>
@@ -412,7 +490,7 @@ export const themes = {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">8. Configure Babel</h3>
+                  <h3 className="text-xl font-semibold mt-8">10. Configure Babel</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Update or create babel.config.js:
                   </p>
@@ -436,7 +514,7 @@ export const themes = {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">9. Configure Metro</h3>
+                  <h3 className="text-xl font-semibold mt-8">11. Configure Metro</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Create metro.config.js:
                   </p>
@@ -452,13 +530,13 @@ const { withNativeWind } = require('nativewind/metro');
 const config = getDefaultConfig(__dirname);
 
 module.exports = withNativeWind(config, {
-  input: './global.css',
+  input: './app/global.css',
 });`}
                   />
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">10. Update App Entry</h3>
+                  <h3 className="text-xl font-semibold mt-8">12. Update App Entry</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Update _layout.tsx:
                   </p>
@@ -467,9 +545,7 @@ module.exports = withNativeWind(config, {
                     collapsible
                     title="app/_layout.tsx"
                     code={`import { View } from 'react-native';
-import { useState } from 'react';
-import { themes } from "@/lib/theme";
-import { ThemeProvider, useTheme } from '@/lib/ThemeProvider';
+import { ThemeProvider, useTheme } from '@/lib/theme-context';
 import './global.css';
 
 export default function RootLayout() {
@@ -492,7 +568,7 @@ function AppContent() {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">11. Configure app.json</h3>
+                  <h3 className="text-xl font-semibold mt-8">13. Configure app.json</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Update app.json:
                   </p>
@@ -511,7 +587,7 @@ function AppContent() {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">12. Configure shadcn</h3>
+                  <h3 className="text-xl font-semibold mt-8">14. Configure components.json</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Create components.json in your project root:
                   </p>
@@ -548,12 +624,12 @@ function AppContent() {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">13. Start Development</h3>
+                  <h3 className="text-xl font-semibold mt-8">14. Start Development</h3>
                   <InstallationTabs command="expo start" />
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold mt-8">14. Test Your Setup</h3>
+                  <h3 className="text-xl font-semibold mt-8">15. Test Your Setup</h3>
                   <p className="text-sm text-muted-foreground mb-4">
                     Add this code in any of your components to test that everything is working:
                   </p>
