@@ -520,7 +520,7 @@ export function cn(...inputs: ClassValue[]) {
     "strict": true,
     "paths": {
       "@/*": [
-        "./"
+        "./*"
       ]
     }
   },
