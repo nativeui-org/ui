@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "badge",
-  "type": "registry:component",
+  "type": "registry:ui",
   "title": "Badge",
   "description": "A badge component for React Native applications.",
   "dependencies": [
@@ -12,7 +12,7 @@
     {
       "path": "registry/badge/badge.tsx",
       "content": "import * as React from \"react\";\nimport { View, Text, Pressable, ViewStyle } from \"react-native\";\nimport { cn } from \"@/lib/utils\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\n\nconst badgeVariants = cva(\n  \"flex-row items-center justify-center rounded-full px-2.5 py-1\",\n  {\n    variants: {\n      variant: {\n        default: \"bg-primary\",\n        secondary: \"bg-secondary\",\n        destructive: \"bg-destructive\",\n        outline: \"border border-input bg-transparent\",\n      },\n      size: {\n        default: \"h-8 px-3\",\n        sm: \"h-6 px-2.5\",\n        lg: \"h-10 px-4\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n      size: \"default\",\n    },\n  }\n);\n\nexport interface BadgeProps\n  extends VariantProps<typeof badgeVariants> {\n  className?: string;\n  style?: ViewStyle;\n  children: React.ReactNode;\n  onPress?: () => void;\n  accessibilityLabel?: string;\n}\n\nfunction Badge({\n  className,\n  variant,\n  size,\n  style,\n  children,\n  onPress,\n  accessibilityLabel,\n}: BadgeProps) {\n  const getTextStyle = () => {\n    let textStyle = \"font-medium\";\n\n    // Adjust text size based on badge size\n    if (size === \"lg\") {\n      textStyle = cn(textStyle, \"text-sm\");\n    } else if (size === \"sm\") {\n      textStyle = cn(textStyle, \"text-xs\");\n    } else {\n      textStyle = cn(textStyle, \"text-xs\");\n    }\n\n    // Adjust text color based on variant\n    if (variant === \"default\") {\n      textStyle = cn(textStyle, \"text-primary-foreground\");\n    } else if (variant === \"secondary\") {\n      textStyle = cn(textStyle, \"text-secondary-foreground\");\n    } else if (variant === \"destructive\") {\n      textStyle = cn(textStyle, \"text-destructive-foreground\");\n    } else if (variant === \"outline\") {\n      textStyle = cn(textStyle, \"text-foreground\");\n    }\n\n    return textStyle;\n  };\n\n  const content = (\n    <View className={cn(badgeVariants({ variant, size, className }))} style={style}>\n      {typeof children === 'string' ? (\n        <Text\n          className={getTextStyle()}\n          numberOfLines={1}\n        >\n          {children}\n        </Text>\n      ) : (\n        children\n      )}\n    </View>\n  );\n\n  if (onPress) {\n    return (\n      <Pressable\n        onPress={onPress}\n        accessibilityRole=\"button\"\n        accessibilityLabel={accessibilityLabel || (typeof children === 'string' ? children : undefined)}\n      >\n        {({ pressed }) => (\n          <View style={{ opacity: pressed ? 0.7 : 1 }}>\n            {content}\n          </View>\n        )}\n      </Pressable>\n    );\n  }\n\n  return content;\n}\n\nBadge.displayName = \"Badge\";\n\nexport { Badge, badgeVariants }; ",
-      "type": "registry:component"
+      "type": "registry:ui"
     }
   ],
   "changelog": [],

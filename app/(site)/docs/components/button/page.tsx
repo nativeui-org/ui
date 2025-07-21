@@ -21,7 +21,7 @@ export default function ButtonPage() {
   {
     "title": "Sizes",
     "value": "sizes",
-    "content": "import { Button } from \"@nativeui/ui\";\n\nexport default function ButtonSizes() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      <Button size=\"default\">Default</Button>\n      <Button size=\"sm\">Sm</Button>\n      <Button size=\"lg\">Lg</Button>\n      <Button size=\"icon\">👋</Button>\n    </div>\n  );\n}",
+    "content": "import { Button } from \"@components/ui\";\n\nexport default function ButtonSizes() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      <Button size=\"default\">Default</Button>\n      <Button size=\"sm\">Sm</Button>\n      <Button size=\"lg\">Lg</Button>\n      <Button size=\"icon\">👋</Button>\n    </div>\n  );\n}",
     "language": "tsx"
   }
 ]}

@@ -95,7 +95,7 @@ componentDirs.forEach(componentName => {
   const registryItem = {
     "$schema": REGISTRY_SCHEMA,
     "name": componentName,
-    "type": "registry:component",
+    "type": "registry:ui",
     "title": componentName.charAt(0).toUpperCase() + componentName.slice(1),
     "description": description,
     "dependencies": dependencies,
@@ -104,7 +104,7 @@ componentDirs.forEach(componentName => {
       {
         "path": `registry/${componentName}/${componentName}.tsx`,
         "content": componentContent,
-        "type": "registry:component"
+        "type": "registry:ui"
       }
     ],
     "changelog": changelog
