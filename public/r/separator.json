@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "separator",
-  "type": "registry:component",
+  "type": "registry:ui",
   "title": "Separator",
   "description": "A separator component for React Native applications.",
   "dependencies": [],
@@ -10,7 +10,7 @@
     {
       "path": "registry/separator/separator.tsx",
       "content": "import React from \"react\";\nimport { View } from \"react-native\";\nimport { cn } from \"@/lib/utils\";\n\ninterface SeparatorProps {\n  className?: string;\n  orientation?: \"horizontal\" | \"vertical\";\n}\n\nfunction Separator({\n  className,\n  orientation = \"horizontal\",\n}: SeparatorProps) {\n  return (\n    <View\n      className={cn(\n        \"bg-border\",\n        orientation === \"horizontal\" ? \"h-px w-full\" : \"h-full w-px\",\n        className\n      )}\n    />\n  );\n}\n\nexport { Separator };\n",
-      "type": "registry:component"
+      "type": "registry:ui"
     }
   ],
   "changelog": [],

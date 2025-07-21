@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "checkbox",
-  "type": "registry:component",
+  "type": "registry:ui",
   "title": "Checkbox",
   "description": "A checkbox component for React Native applications.",
   "dependencies": [],
@@ -10,7 +10,7 @@
     {
       "path": "registry/checkbox/checkbox.tsx",
       "content": "import { cn } from \"@/lib/utils\"\nimport { Ionicons } from \"@expo/vector-icons\"\nimport { useColorScheme } from \"nativewind\"\nimport * as React from \"react\"\nimport { Pressable, Text } from \"react-native\"\n\ninterface CheckboxProps extends Omit<React.ComponentPropsWithoutRef<typeof Pressable>, 'children'> {\n  checked?: boolean\n  defaultChecked?: boolean\n  onCheckedChange?: (checked: boolean) => void\n  disabled?: boolean\n  id?: string\n}\n\ninterface CheckboxLabelProps extends React.ComponentPropsWithoutRef<typeof Text> {\n  disabled?: boolean\n  htmlFor?: string\n}\n\nconst Checkbox = React.forwardRef<\n  React.ElementRef<typeof Pressable>,\n  CheckboxProps\n>(({\n  className,\n  checked,\n  defaultChecked,\n  onCheckedChange,\n  disabled,\n  id,\n  ...props\n}, ref) => {\n  const { colorScheme } = useColorScheme()\n  const [innerChecked, setInnerChecked] = React.useState<boolean>(\n    checked !== undefined ? checked : defaultChecked || false\n  )\n  const isChecked = checked !== undefined ? checked : innerChecked\n\n  const handlePress = React.useCallback(() => {\n    if (disabled) return\n\n    const newValue = !isChecked\n\n    if (checked === undefined) {\n      setInnerChecked(newValue)\n    }\n\n    onCheckedChange?.(newValue)\n  }, [checked, isChecked, onCheckedChange, disabled])\n\n  React.useEffect(() => {\n    if (checked !== undefined) {\n      setInnerChecked(checked)\n    }\n  }, [checked])\n\n  return (\n    <Pressable\n      ref={ref}\n      accessibilityRole=\"checkbox\"\n      accessibilityState={{ checked: isChecked, disabled }}\n      onPress={handlePress}\n      disabled={disabled}\n      className={cn(\n        \"h-6 w-6 rounded-md border-2 justify-center items-center\",\n        isChecked\n          ? \"border-primary bg-primary\"\n          : \"border-border bg-transparent\",\n        disabled && \"opacity-50\",\n        className\n      )}\n      accessibilityLabel={id}\n      {...props}\n    >\n      {isChecked && (\n        <Ionicons\n          name=\"checkmark-sharp\"\n          size={18}\n          className=\"color-primary-foreground\"\n        />\n      )}\n    </Pressable>\n  )\n})\n\nconst CheckboxLabel = React.forwardRef<\n  React.ElementRef<typeof Text>,\n  CheckboxLabelProps\n>(({ className, disabled, htmlFor, ...props }, ref) => {\n  return (\n    <Text\n      ref={ref}\n      className={cn(\n        \"text-base text-foreground ml-3\",\n        disabled && \"text-muted-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n})\n\nCheckbox.displayName = \"Checkbox\"\nCheckboxLabel.displayName = \"CheckboxLabel\"\n\nexport { Checkbox, CheckboxLabel }\n",
-      "type": "registry:component"
+      "type": "registry:ui"
     }
   ],
   "changelog": [],
