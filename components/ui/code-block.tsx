@@ -46,7 +46,7 @@ export function CodeBlock({
   maxVisibleLines = 10,
   defaultExpanded = false,
 }: CodeBlockProps) {
-  const { theme: applicationTheme, resolvedTheme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const [copied, setCopied] = React.useState(false);
   const [localActiveTab, setLocalActiveTab] = React.useState<string | undefined>(activeTab || (tabs && tabs.length > 0 ? tabs[0].value : undefined));
   const [isExpanded, setIsExpanded] = React.useState(defaultExpanded);
@@ -85,7 +85,7 @@ export function CodeBlock({
 
   const codeLines = activeContent.split("\n");
   const shouldCollapse = collapsible && codeLines.length > maxVisibleLines;
-  const displayedCode = shouldCollapse && !isExpanded 
+  const displayedCode = shouldCollapse && !isExpanded
     ? codeLines.slice(0, maxVisibleLines).join("\n")
     : activeContent;
 
@@ -364,7 +364,7 @@ export function CodeBlock({
                 </pre>
               )}
             </Highlight>
-            
+
             {shouldCollapse && !isExpanded && (
               <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-background to-transparent pointer-events-none" />
             )}
