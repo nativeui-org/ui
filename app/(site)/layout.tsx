@@ -53,7 +53,7 @@ export default function SiteLayout({
               width={32} 
               height={32} 
             />
-            NativeUI
+            <span className="hidden sm:inline">NativeUI</span>
           </Link>
           <div className="flex items-center gap-4">
             <CommandMenu />
