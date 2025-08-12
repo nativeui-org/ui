@@ -47,7 +47,7 @@ export default function DocsPage() {
               </div>
             </Link>
             <Link
-              href="/docs/components"
+              href="/components"
               className="group relative overflow-hidden rounded-lg border p-6 hover:border-foreground/10 transition-colors"
             >
               <div className="flex flex-col justify-between space-y-2">

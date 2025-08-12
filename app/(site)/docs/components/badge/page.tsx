@@ -21,7 +21,7 @@ export default function BadgePage() {
   {
     "title": "Sizes",
     "value": "sizes",
-    "content": "import { Badge } from \"@nativeui/ui\";\n\nexport default function BadgeSizes() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      <Badge size=\"default\">Default</Badge>\n      <Badge size=\"sm\">Sm</Badge>\n      <Badge size=\"lg\">Lg</Badge>\n    </div>\n  );\n}",
+    "content": "import { Badge } from \"@components/ui\";\n\nexport default function BadgeSizes() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      <Badge size=\"default\">Default</Badge>\n      <Badge size=\"sm\">Sm</Badge>\n      <Badge size=\"lg\">Lg</Badge>\n    </div>\n  );\n}",
     "language": "tsx"
   }
 ]}

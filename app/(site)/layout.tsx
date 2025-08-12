@@ -13,8 +13,11 @@ export default function SiteLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { resolvedTheme } = useTheme(); // Suppression de theme non utilisé
+  const { resolvedTheme, theme } = useTheme(); // Suppression de theme non utilisé
   const [mounted, setMounted] = React.useState(false);
+
+  console.log(theme);
+  
 
   React.useEffect(() => {
     setMounted(true);

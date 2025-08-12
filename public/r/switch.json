@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "switch",
-  "type": "registry:component",
+  "type": "registry:ui",
   "title": "Switch",
   "description": "A switch component for React Native applications.",
   "dependencies": [],
@@ -10,7 +10,7 @@
     {
       "path": "registry/switch/switch.tsx",
       "content": "import * as React from \"react\"\nimport { TouchableOpacity, Animated } from \"react-native\"\nimport { cn } from \"@/lib/utils\"\n\ninterface SwitchProps extends Omit<React.ComponentPropsWithoutRef<typeof TouchableOpacity>, \"onPress\"> {\n  checked?: boolean\n  onCheckedChange?: (checked: boolean) => void\n  disabled?: boolean\n}\n\nconst Switch = React.forwardRef<\n  React.ElementRef<typeof TouchableOpacity>,\n  SwitchProps\n>(({ className, checked, onCheckedChange, disabled, ...props }, ref) => {\n  const [innerChecked, setInnerChecked] = React.useState(checked ?? false)\n  const isChecked = checked !== undefined ? checked : innerChecked\n  const [animatedValue] = React.useState(new Animated.Value(isChecked ? 1 : 0))\n\n  React.useEffect(() => {\n    Animated.timing(animatedValue, {\n      toValue: isChecked ? 1 : 0,\n      duration: 100,\n      useNativeDriver: true,\n    }).start()\n  }, [isChecked, animatedValue])\n\n  const handlePress = React.useCallback(() => {\n    if (disabled) return\n\n    const newChecked = !isChecked\n\n    if (checked === undefined) {\n      setInnerChecked(newChecked)\n    }\n\n    onCheckedChange?.(newChecked)\n  }, [isChecked, onCheckedChange, disabled, checked])\n\n  const translateX = animatedValue.interpolate({\n    inputRange: [0, 1],\n    outputRange: [2, 21]\n  })\n\n  return (\n    <TouchableOpacity\n      ref={ref}\n      activeOpacity={0.8}\n      onPress={handlePress}\n      disabled={disabled}\n      accessibilityRole=\"switch\"\n      accessibilityState={{ checked: isChecked, disabled }}\n      data-state={isChecked ? \"checked\" : \"unchecked\"}\n      className={cn(\n        \"relative h-7 w-12 rounded-full border-2 border-transparent overflow-hidden\",\n        isChecked\n          ? \"bg-primary\"\n          : \"bg-gray-300 dark:bg-gray-600 border-border\",\n        disabled && \"opacity-50\",\n        className\n      )}\n      {...props}\n    >\n      <Animated.View\n        className=\"absolute h-5 w-5 rounded-full bg-background shadow-md\"\n        style={{\n          transform: [{ translateX }],\n          top: \"50%\",\n          marginTop: -9,\n        }}\n      />\n    </TouchableOpacity>\n  )\n})\n\nSwitch.displayName = \"Switch\"\n\nexport { Switch }\n",
-      "type": "registry:component"
+      "type": "registry:ui"
     }
   ],
   "changelog": [],

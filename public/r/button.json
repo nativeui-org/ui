@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "button",
-  "type": "registry:component",
+  "type": "registry:ui",
   "title": "Button",
   "description": "A button component for React Native applications.",
   "dependencies": [
@@ -12,7 +12,7 @@
     {
       "path": "registry/button/button.tsx",
       "content": "import * as React from \"react\";\nimport {\n  Pressable,\n  PressableProps as RNPressableProps,\n  View,\n  ViewStyle,\n  PressableStateCallbackType,\n} from \"react-native\";\nimport { cn } from \"@/lib/utils\";\n\nimport { cva, type VariantProps } from \"class-variance-authority\";\n\nexport const buttonVariants = cva(\n  \"flex-row items-center justify-center rounded-md\",\n  {\n    variants: {\n      variant: {\n        default:\n          \"bg-primary text-primary-foreground dark:bg-primary dark:text-primary-foreground shadow\",\n        destructive:\n          \"bg-destructive text-destructive-foreground dark:bg-destructive dark:text-destructive-foreground shadow-sm\",\n        outline:\n          \"border border-input bg-background text-foreground dark:border-input dark:bg-background dark:text-foreground shadow-sm\",\n        secondary:\n          \"bg-secondary text-secondary-foreground dark:bg-secondary dark:text-secondary-foreground shadow-sm\",\n        ghost: \"text-foreground dark:text-foreground\",\n        link: \"text-primary dark:text-primary underline\",\n      },\n      size: {\n        default: \"h-12 px-6\",\n        sm: \"h-10 px-4\",\n        lg: \"h-14 px-8\",\n        icon: \"h-12 w-12\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n      size: \"default\",\n    },\n  }\n);\n\nexport interface ButtonProps\n  extends Omit<RNPressableProps, \"style\">,\n  VariantProps<typeof buttonVariants> {\n  className?: string;\n  style?: ViewStyle;\n  asChild?: boolean;\n}\n\nconst Button = React.forwardRef<View, ButtonProps>(\n  ({ className, variant, size, asChild = false, children, ...props }, ref) => {\n    return (\n      <Pressable\n        className={cn(buttonVariants({ variant, size, className }))}\n        ref={ref}\n        {...props}\n      >\n        {(state: PressableStateCallbackType) => (\n          <View\n            className={`flex-row items-center justify-center gap-2 ${state.pressed ? \"opacity-80\" : \"\"\n              }`}\n          >\n            {typeof children === \"function\" ? children(state) : children}\n          </View>\n        )}\n      </Pressable>\n    );\n  }\n);\n\nButton.displayName = \"Button\";\n\nexport { Button };\n",
-      "type": "registry:component"
+      "type": "registry:ui"
     }
   ],
   "changelog": [],

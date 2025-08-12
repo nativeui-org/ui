@@ -46,10 +46,16 @@ export function CodeBlock({
   maxVisibleLines = 10,
   defaultExpanded = false,
 }: CodeBlockProps) {
-  const { theme: applicationTheme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const [copied, setCopied] = React.useState(false);
   const [localActiveTab, setLocalActiveTab] = React.useState<string | undefined>(activeTab || (tabs && tabs.length > 0 ? tabs[0].value : undefined));
   const [isExpanded, setIsExpanded] = React.useState(defaultExpanded);
+  const [mounted, setMounted] = React.useState(false);
+
+  // Fix hydration issues with next-themes
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleCopy = () => {
     const textToCopy = tabs && localActiveTab
@@ -79,7 +85,7 @@ export function CodeBlock({
 
   const codeLines = activeContent.split("\n");
   const shouldCollapse = collapsible && codeLines.length > maxVisibleLines;
-  const displayedCode = shouldCollapse && !isExpanded 
+  const displayedCode = shouldCollapse && !isExpanded
     ? codeLines.slice(0, maxVisibleLines).join("\n")
     : activeContent;
 
@@ -110,7 +116,7 @@ export function CodeBlock({
       case 'shell':
         return (
           <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2m0 2v14h14V5H5m2 2h2v2H7V7m3 0h2v2h-2V7m3 0h2v2h-2V7m3 0h2v2h-2V7m3 0h2v2h-2V7M7 10h2v2H7v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2M7 13h2v2H7v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2M7 16h2v2H7v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2" />
+            <path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2m0 2v14h14V5H5m2 2h2v2H7V7m3 0h2v2h-2V7m3 0h2v2h-2V7m3 0h2v2h-2V7m3 0h2v2h-2V7m3 0h2v2h-2V7m3 0h2v2h-2V7m3 0h2v2h-2V7M7 10h2v2H7v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2M7 16h2v2H7v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2m3 0h2v2h-2v-2" />
           </svg>
         );
       case 'css':
@@ -212,7 +218,32 @@ export function CodeBlock({
     ]
   };
 
-  const theme = applicationTheme === "dark" ? customDarkTheme : themes.github;
+  const theme = resolvedTheme === "dark" ? customDarkTheme : themes.github;
+
+  // Don't render until mounted to avoid hydration mismatch
+  if (!mounted) {
+    return (
+      <div className={cn("relative group rounded-md overflow-hidden border border-border", className)}>
+        {showHeader && (
+          <div className="flex items-center justify-between border-b border-border bg-muted/50 px-4 py-2">
+            <div className="flex items-center gap-2">
+              {headerPrefix}
+              {getLanguageIcon(activeLanguage)}
+              {title && <div className="text-sm font-medium">{title}</div>}
+            </div>
+            <div className="rounded-md p-1">
+              <Copy className="h-4 w-4" />
+            </div>
+          </div>
+        )}
+        <div className="relative">
+          <pre className="text-sm p-4 overflow-x-auto bg-muted">
+            <code>{displayedCode.trim()}</code>
+          </pre>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={cn("relative group rounded-md overflow-hidden border border-border", className)}>
@@ -310,7 +341,8 @@ export function CodeBlock({
                   )}
                   style={{
                     ...style,
-                    backgroundColor: applicationTheme === "dark" ? "#1a1a1a" : style.backgroundColor,
+                    // Remove hardcoded background, let CSS variables handle it
+                    backgroundColor: undefined,
                   }}
                 >
                   {tokens.map((line, i) => {
@@ -332,7 +364,7 @@ export function CodeBlock({
                 </pre>
               )}
             </Highlight>
-            
+
             {shouldCollapse && !isExpanded && (
               <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-background to-transparent pointer-events-none" />
             )}

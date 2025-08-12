@@ -6,46 +6,93 @@ import { InstallationTabs } from "@/components/docs/installation-tabs";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 
-export default function InstallationPage() {
-  const [selectedPlatform, setSelectedPlatform] = React.useState("expo");
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <div className="space-y-8">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Installation</h1>
-          <p className="text-muted-foreground text-lg mt-2">
-            How to install dependencies and structure your app.
-          </p>
+const InstallationPageSkeleton = () => {
+  return (
+    <div className="container max-w-3xl py-10 animate-pulse">
+      {/* Header skeleton */}
+      <div className="space-y-6">
+        <div className="space-y-4">
+          <div className="h-10 bg-muted rounded-md w-1/2"></div>
+          <div className="h-6 bg-muted rounded-md w-full"></div>
+          <div className="h-6 bg-muted rounded-md w-4/5"></div>
         </div>
+
+        {/* Info banner skeleton */}
+        <div className="rounded-lg border-2 p-4">
+          <div className="flex items-center gap-3">
+            <div className="rounded-full bg-muted p-2 w-9 h-9"></div>
+            <div className="h-5 bg-muted rounded-md flex-1"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Platform selection skeleton */}
+      <div className="mt-12 space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="relative overflow-hidden rounded-lg border p-6">
+          <div className="rounded-lg border p-6">
             <div className="flex flex-col items-center space-y-4">
-              <div className="h-16 w-16 relative">
-                <Image
-                  src={resolvedTheme === 'dark' ? "/images/expo-logo-dark.svg" : "/images/expo-logo.svg"}
-                  alt="Expo"
-                  fill
-                  className="object-contain"
-                />
+              <div className="h-16 w-16 bg-muted rounded"></div>
+              <div className="text-center space-y-2">
+                <div className="h-6 bg-muted rounded-md w-32"></div>
+                <div className="h-4 bg-muted rounded-md w-40"></div>
               </div>
-              <div className="text-center">
-                <h3 className="font-bold text-xl">Expo (Recommended)</h3>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Quick setup with better developer experience
-                </p>
+            </div>
+          </div>
+          <div className="rounded-lg border p-6 opacity-50">
+            <div className="flex flex-col items-center space-y-4">
+              <div className="h-16 w-16 bg-muted rounded"></div>
+              <div className="text-center space-y-2">
+                <div className="h-6 bg-muted rounded-md w-32"></div>
+                <div className="h-4 bg-muted rounded-md w-40"></div>
               </div>
             </div>
           </div>
         </div>
+
+        {/* Installation steps skeleton */}
+        <div className="space-y-8">
+          <div className="space-y-4">
+            <div className="h-8 bg-muted rounded-md w-1/3"></div>
+            <div className="h-5 bg-muted rounded-md w-full"></div>
+            <div className="h-5 bg-muted rounded-md w-3/4"></div>
+          </div>
+
+          {/* Multiple step skeletons */}
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="space-y-4">
+              <div className="h-6 bg-muted rounded-md w-1/4"></div>
+              <div className="h-4 bg-muted rounded-md w-full"></div>
+              <div className="h-32 bg-muted rounded-md"></div>
+            </div>
+          ))}
+        </div>
       </div>
-    );
+    </div>
+  );
+};
+
+export default function InstallationPage() {
+  const [selectedPlatform, setSelectedPlatform] = React.useState("expo");
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const loadResources = async () => {
+      setIsLoading(true);
+      
+      // Simulate loading time for theme and resources
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      setMounted(true);
+      setIsLoading(false);
+    };
+
+    loadResources();
+  }, []);
+
+  if (isLoading || !mounted) {
+    return <InstallationPageSkeleton />;
   }
 
   return (
@@ -136,7 +183,7 @@ export default function InstallationPage() {
               <div className="mt-8 space-y-12">
                 <div className="space-y-4">
                   <h3 className="text-xl font-semibold">1. Create Expo Project</h3>
-                  <InstallationTabs command="create-expo-app my-app --template default" />
+                  <InstallationTabs command="create-expo-app my-app" />
                 </div>
 
                 <div className="space-y-4">
@@ -473,7 +520,7 @@ export function cn(...inputs: ClassValue[]) {
     "strict": true,
     "paths": {
       "@/*": [
-        "./"
+        "./*"
       ]
     }
   },
@@ -634,40 +681,33 @@ function AppContent() {
                     Add this code in any of your components to test that everything is working:
                   </p>
                   <CodeBlock
-                    language="typescript"
+                    language="tsx"
                     collapsible
-                    title="app/components/TestComponent.tsx"
-                    code={`import { Button } from '@/components/ui/button';
-import { Text } from 'react-native';
+                    title="Test Component"
+                    code={`import { View, Text } from 'react-native';
 
-// ... rest of your imports ...
-
-return (
-  <Button>
-    <Text className="text-primary-foreground">Click me</Text>
-  </Button>
-);`}
+export default function TestComponent() {
+  return (
+    <View className="flex-1 justify-center items-center bg-background">
+      <Text className="text-2xl font-bold text-foreground">
+        NativeUI is working! 🎉
+      </Text>
+    </View>
+  );
+}`}
                   />
                 </div>
               </div>
             </div>
           </div>
         ) : (
-          <div className="rounded-lg border-2 border-muted p-8 text-center">
-            <h2 className="text-2xl font-bold tracking-tight mb-4">React Native CLI Support</h2>
-            <p className="text-muted-foreground text-lg leading-7">
-              Support for React Native CLI is coming soon. We recommend using Expo for now.
+          <div className="text-center py-12">
+            <h3 className="text-xl font-semibold mb-2">React Native CLI</h3>
+            <p className="text-muted-foreground">
+              Support for React Native CLI is coming soon. Stay tuned!
             </p>
           </div>
         )}
-      </div>
-
-      <div className="mt-12 space-y-4">
-        <h2 className="text-2xl font-bold tracking-tight">Next Steps</h2>
-        <p className="text-muted-foreground leading-7">
-          Now that you have set up your project, you can start adding components from our collection.
-          Visit the components section to explore available components and learn how to use them.
-        </p>
       </div>
     </div>
   );
