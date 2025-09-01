@@ -232,6 +232,10 @@ module.exports = {
           DEFAULT: "rgb(var(--color-foreground) / <alpha-value>)",
           muted: "rgb(var(--color-foreground-muted) / <alpha-value>)",
         },
+        muted: {
+          DEFAULT: "rgb(var(--color-muted) / <alpha-value>)",
+          foreground: "rgb(var(--color-muted-foreground) / <alpha-value>)",
+        },
         destructive: {
           DEFAULT: "rgb(var(--color-destructive) / <alpha-value>)",
           foreground: "rgb(var(--color-destructive-foreground) / <alpha-value>)",
@@ -249,27 +253,31 @@ module.exports = {
           foreground: "rgb(var(--color-info-foreground) / <alpha-value>)",
         },
         card: {
-          DEFAULT: "rgb(var(--card-rgb) / <alpha-value>)",
-          foreground: "rgb(var(--card-foreground-rgb) / <alpha-value>)",
+          DEFAULT: "rgb(var(--color-card) / <alpha-value>)",
+          foreground: "rgb(var(--color-card-foreground) / <alpha-value>)",
         },
         popover: {
-          DEFAULT: "rgb(var(--popover-rgb) / <alpha-value>)",
-          foreground: "rgb(var(--popover-foreground-rgb) / <alpha-value>)",
+          DEFAULT: "rgb(var(--color-popover) / <alpha-value>)",
+          foreground: "rgb(var(--color-popover-foreground) / <alpha-value>)",
         },
         accent: {
-          DEFAULT: "rgb(var(--accent-rgb) / <alpha-value>)",
-          foreground: "rgb(var(--accent-foreground-rgb) / <alpha-value>)",
+          DEFAULT: "rgb(var(--color-accent) / <alpha-value>)",
+          foreground: "rgb(var(--color-accent-foreground) / <alpha-value>)",
         },
         border: {
-          DEFAULT: "rgb(var(--border-rgb) / <alpha-value>)",
-          foreground: "rgb(var(--border-foreground-rgb) / <alpha-value>)",
+          DEFAULT: "rgb(var(--border) / <alpha-value>)",
+          foreground: "rgb(var(--border-foreground) / <alpha-value>)",
         },
         input: {
-          DEFAULT: "rgb(var(--input-rgb) / <alpha-value>)",
-          foreground: "rgb(var(--input-foreground-rgb) / <alpha-value>)",
+          DEFAULT: "rgb(var(--input) / <alpha-value>)",
+          foreground: "rgb(var(--input-foreground) / <alpha-value>)",
         },
-        ring: "rgb(var(--ring-rgb) / <alpha-value>)",
-        radius: "var(--radius)",
+        
+        toggle: {
+          active: "rgb(var(--toggle-active) / <alpha-value>)",
+          "active-foreground": "rgb(var(--toggle-active-foreground) / <alpha-value>)",
+          border: "rgb(var(--toggle-border) / <alpha-value>)",
+        },
       },
     },
   },
@@ -287,6 +295,8 @@ module.exports = {
           "--color-warning": "234 179 8",
           "--color-info": "59 130 246",
           "--color-muted": "115 115 115",
+          "--toggle-active": "45 45 45",
+          "--toggle-border": "229 231 235",
         },
       });
     },
@@ -326,9 +336,11 @@ export const themes = {
       "--color-secondary":    "45 45 45",
       "--color-secondary-foreground": "255 255 255",
       "--color-foreground-muted": "115 115 115",
+      "--color-muted-foreground": "115 115 115",
+      "--color-muted":        "240 240 240", 
 
       // Accent colors
-      "--color-accent":       "45 45 45",
+      "--color-accent":       "145 145 145",
       "--color-accent-foreground": "255 255 255",
 
       // Status colors
@@ -350,6 +362,11 @@ export const themes = {
       "--input":              "229 231 235",
       "--input-foreground": "13 13 13",
       "--ring":               "13 13 13",
+      
+      // Toggle specific colors
+      "--toggle-active":      "45 45 45",
+      "--toggle-active-foreground": "255 255 255",
+      "--toggle-border":      "229 231 235",
     }),
 
     dark: vars({
@@ -368,7 +385,9 @@ export const themes = {
 
       // Secondary colors
       "--color-secondary":    "58 58 58",
-      "--color-muted":        "163 163 163",
+      "--color-muted":        "75 85 99",
+      "--color-foreground-muted": "209 213 219",
+      "--color-muted-foreground": "209 213 219", 
 
       // Accent colors
       "--color-accent":       "58  58  58",
@@ -388,11 +407,14 @@ export const themes = {
       "--color-info-foreground": "250 250 250",
 
       // Borders, inputs and "rings"
-      "--border":             " 38  38  38",
-      "--border-foreground": "250 250 250",
+      "--border":             "75 85 99", 
       "--input":              " 38  38  38",
-      "--input-foreground": "250 250 250",
       "--ring":               "212 212 212",
+      
+      // Toggle specific colors
+      "--toggle-active":      "120 120 120",
+      "--toggle-active-foreground": "250 250 250",
+      "--toggle-border":      "100 100 100",
     }),
 } as const;
 `}
