@@ -7,7 +7,12 @@ export async function GET(
   { params }: { params: Promise<{ componentName: string }> }
 
 ) {
-  const { componentName } = await params;
+  let { componentName } = await params;
+  
+  // Supprimer l'extension .json si elle est présente
+  if (componentName.endsWith('.json')) {
+    componentName = componentName.slice(0, -5); // Enlève les 5 derniers caractères (.json)
+  }
 
   try {
     const filePath = join(process.cwd(), 'public', 'r', `${componentName}.json`);
