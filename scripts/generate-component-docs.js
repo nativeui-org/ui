@@ -10,34 +10,38 @@ if (!fs.existsSync(DOCS_COMPONENTS_DIR)) {
   fs.mkdirSync(DOCS_COMPONENTS_DIR, { recursive: true });
 }
 
-// Get all registry JSON files
+// Get all registry JSON files, excluding registry.json itself
 const registryFiles = fs.readdirSync(PUBLIC_REGISTRY_DIR)
-  .filter(file => file.endsWith('.json'));
+  .filter(file => file.endsWith('.json') && file !== 'registry.json');
 
 // Process each component
 registryFiles.forEach(jsonFile => {
   const componentName = path.basename(jsonFile, '.json');
   const jsonPath = path.join(PUBLIC_REGISTRY_DIR, jsonFile);
-  
+
   // Read the component JSON
   const componentJson = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
-  
+
   // Create component directory if it doesn't exist
   const componentDir = path.join(DOCS_COMPONENTS_DIR, componentName);
   if (!fs.existsSync(componentDir)) {
     fs.mkdirSync(componentDir, { recursive: true });
   }
+
+ if (!componentJson.files || !componentJson.files.length) {
+    console.log(`⚠️ No files found for ${componentName}, skipping...`);
+    return; 
+  }
   
-  // Get component code from JSON
   const componentCode = componentJson.files[0].content;
-  
+
   // Parse component code to extract variants and sizes
   const variants = extractVariants(componentCode);
   const sizes = extractSizes(componentCode);
-  
+
   // Generate examples based on variants and sizes
   const examples = generateExamples(componentName, variants, sizes);
-  
+
   // Generate page content
   const pageContent = generatePageContent(
     componentName,
@@ -45,11 +49,11 @@ registryFiles.forEach(jsonFile => {
     examples,
     componentCode
   );
-  
+
   // Write the page file
   const pagePath = path.join(componentDir, 'page.tsx');
   fs.writeFileSync(pagePath, pageContent);
-  
+
   console.log(`✅ Generated documentation page for ${componentName}`);
 });
 
@@ -62,18 +66,18 @@ function extractVariants(code) {
   // Find the variants section inside buttonVariants (or similar)
   const variantsMatch = code.match(/variant:\s*{([^}]*)}/s);
   if (!variantsMatch) return ['default'];
-  
+
   const variantsBlock = variantsMatch[1];
-  
+
   // Now extract each variant name defined in the component
   const variantRegex = /\s+(\w+):\s*["|']/g;
   const variantMatches = [];
   let match;
-  
+
   while ((match = variantRegex.exec(variantsBlock)) !== null) {
     variantMatches.push(match[1]);
   }
-  
+
   return variantMatches.length > 0 ? variantMatches : ['default'];
 }
 
@@ -83,14 +87,14 @@ function extractVariants(code) {
 function extractSizes(code) {
   const sizesMatch = code.match(/size:\s*{([^}]*)}/s);
   if (!sizesMatch) return ['default'];
-  
+
   const sizesBlock = sizesMatch[1];
   // Extract only the size names (without the comments and values)
   const sizeMatches = Array.from(
     sizesBlock.matchAll(/\s+(\w+):\s*/g),
     m => m[1]
   );
-  
+
   // Return unique sizes
   return [...new Set(sizeMatches)];
 }
@@ -104,7 +108,7 @@ function generateExamples(componentName, variants, sizes) {
     .split('-')
     .map(part => part.charAt(0).toUpperCase() + part.slice(1))
     .join('');
-  
+
   const examples = [
     {
       title: "Default",
@@ -121,7 +125,7 @@ export default function ${formattedComponentName}Demo() {
       language: "tsx",
     }
   ];
-  
+
   if (variants.length > 1) {
     // Add an example showing each variant
     examples.push({
@@ -139,7 +143,7 @@ export default function ${formattedComponentName}Variants() {
       language: "tsx",
     });
   }
-  
+
   if (sizes.length > 1) {
     // Add an example showing each size
     examples.push({
@@ -157,7 +161,7 @@ export default function ${formattedComponentName}Sizes() {
       language: "tsx",
     });
   }
-  
+
   return examples;
 }
 
@@ -172,14 +176,14 @@ function generatePageContent(componentName, description, examples, componentCode
     .join('');
 
   // Get component dependencies from registry.json
-  const registryContent = JSON.parse(fs.readFileSync('registry.json', 'utf8'));
+  const registryContent = JSON.parse(fs.readFileSync('./public/r/registry.json', 'utf8'));
   const componentInfo = registryContent.items.find(item => item.name === componentName);
   const changelog = componentInfo?.changelog || [];
-  
+
   // Combine both types of dependencies
   const directDependencies = componentInfo?.dependencies || [];
   const registryDependencies = componentInfo?.registryDependencies || [];
-  
+
   // Format registry dependencies to show they are from the registry
   const formattedRegistryDeps = registryDependencies.map(dep => {
     // Si c'est une URL, extraire juste le nom du composant
@@ -189,17 +193,17 @@ function generatePageContent(componentName, description, examples, componentCode
     }
     return `@nativeui/ui/${dep}`;
   });
-  
+
   const allDependencies = [
     ...directDependencies,
     ...formattedRegistryDeps
   ];
-  
+
   // Generate preview code
   // Lire le fichier JSON du composant pour obtenir customPreview
   const jsonPath = path.join(PUBLIC_REGISTRY_DIR, `${componentName}.json`);
   const componentJson = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
-  
+
   // Utiliser customPreview s'il existe, sinon utiliser le code généré par défaut
   const previewCode = componentJson.customPreview || `import { ${formattedComponentName} } from "@nativeui/ui";
 

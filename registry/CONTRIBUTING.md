@@ -61,7 +61,7 @@ registry/
 After creating your component files, you need to add the component to the registry:
 
 1. Create a JSON file in `public/r/[component-name].json`
-2. Add the component entry to `registry.json`
+2. Add the component entry to `public/r/registry.json`
 
 ### Generate component files
 
