@@ -5,9 +5,23 @@ import { NextResponse } from 'next/server';
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ componentName: string }> }
-
 ) {
   let { componentName } = await params;
+  
+  if (componentName === 'registry' || componentName === 'registry.json') {
+    try {
+      const registryFilePath = join(process.cwd(), 'registry.json');
+      const registryFileContent = readFileSync(registryFilePath, 'utf-8');
+      const registryData = JSON.parse(registryFileContent);
+
+      return NextResponse.json(registryData);
+    } catch (error) {
+      return new NextResponse(
+        JSON.stringify({ error: `Registry file not found: ${error}` }),
+        { status: 404, headers: { 'content-type': 'application/json' } }
+      );
+    }
+  }
   
   // Supprimer l'extension .json si elle est présente
   if (componentName.endsWith('.json')) {
