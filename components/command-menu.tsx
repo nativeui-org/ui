@@ -9,7 +9,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import registry from "@/registry.json";
+import registry from "@/public/r/registry.json";
 
 export function CommandMenu() {
   const [open, setOpen] = React.useState(false);

@@ -23,9 +23,8 @@ export async function GET(
     }
   }
   
-  // Supprimer l'extension .json si elle est présente
   if (componentName.endsWith('.json')) {
-    componentName = componentName.slice(0, -5); // Enlève les 5 derniers caractères (.json)
+    componentName = componentName.slice(0, -5);
   }
 
   try {
