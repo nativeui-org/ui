@@ -4,10 +4,17 @@ const path = require('path');
 // Configuration
 const PUBLIC_REGISTRY_DIR = path.join(process.cwd(), 'public/r');
 const DOCS_COMPONENTS_DIR = path.join(process.cwd(), 'app/(site)/docs/components');
+const REGISTRY_DIR = path.join(process.cwd(), 'registry');
+const MARKDOWN_DOCS_DIR = path.join(process.cwd(), 'public/docs/components');
 
 // Ensure docs components directory exists
 if (!fs.existsSync(DOCS_COMPONENTS_DIR)) {
   fs.mkdirSync(DOCS_COMPONENTS_DIR, { recursive: true });
+}
+
+// Ensure markdown docs directory exists
+if (!fs.existsSync(MARKDOWN_DOCS_DIR)) {
+  fs.mkdirSync(MARKDOWN_DOCS_DIR, { recursive: true });
 }
 
 // Get all registry JSON files, excluding registry.json itself
@@ -54,7 +61,26 @@ registryFiles.forEach(jsonFile => {
   const pagePath = path.join(componentDir, 'page.tsx');
   fs.writeFileSync(pagePath, pageContent);
 
-  console.log(`✅ Generated documentation page for ${componentName}`);
+  // Get component dependencies from registry.json (same as page generation)
+  const registryContent = JSON.parse(fs.readFileSync('./public/r/registry.json', 'utf8'));
+  const componentInfo = registryContent.items.find(item => item.name === componentName);
+  
+  // Combine both types of dependencies
+  const directDependencies = componentInfo?.dependencies || [];
+  const registryDependencies = componentInfo?.registryDependencies || [];
+  const allDependencies = [...directDependencies, ...registryDependencies];
+
+  // Generate and write markdown file
+  const markdownContent = generateMarkdownContent(
+    componentName,
+    componentJson.description,
+    componentCode,
+    allDependencies
+  );
+  const markdownPath = path.join(MARKDOWN_DOCS_DIR, `${componentName}.md`);
+  fs.writeFileSync(markdownPath, markdownContent);
+
+  console.log(`✅ Generated documentation page and markdown for ${componentName}`);
 });
 
 console.log(`\n🎉 Documentation generation complete!`);
@@ -254,4 +280,137 @@ export default function ${formattedComponentName}Page() {
   );
 }
 `;
+}
+
+/**
+ * Generate markdown content for a component
+ */
+function generateMarkdownContent(componentName, description, componentCode, dependencies) {
+  // Convert kebab-case to PascalCase
+  const formattedComponentName = componentName
+    .split('-')
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('');
+
+  // Read preview and usage files if they exist
+  let previewCode = '';
+  let usageCode = '';
+  
+  const componentRegistryDir = path.join(REGISTRY_DIR, componentName);
+  const previewPath = path.join(componentRegistryDir, `${componentName}.preview.tsx`);
+  const usagePath = path.join(componentRegistryDir, `${componentName}.usage.tsx`);
+  
+  if (fs.existsSync(previewPath)) {
+    previewCode = fs.readFileSync(previewPath, 'utf8');
+  }
+  
+  if (fs.existsSync(usagePath)) {
+    usageCode = fs.readFileSync(usagePath, 'utf8');
+  }
+
+  // Separate external and internal dependencies
+  const externalDeps = dependencies.filter(dep => 
+    !dep.startsWith('http') && !dep.includes('/registry/')
+  );
+  const internalDeps = dependencies.filter(dep => 
+    dep.startsWith('http') || dep.includes('/registry/')
+  ).map(dep => {
+    if (dep.startsWith('http')) {
+      const parts = dep.split('/');
+      return parts[parts.length - 1].replace('.json', '');
+    }
+    return dep.replace('/registry/', '').replace('.json', '');
+  });
+
+  let markdownContent = `# ${formattedComponentName}
+
+${description}
+
+## Installation
+
+\`\`\`bash
+npx @nativeui/cli add ${componentName}
+\`\`\`
+
+## Manual Installation
+
+\`\`\`tsx
+${componentCode}
+\`\`\`
+`;
+
+  // Add dependencies section if there are any
+  if (externalDeps.length > 0 || internalDeps.length > 0) {
+    markdownContent += `
+## Dependencies
+`;
+    
+    if (externalDeps.length > 0) {
+      markdownContent += `
+### Package Dependencies
+
+\`\`\`bash
+npm install ${externalDeps.join(' ')}
+\`\`\`
+`;
+    }
+
+    if (internalDeps.length > 0) {
+      markdownContent += `
+### Required Components
+
+${internalDeps.map(dep => `- ${dep}`).join('\n')}
+`;
+    }
+  }
+
+  // Add usage section
+  if (usageCode) {
+    markdownContent += `
+## Usage
+
+\`\`\`tsx
+${usageCode}
+\`\`\`
+`;
+  }
+
+  // Add preview section
+  if (previewCode) {
+    markdownContent += `
+## Preview
+
+\`\`\`tsx
+${previewCode}
+\`\`\`
+`;
+  }
+
+  // Add API reference
+  markdownContent += `
+## API Reference
+
+### Props
+
+The ${formattedComponentName} component accepts all standard HTML attributes plus:
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| variant | string | "default" | The visual style variant |
+| size | string | "default" | The size of the component |
+
+### Variants
+
+- \`default\` - Standard appearance
+- \`outline\` - Outlined style
+- \`ghost\` - Minimal style
+
+### Sizes
+
+- \`sm\` - Small size
+- \`default\` - Default size
+- \`lg\` - Large size
+`;
+
+  return markdownContent;
 }
