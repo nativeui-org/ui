@@ -1,0 +1,631 @@
+# NativeUI - React Native Component Library
+
+NativeUI is an open-source UI component library for React Native applications inspired by shadcn/ui's design principles. It provides beautifully designed, customizable, and accessible components for building mobile applications.
+
+## Overview
+
+- **Website**: https://nativeui.io
+- **GitHub**: https://github.com/nativeui-org/ui
+- **Playground**: https://github.com/nativeui-org/playground
+- **License**: MIT
+
+## Philosophy
+
+NativeUI is NOT a traditional component library that you install via npm. Instead, it's a collection of reusable components that you copy and paste into your React Native project. This approach gives you:
+
+- **Full ownership** of the code
+- **Complete customization** control
+- **No dependency coupling** between style and implementation
+- **Freedom to modify** components as needed
+
+## Installation & Setup
+
+### Prerequisites
+
+- Node.js 18+ 
+- Expo CLI or React Native development environment
+- React Native 0.70+
+
+### Quick Start with Expo (Recommended)
+
+1. **Create Expo Project**
+```bash
+npx create-expo-app my-app
+cd my-app
+```
+
+2. **Install Dependencies**
+```bash
+npx expo install nativewind tailwindcss react-native-reanimated react-native-safe-area-context class-variance-authority tailwind-merge clsx
+```
+
+3. **Configure Tailwind CSS**
+```bash
+npx tailwindcss init
+```
+
+Update `tailwind.config.js`:
+```javascript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
+  presets: [require("nativewind/preset")],
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: "rgb(var(--color-primary) / <alpha-value>)",
+          foreground: "rgb(var(--color-primary-foreground) / <alpha-value>)",
+        },
+        secondary: {
+          DEFAULT: "rgb(var(--color-secondary) / <alpha-value>)",
+          foreground: "rgb(var(--color-secondary-foreground) / <alpha-value>)",
+        },
+        background: {
+          DEFAULT: "rgb(var(--color-background) / <alpha-value>)",
+          foreground: "rgb(var(--color-background-foreground) / <alpha-value>)",
+        },
+        foreground: {
+          DEFAULT: "rgb(var(--color-foreground) / <alpha-value>)",
+          muted: "rgb(var(--color-foreground-muted) / <alpha-value>)",
+        },
+        muted: {
+          DEFAULT: "rgb(var(--color-muted) / <alpha-value>)",
+          foreground: "rgb(var(--color-muted-foreground) / <alpha-value>)",
+        },
+        destructive: {
+          DEFAULT: "rgb(var(--color-destructive) / <alpha-value>)",
+          foreground: "rgb(var(--color-destructive-foreground) / <alpha-value>)",
+        },
+        success: {
+          DEFAULT: "rgb(var(--color-success) / <alpha-value>)",
+          foreground: "rgb(var(--color-success-foreground) / <alpha-value>)",
+        },
+        warning: {
+          DEFAULT: "rgb(var(--color-warning) / <alpha-value>)",
+          foreground: "rgb(var(--color-warning-foreground) / <alpha-value>)",
+        },
+        info: {
+          DEFAULT: "rgb(var(--color-info) / <alpha-value>)",
+          foreground: "rgb(var(--color-info-foreground) / <alpha-value>)",
+        },
+        card: {
+          DEFAULT: "rgb(var(--color-card) / <alpha-value>)",
+          foreground: "rgb(var(--color-card-foreground) / <alpha-value>)",
+        },
+        popover: {
+          DEFAULT: "rgb(var(--color-popover) / <alpha-value>)",
+          foreground: "rgb(var(--color-popover-foreground) / <alpha-value>)",
+        },
+        accent: {
+          DEFAULT: "rgb(var(--color-accent) / <alpha-value>)",
+          foreground: "rgb(var(--color-accent-foreground) / <alpha-value>)",
+        },
+        border: {
+          DEFAULT: "rgb(var(--border) / <alpha-value>)",
+          foreground: "rgb(var(--border-foreground) / <alpha-value>)",
+        },
+        input: {
+          DEFAULT: "rgb(var(--input) / <alpha-value>)",
+          foreground: "rgb(var(--input-foreground) / <alpha-value>)",
+        },
+        toggle: {
+          active: "rgb(var(--toggle-active) / <alpha-value>)",
+          "active-foreground": "rgb(var(--toggle-active-foreground) / <alpha-value>)",
+          border: "rgb(var(--toggle-border) / <alpha-value>)",
+        },
+      },
+    },
+  },
+  plugins: [
+    ({ addBase }) => {
+      addBase({
+        ":root": {
+          "--color-primary": "0 0 0",
+          "--color-secondary": "45 45 45",
+          "--color-background": "255 255 255",
+          "--color-primary-foreground": "255 255 255",
+          "--color-foreground": "0 0 0",
+          "--color-destructive": "239 68 68",
+          "--color-success": "34 197 94",
+          "--color-warning": "234 179 8",
+          "--color-info": "59 130 246",
+          "--color-muted": "115 115 115",
+          "--toggle-active": "45 45 45",
+          "--toggle-border": "229 231 235",
+        },
+      });
+    },
+  ],
+};
+```
+
+4. **Setup Theme System**
+
+Create `lib/utils.ts`:
+```typescript
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```
+
+Create `lib/theme.ts`:
+```typescript
+import { vars } from "nativewind";
+
+export const themes = {
+    light: vars({
+      // Primary colors
+      "--color-primary":      "0 0 0",
+      "--color-primary-foreground": "255 255 255",
+      "--color-foreground":   "13 13 13",
+      // ... (full theme configuration)
+    }),
+    dark: vars({
+      // Dark theme configuration
+      "--color-primary":      "255 255 255",
+      "--color-primary-foreground": "13 13 13",
+      "--color-foreground":   "250 250 250",
+      // ... (full dark theme configuration)
+    }),
+} as const;
+```
+
+5. **Configure Build Tools**
+
+Update `babel.config.js`:
+```javascript
+module.exports = function (api) {
+  api.cache(true);
+  return {
+    presets: [
+      ['babel-preset-expo', { jsxImportSource: 'nativewind' }],
+      'nativewind/babel',
+    ],
+    plugins: [
+      'react-native-reanimated/plugin',
+    ],
+  };
+};
+```
+
+Create `metro.config.js`:
+```javascript
+const { getDefaultConfig } = require('expo/metro-config');
+const { withNativeWind } = require('nativewind/metro');
+
+const config = getDefaultConfig(__dirname);
+
+module.exports = withNativeWind(config, {
+  input: './app/global.css',
+});
+```
+
+6. **Setup TypeScript**
+
+Create `nativewind-env.d.ts`:
+```typescript
+/// <reference types="nativewind/types" />
+```
+
+Update `tsconfig.json`:
+```json
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts",
+    "nativewind-env.d.ts"
+  ]
+}
+```
+
+7. **Configure Components Registry**
+
+Create `components.json`:
+```json
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "./app/global.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  },
+  "iconLibrary": "lucide"
+}
+```
+
+## How to Add Components
+
+### Method 1: Using shadcn CLI (Recommended)
+```bash
+npx shadcn@latest add https://nativeui.io/registry/button
+npx shadcn@latest add https://nativeui.io/registry/input
+npx shadcn@latest add https://nativeui.io/registry/card
+```
+
+### Method 2: Manual Copy & Paste
+1. Visit https://nativeui.io/components/[component-name]
+2. Copy the component code
+3. Create the component file in your project
+4. Install any required dependencies
+
+## Available Components
+
+### Form Components
+
+#### Button
+- **Description**: A button component with multiple variants for React Native applications
+- **Registry URL**: https://nativeui.io/registry/button
+- **Dependencies**: react-native, class-variance-authority
+- **Variants**: default, destructive, outline, secondary, ghost, link, selection
+- **Sizes**: default, sm, lg, icon
+- **Features**: Press states, compound variants, accessibility support
+
+#### Input  
+- **Description**: An input component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/input
+- **Dependencies**: react-native
+- **Features**: Focus states, platform-specific styling, keyboard types, accessibility
+
+#### Textarea
+- **Description**: A textarea component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/textarea
+- **Dependencies**: react-native
+- **Features**: Multi-line text input, auto-resize, character counting
+
+#### Checkbox
+- **Description**: A checkbox component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/checkbox
+- **Dependencies**: react-native, @expo/vector-icons
+- **Features**: Checked/unchecked states, indeterminate state, custom icons
+
+#### Radio Group
+- **Description**: A radio group component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/radio-group
+- **Dependencies**: react-native
+- **Features**: Single selection, grouped options, accessibility
+
+#### Switch
+- **Description**: A switch component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/switch
+- **Dependencies**: react-native
+- **Features**: Toggle states, animations, accessibility
+
+#### Slider
+- **Description**: A slider component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/slider
+- **Dependencies**: react-native
+- **Features**: Range selection, step values, custom styling
+
+#### Select
+- **Description**: A select component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/select
+- **Dependencies**: react-native, @expo/vector-icons
+- **Registry Dependencies**: drawer
+- **Features**: Dropdown selection, search, custom options
+
+#### Combobox
+- **Description**: A combobox component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/combobox
+- **Dependencies**: react-native, @expo/vector-icons
+- **Registry Dependencies**: drawer, input
+- **Features**: Searchable dropdown, autocomplete, custom filtering
+
+#### Input OTP
+- **Description**: An input OTP component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/input-otp
+- **Dependencies**: react-native
+- **Features**: One-time password input, auto-focus, validation
+
+### Layout Components
+
+#### Card
+- **Description**: A card component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/card
+- **Dependencies**: react-native
+- **Features**: Header, content, footer sections, elevation styles
+
+#### Separator
+- **Description**: A separator component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/separator
+- **Dependencies**: react-native
+- **Features**: Horizontal/vertical dividers, custom styling
+
+#### Accordion
+- **Description**: An accordion component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/accordion
+- **Dependencies**: react-native, @expo/vector-icons
+- **Features**: Collapsible sections, single/multiple expansion
+
+#### Collapsible
+- **Description**: A collapsible component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/collapsible
+- **Dependencies**: react-native, @expo/vector-icons
+- **Features**: Expand/collapse content, smooth animations
+
+#### Tabs
+- **Description**: A tabs component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/tabs
+- **Dependencies**: react-native
+- **Features**: Multiple tab panels, active states, swipe navigation
+
+### Display Components
+
+#### Avatar
+- **Description**: An avatar component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/avatar
+- **Dependencies**: react-native
+- **Features**: Image avatars, fallback text, different sizes
+
+#### Badge
+- **Description**: A badge component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/badge
+- **Dependencies**: react-native, class-variance-authority
+- **Variants**: default, secondary, destructive, outline
+- **Features**: Status indicators, notification counts
+
+#### Alert
+- **Description**: An alert component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/alert
+- **Dependencies**: react-native, class-variance-authority
+- **Variants**: default, destructive
+- **Features**: Status messages, icons, dismissible
+
+#### Progress
+- **Description**: A progress component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/progress
+- **Dependencies**: react-native
+- **Features**: Progress bars, percentage display, animations
+
+#### Skeleton
+- **Description**: A skeleton component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/skeleton
+- **Features**: Loading placeholders, shimmer effects
+
+### Navigation Components
+
+#### Breadcrumb
+- **Description**: A breadcrumb component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/breadcrumb
+- **Dependencies**: react-native, @expo/vector-icons
+- **Features**: Navigation hierarchy, separators, clickable items
+
+#### Pagination
+- **Description**: A pagination component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/pagination
+- **Dependencies**: react-native, @expo/vector-icons
+- **Features**: Page navigation, first/last buttons, ellipsis
+
+### Overlay Components
+
+#### Dialog
+- **Description**: A dialog component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/dialog
+- **Dependencies**: react-native, @expo/vector-icons
+- **Features**: Modal dialogs, backdrop dismiss, animations
+
+#### Alert Dialog
+- **Description**: An alert dialog component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/alert-dialog
+- **Dependencies**: react-native
+- **Features**: Confirmation dialogs, action buttons
+
+#### Sheet
+- **Description**: A sheet component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/sheet
+- **Dependencies**: react-native, react-native-safe-area-context, @expo/vector-icons
+- **Features**: Bottom sheets, drag gestures, safe area handling
+
+#### Drawer
+- **Description**: A drawer component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/drawer
+- **Dependencies**: react-native, react-native-safe-area-context
+- **Features**: Side navigation, overlay, gestures
+
+#### Popover
+- **Description**: A popover component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/popover
+- **Dependencies**: react-native
+- **Features**: Positioned content, arrow pointing, auto-positioning
+
+#### Tooltip
+- **Description**: A tooltip component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/tooltip
+- **Dependencies**: react-native
+- **Features**: Hover/press tooltips, positioning, delays
+
+#### Dropdown
+- **Description**: A dropdown component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/dropdown
+- **Dependencies**: react-native, @expo/vector-icons
+- **Features**: Menu items, separators, keyboard navigation
+
+### Utility Components
+
+#### Label
+- **Description**: A label component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/label
+- **Dependencies**: react-native
+- **Features**: Form labels, accessibility associations
+
+#### Toggle
+- **Description**: A toggle component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/toggle
+- **Dependencies**: react-native
+- **Features**: On/off states, press animations
+
+#### Toggle Group
+- **Description**: A toggle group component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/toggle-group
+- **Dependencies**: react-native
+- **Features**: Multiple toggles, single/multiple selection
+
+### Data Components
+
+#### Table
+- **Description**: A table component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/table
+- **Dependencies**: react-native
+- **Features**: Rows, columns, headers, scrollable content
+
+#### Carousel
+- **Description**: A carousel component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/carousel
+- **Dependencies**: react-native, @expo/vector-icons
+- **Features**: Swipeable content, indicators, auto-play
+
+### Date & Time Components
+
+#### Calendar
+- **Description**: A calendar component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/calendar
+- **Dependencies**: react-native, date-fns, @expo/vector-icons, @react-native-community/datetimepicker
+- **Features**: Date selection, month/year navigation, localization
+
+#### Date Time Picker
+- **Description**: A date time picker component for React Native applications
+- **Registry URL**: https://nativeui.io/registry/date-time-picker
+- **Dependencies**: react-native, date-fns, @expo/vector-icons
+- **Registry Dependencies**: calendar
+- **Features**: Date/time selection, format customization
+
+## Component Architecture
+
+### Base Structure
+All NativeUI components follow these patterns:
+
+1. **TypeScript Support**: Full type safety with proper interfaces
+2. **Variant System**: Using `class-variance-authority` for consistent styling
+3. **Accessibility**: ARIA labels, keyboard navigation, screen reader support
+4. **Platform Adaptation**: iOS/Android specific optimizations
+5. **Theme Integration**: CSS variables for consistent theming
+6. **Ref Forwarding**: Proper ref handling for all components
+
+### Example Component Usage
+
+```typescript
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+
+export default function MyScreen() {
+  return (
+    <Card className="p-4 m-4">
+      <Input 
+        placeholder="Enter your name" 
+        className="mb-4"
+      />
+      <Button 
+        variant="default" 
+        size="lg"
+        onPress={() => console.log('Pressed!')}
+      >
+        <Text className="text-primary-foreground font-bold">
+          Submit
+        </Text>
+      </Button>
+    </Card>
+  );
+}
+```
+
+## Customization
+
+### Theme Customization
+Components use CSS variables for theming. Modify the theme configuration in your `lib/theme.ts` file to customize colors, spacing, and other design tokens.
+
+### Component Customization
+Since you own the component code, you can:
+- Modify styling and behavior directly
+- Add new variants and sizes
+- Integrate with your preferred state management
+- Add custom animations and interactions
+- Extend with additional props and features
+
+### Styling System
+- **TailwindCSS**: Primary styling system with NativeWind
+- **Class Variance Authority**: For variant-based styling
+- **CSS Variables**: For theme consistency
+- **Platform-specific**: iOS/Android adaptations
+
+## Best Practices
+
+1. **Copy, Don't Install**: Always copy component code into your project
+2. **Customize Freely**: Modify components to fit your design system
+3. **Test Thoroughly**: Test on both iOS and Android platforms
+4. **Accessibility First**: Maintain accessibility features when customizing
+5. **Performance**: Optimize for mobile performance and memory usage
+6. **Version Control**: Track your customizations for future updates
+
+## Development Workflow
+
+1. Browse components at https://nativeui.io/components
+2. Copy the component code you need
+3. Paste into your project structure
+4. Install required dependencies
+5. Customize styling and behavior
+6. Test on target platforms
+7. Integrate with your app
+
+## Contributing
+
+To contribute to NativeUI:
+
+1. Fork the repository
+2. Create a new branch for your component/feature
+3. Follow the component structure guidelines
+4. Add proper documentation and examples
+5. Test on iOS and Android
+6. Submit a pull request
+
+### Component Guidelines
+- Use TypeScript for all components
+- Follow existing code style and patterns
+- Include proper accessibility features
+- Ensure platform compatibility
+- Add comprehensive examples
+- Document all props and variants
+
+## Resources
+
+- **Documentation**: https://nativeui.io/docs
+- **Component Gallery**: https://nativeui.io/components  
+- **Installation Guide**: https://nativeui.io/docs/installation
+- **Usage Examples**: https://nativeui.io/docs/usage
+- **Playground Project**: https://github.com/nativeui-org/playground
+- **GitHub Issues**: https://github.com/nativeui-org/ui/issues
+- **Contributing Guide**: https://github.com/nativeui-org/ui/blob/main/registry/CONTRIBUTING.md
+
+## Support
+
+- **GitHub Issues**: Report bugs and feature requests
+- **Discussions**: Community support and questions
+- **Documentation**: Comprehensive guides and examples
+- **Playground**: Live examples and testing environment
+
+NativeUI provides a solid foundation for building beautiful React Native applications with a focus on developer experience, customization, and platform-native performance.
