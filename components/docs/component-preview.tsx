@@ -304,7 +304,7 @@ export function ComponentPreview({
                   CLI.
                 </p>
                 <InstallationTabs
-                  command={`shadcn@latest add https://nativeui.io/registry/${registryName}`}
+                  command={`shadcn@latest add @nativeui/${registryName}`}
                 />
               </div>
             ) : (
