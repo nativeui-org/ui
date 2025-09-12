@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { useColorScheme } from "nativewind";
 import * as React from "react";
 import {
   Animated,
@@ -129,6 +130,7 @@ const Drawer = React.forwardRef<View, DrawerProps>(
     },
     ref
   ) => {
+    const { colorScheme } = useColorScheme();
     const [isVisible, setIsVisible] = React.useState(false);
     const snapPoints = React.useMemo(
       () => providedSnapPoints || resolveSnapPoints(size),
@@ -438,7 +440,14 @@ const Drawer = React.forwardRef<View, DrawerProps>(
           </Animated.View>
 
           <Animated.View
-            style={[styles.drawerContainer, { transform: [{ translateY }] }]}
+            style={[
+              styles.drawerContainer, 
+              { transform: [{ translateY }] },
+              // Fallback pour s'assurer que le background est visible sur web
+              Platform.OS === "web" && {
+                backgroundColor: colorScheme === "dark" ? "rgb(32, 32, 36)" : "rgb(255, 255, 255)"
+              }
+            ]}
             className={cn(
               "absolute bottom-0 left-0 right-0 bg-popover rounded-t-xl overflow-hidden",
               Platform.OS === "ios" ? "ios:shadow-xl" : "android:elevation-24",
