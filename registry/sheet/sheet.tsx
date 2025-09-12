@@ -1,19 +1,20 @@
-import * as React from "react";
-import {
-  View,
-  Text,
-  Modal,
-  TouchableWithoutFeedback,
-  Platform,
-  Animated,
-  Dimensions,
-  StyleSheet,
-  Easing,
-  KeyboardAvoidingView,
-} from "react-native";
-import { SafeAreaView, Edge } from "react-native-safe-area-context";
 import { cn } from "@/lib/utils";
 import { Feather } from "@expo/vector-icons";
+import { useColorScheme } from "nativewind";
+import * as React from "react";
+import {
+  Animated,
+  Dimensions,
+  Easing,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
+import { Edge, SafeAreaView } from "react-native-safe-area-context";
 
 // Animation config constants
 const ANIMATION = {
@@ -83,7 +84,7 @@ interface SheetContextValue {
 }
 
 export const SheetContext = React.createContext<SheetContextValue>({
-  close: () => { },
+  close: () => {},
   isClosing: false,
   isAnimating: false,
   position: new Animated.Value(0),
@@ -108,6 +109,7 @@ const Sheet = React.forwardRef<View, SheetProps>(
     },
     ref
   ) => {
+    const { colorScheme } = useColorScheme();
     const [isVisible, setIsVisible] = React.useState(false);
     const sheetSize = React.useMemo(() => resolveSheetSize(size), [size]);
 
@@ -118,17 +120,32 @@ const Sheet = React.forwardRef<View, SheetProps>(
     const hasInitializedOpen = React.useRef(false);
 
     const getInitialPosition = () => {
-      switch (side) {
-        case "left":
-          return -SCREEN_WIDTH;
-        case "right":
-          return SCREEN_WIDTH;
-        case "top":
-          return -SCREEN_HEIGHT;
-        case "bottom":
-          return SCREEN_HEIGHT;
-        default:
-          return SCREEN_WIDTH;
+      if (Platform.OS === "web") {
+        switch (side) {
+          case "left":
+            return -getSheetDimensions().width;
+          case "right":
+            return getSheetDimensions().width;
+          case "top":
+            return -getSheetDimensions().height;
+          case "bottom":
+            return getSheetDimensions().height;
+          default:
+            return getSheetDimensions().width;
+        }
+      } else {
+        switch (side) {
+          case "left":
+            return -SCREEN_WIDTH;
+          case "right":
+            return SCREEN_WIDTH;
+          case "top":
+            return -SCREEN_HEIGHT;
+          case "bottom":
+            return SCREEN_HEIGHT;
+          default:
+            return SCREEN_WIDTH;
+        }
       }
     };
 
@@ -285,17 +302,32 @@ const Sheet = React.forwardRef<View, SheetProps>(
     };
 
     const getSheetPosition = () => {
-      switch (side) {
-        case "left":
-          return "left-0 top-0 bottom-0";
-        case "right":
-          return "right-0 top-0 bottom-0";
-        case "top":
-          return "top-0 left-0 right-0";
-        case "bottom":
-          return "bottom-0 left-0 right-0";
-        default:
-          return "right-0 top-0 bottom-0";
+      if (Platform.OS === "web") {
+        switch (side) {
+          case "left":
+            return "left-0 top-0 bottom-0";
+          case "right":
+            return "right-0 top-0 bottom-0";
+          case "top":
+            return "top-0 left-0 right-0";
+          case "bottom":
+            return "bottom-0 left-0 right-0";
+          default:
+            return "right-0 top-0 bottom-0";
+        }
+      } else {
+        switch (side) {
+          case "left":
+            return "left-0 top-0 bottom-0";
+          case "right":
+            return "right-0 top-0 bottom-0";
+          case "top":
+            return "top-0 left-0 right-0";
+          case "bottom":
+            return "bottom-0 left-0 right-0";
+          default:
+            return "right-0 top-0 bottom-0";
+        }
       }
     };
 
@@ -331,11 +363,20 @@ const Sheet = React.forwardRef<View, SheetProps>(
               styles.sheetContainer,
               getTransformStyle(),
               getSheetDimensions(),
+              Platform.OS === "web" && {
+                backgroundColor: colorScheme === "dark" ? "rgb(32, 32, 36)" : "rgb(255, 255, 255)",
+                position: 'fixed' as any,
+                ...(side === "left" && { left: 0, top: 0, bottom: 0 }),
+                ...(side === "right" && { right: 0, top: 0, bottom: 0 }),
+                ...(side === "top" && { top: 0, left: 0, right: 0 }),
+                ...(side === "bottom" && { bottom: 0, left: 0, right: 0 }),
+                zIndex: 1001,
+              }
             ]}
             className={cn(
               "absolute bg-popover",
               Platform.OS === "ios" ? "ios:shadow-xl" : "android:elevation-24",
-              getSheetPosition(),
+              Platform.OS !== "web" && getSheetPosition(),
               contentClassName
             )}
           >
@@ -356,7 +397,7 @@ const Sheet = React.forwardRef<View, SheetProps>(
                   </View>
                   <TouchableWithoutFeedback onPress={animateClose}>
                     <View className="p-2 rounded-full bg-muted/50">
-                      <Feather name="x" size={20} color="#6B7280" />
+                      <Feather name="x" size={20} className="color-muted-foreground" />
                     </View>
                   </TouchableWithoutFeedback>
                 </View>
