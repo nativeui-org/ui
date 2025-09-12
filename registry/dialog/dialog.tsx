@@ -1,18 +1,19 @@
+import { cn } from "@/lib/utils";
+import { Ionicons } from "@expo/vector-icons";
+import { useColorScheme } from "nativewind";
 import * as React from "react";
 import {
-  View,
-  Text,
-  Pressable,
-  Modal,
-  TouchableWithoutFeedback,
-  Platform,
   Animated,
   Dimensions,
   KeyboardAvoidingView,
+  Modal,
+  Platform,
+  Pressable,
   ScrollView,
+  Text,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
-import { cn } from "@/lib/utils";
-import { Ionicons } from "@expo/vector-icons";
 
 interface DialogProps {
   children: React.ReactNode;
@@ -66,7 +67,7 @@ const DialogContext = React.createContext<{
   handleClose?: () => void;
 }>({
   open: false,
-  setOpen: () => { },
+  setOpen: () => {},
 });
 
 const Dialog = React.forwardRef<View, DialogProps>(
@@ -150,6 +151,7 @@ const DialogContent = React.forwardRef<View, DialogContentProps>(
     },
     ref
   ) => {
+    const { colorScheme } = useColorScheme();
     const { open, setOpen } = React.useContext(DialogContext);
     const fadeAnim = React.useRef(new Animated.Value(0)).current;
     const scaleAnim = React.useRef(new Animated.Value(0.95)).current;
@@ -217,7 +219,15 @@ const DialogContent = React.forwardRef<View, DialogContentProps>(
           >
             <Animated.View
               className="flex-1 justify-center items-center bg-black/50"
-              style={{ opacity: fadeAnim }}
+              style={{ 
+                opacity: fadeAnim,
+                ...(Platform.OS === "web" && {
+                  display: 'flex' as any,
+                  alignItems: 'center' as any,
+                  justifyContent: 'center' as any,
+                  minHeight: '100vh' as any
+                })
+              }}
             >
               <TouchableWithoutFeedback>
                 <KeyboardAvoidingView
@@ -225,9 +235,20 @@ const DialogContent = React.forwardRef<View, DialogContentProps>(
                   keyboardVerticalOffset={
                     Platform.OS === "ios" ? -SCREEN_HEIGHT * 0.2 : 0
                   }
+                  style={Platform.OS === "web" ? { 
+                    display: 'flex' as any,
+                    alignItems: 'center' as any,
+                    justifyContent: 'center' as any,
+                  } : undefined}
                 >
                   <Animated.View
                     ref={ref}
+                    style={{
+                      transform: [{ scale: scaleAnim }],
+                      ...(Platform.OS === "web" && {
+                        backgroundColor: colorScheme === "dark" ? "rgb(32, 32, 36)" : "rgb(255, 255, 255)"
+                      })
+                    }}
                     className={cn(
                       "bg-background m-6 rounded-2xl",
                       "w-[85%] max-w-sm",
@@ -236,9 +257,6 @@ const DialogContent = React.forwardRef<View, DialogContentProps>(
                         : "android:elevation-8",
                       className
                     )}
-                    style={{
-                      transform: [{ scale: scaleAnim }],
-                    }}
                     {...props}
                   >
                     <ScrollView bounces={false} className="max-h-[80vh]">
@@ -247,7 +265,7 @@ const DialogContent = React.forwardRef<View, DialogContentProps>(
                           onPress={handleClose}
                           className="absolute right-4 top-4 z-50 rounded-full p-2 bg-muted/50"
                         >
-                          <Ionicons name="close" size={24} color="#666" />
+                          <Ionicons name="close" size={24} className="color-muted-foreground" />
                         </Pressable>
                       )}
                       {children}
@@ -341,12 +359,6 @@ const DialogClose = React.forwardRef<View, DialogCloseProps>(
 DialogClose.displayName = "DialogClose";
 
 export {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
-  DialogDescription,
-  DialogClose,
+  Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger
 };
+
