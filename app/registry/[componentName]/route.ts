@@ -1,5 +1,3 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
 import { NextResponse } from 'next/server';
 
 export async function GET(
@@ -10,10 +8,12 @@ export async function GET(
   
   if (componentName === 'registry' || componentName === 'registry.json') {
     try {
-      const registryFilePath = join(process.cwd(), 'registry.json');
-      const registryFileContent = readFileSync(registryFilePath, 'utf-8');
-      const registryData = JSON.parse(registryFileContent);
-
+      const url = new URL('/r/registry.json', request.url);
+      const res = await fetch(url.toString());
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+      const registryData = await res.json();
       return NextResponse.json(registryData);
     } catch (error) {
       return new NextResponse(
@@ -28,24 +28,17 @@ export async function GET(
   }
 
   try {
-    const filePath = join(process.cwd(), 'public', 'r', `${componentName}.json`);
-    const fileContent = readFileSync(filePath, 'utf-8');
-    const componentData = JSON.parse(fileContent);
-
+    const url = new URL(`/r/${componentName}.json`, request.url);
+    const res = await fetch(url.toString());
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+    const componentData = await res.json();
     return NextResponse.json(componentData);
   } catch (error) {
-    try {
-      const legacyFilePath = join(process.cwd(), 'registry', 'ui', `${componentName}.json`);
-      const legacyFileContent = readFileSync(legacyFilePath, 'utf-8');
-      const legacyComponentData = JSON.parse(legacyFileContent);
-      console.error(error);
-
-      return NextResponse.json(legacyComponentData);
-    } catch (legacyError) {
-      return new NextResponse(
-        JSON.stringify({ error: `Component ${componentName} not found, ${legacyError}` }),
-        { status: 404, headers: { 'content-type': 'application/json' } }
-      );
-    }
+    return new NextResponse(
+      JSON.stringify({ error: `Component ${componentName} not found, ${error}` }),
+      { status: 404, headers: { 'content-type': 'application/json' } }
+    );
   }
 }
