@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { cva, type VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 import * as React from "react";
 import { Animated, StyleSheet, Text, View } from "react-native";
 
@@ -21,17 +21,17 @@ export const useToast = () => {
 	return context;
 };
 
-const toastVariants = cva("px-4 py-3 rounded-lg shadow-lg border", {
+const toastVariants = cva("px-5 py-4 rounded-2xl border", {
 	variants: {
 		variant: {
-			default: "bg-background border-border",
+			default: "bg-background border-border backdrop-blur-sm",
 			success:
-				"bg-green-50 border-green-200 dark:bg-green-950 dark:border-green-800",
+				"bg-green-50 border-green-200 dark:bg-green-950 dark:border-green-800 backdrop-blur-sm",
 			error:
-				"bg-red-50 border-red-200 dark:bg-red-950 dark:border-red-800",
+				"bg-red-50 border-red-200 dark:bg-red-950 dark:border-red-800 backdrop-blur-sm",
 			warning:
-				"bg-yellow-50 border-yellow-200 dark:bg-yellow-950 dark:border-yellow-800",
-			info: "bg-blue-50 border-blue-200 dark:bg-blue-950 dark:border-blue-800",
+				"bg-yellow-50 border-yellow-200 dark:bg-yellow-950 dark:border-yellow-800 backdrop-blur-sm",
+			info: "bg-blue-50 border-blue-200 dark:bg-blue-950 dark:border-blue-800 backdrop-blur-sm",
 		},
 	},
 	defaultVariants: {
@@ -57,7 +57,7 @@ const toastTextVariants = cva("text-sm font-medium", {
 interface ToastProviderProps {
 	children: React.ReactNode;
 	duration?: number;
-	position?: "top" | "bottom";
+	position?: "top" | "bottom" | "top-left" | "top-right" | "bottom-left" | "bottom-right";
 }
 
 export function ToastProvider({
@@ -107,7 +107,26 @@ export function ToastProvider({
 		};
 	}, []);
 
-	const positionStyle = position === "top" ? { top: 50 } : { bottom: 50 };
+	const getPositionStyle = () => {
+		const sideMargin = 16;
+
+		switch (position) {
+			case "top":
+				return { top: 50, alignSelf: "center" as const };
+			case "bottom":
+				return { bottom: 50, alignSelf: "center" as const };
+			case "top-left":
+				return { top: 50, left: sideMargin, alignSelf: "flex-start" as const };
+			case "top-right":
+				return { top: 50, right: sideMargin, alignSelf: "flex-end" as const };
+			case "bottom-left":
+				return { bottom: 50, left: sideMargin, alignSelf: "flex-start" as const };
+			case "bottom-right":
+				return { bottom: 50, right: sideMargin, alignSelf: "flex-end" as const };
+			default:
+				return { bottom: 50, alignSelf: "center" as const };
+		}
+	};
 
 	return (
 		<ToastContext.Provider value={{ show }}>
@@ -116,14 +135,14 @@ export function ToastProvider({
 				<Animated.View
 					style={[
 						styles.container,
-						positionStyle,
+						getPositionStyle(),
 						{
 							opacity: fadeAnim,
 							transform: [
 								{
 									translateY: fadeAnim.interpolate({
 										inputRange: [0, 1],
-										outputRange: position === "top" ? [-40, 0] : [40, 0],
+										outputRange: position.includes("top") ? [-40, 0] : [40, 0],
 									}),
 								},
 							],
@@ -144,14 +163,19 @@ export function ToastProvider({
 const styles = StyleSheet.create({
 	container: {
 		position: "absolute",
-		alignSelf: "center",
-		left: 0,
-		right: 0,
 		alignItems: "center",
-		paddingHorizontal: 16,
 		zIndex: 9999,
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 4,
+		},
+		shadowOpacity: 0.15,
+		shadowRadius: 12,
+		elevation: 8,
 	},
 });
 
-export { toastVariants, toastTextVariants };
-export type { ToastType, ToastProviderProps };
+export { toastTextVariants, toastVariants };
+export type { ToastProviderProps, ToastType };
+

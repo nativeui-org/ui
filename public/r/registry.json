@@ -511,6 +511,20 @@
       ],
       "dependencies": ["react-native", "date-fns", "@expo/vector-icons"],
       "registryDependencies": ["https://nativeui.io/registry/calendar.json"]
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "A toast component for React Native applications.",
+      "files": [
+        {
+          "path": "registry/toast/toast.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": ["react-native"],
+      "registryDependencies": []
     }
   ]
 }
