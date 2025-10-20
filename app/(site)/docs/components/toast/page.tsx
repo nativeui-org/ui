@@ -1,35 +1,26 @@
 import { ComponentPreview } from "@/components/docs/component-preview";
 
 export default function ToastPage() {
-	return (
-		<ComponentPreview
-			name="Toast"
-			description="Display temporary notification messages to users."
-			examples={[
-				{
-					title: "Default",
-					value: "default",
-					content:
-						'import { Button } from "@nativeui/ui";\nimport { ToastProvider, useToast } from "@nativeui/ui";\nimport { Text } from "react-native";\n\nfunction ToastDemo() {\n  const { show } = useToast();\n  \n  return (\n    <Button onPress={() => show("Your changes have been saved")}>\n      <Text>Show Toast</Text>\n    </Button>\n  );\n}\n\nexport default function App() {\n  return (\n    <ToastProvider>\n      <ToastDemo />\n    </ToastProvider>\n  );\n}',
-					language: "tsx",
-				},
-				{
-					title: "Variants",
-					value: "variants",
-					content:
-						'import { Button } from "@nativeui/ui";\nimport { ToastProvider, useToast } from "@nativeui/ui";\nimport { View, Text } from "react-native";\n\nfunction ToastVariants() {\n  const { show } = useToast();\n  \n  return (\n    <View className="flex flex-col gap-4">\n      <Button onPress={() => show("Default notification")}>\n        <Text>Default</Text>\n      </Button>\n      <Button onPress={() => show("Success!", "success")}>\n        <Text>Success</Text>\n      </Button>\n      <Button onPress={() => show("Error occurred", "error")}>\n        <Text>Error</Text>\n      </Button>\n      <Button onPress={() => show("Warning message", "warning")}>\n        <Text>Warning</Text>\n      </Button>\n      <Button onPress={() => show("Info message", "info")}>\n        <Text>Info</Text>\n      </Button>\n    </View>\n  );\n}\n\nexport default function App() {\n  return (\n    <ToastProvider>\n      <ToastVariants />\n    </ToastProvider>\n  );\n}',
-					language: "tsx",
-				},
-				{
-					title: "Custom Duration & Position",
-					value: "custom",
-					content:
-						'import { Button } from "@nativeui/ui";\nimport { ToastProvider, useToast } from "@nativeui/ui";\nimport { View, Text } from "react-native";\n\nfunction ToastCustom() {\n  const { show } = useToast();\n  \n  return (\n    <View className="flex flex-col gap-4">\n      <Button onPress={() => show("This toast appears at the top")}>\n        <Text>Top Position</Text>\n      </Button>\n    </View>\n  );\n}\n\nexport default function App() {\n  return (\n    <ToastProvider duration={5000} position="top">\n      <ToastCustom />\n    </ToastProvider>\n  );\n}',
-					language: "tsx",
-				},
-			]}
-			componentCode={`import { cn } from "@/lib/utils";
-import { cva, type VariantProps } from "class-variance-authority";
+  return (
+    <ComponentPreview
+      name="Toast"
+      description="A toast component for React Native applications."
+      examples={[
+  {
+    "title": "Default",
+    "value": "default",
+    "content": "import { Toast } from \"@nativeui/ui\";\n\nexport default function ToastDemo() {\n  return (\n    <Toast>\n      Click me\n    </Toast>\n  );\n}",
+    "language": "tsx"
+  },
+  {
+    "title": "Variants",
+    "value": "variants",
+    "content": "import { Toast } from \"@nativeui/ui\";\n\nexport default function ToastVariants() {\n  return (\n    <div className=\"flex flex-col gap-4\">\n      <Toast variant=\"default\">Default</Toast>\n      <Toast variant=\"success\">Success</Toast>\n      <Toast variant=\"error\">Error</Toast>\n      <Toast variant=\"warning\">Warning</Toast>\n      <Toast variant=\"info\">Info</Toast>\n    </div>\n  );\n}",
+    "language": "tsx"
+  }
+]}
+      componentCode={`import { cn } from "@/lib/utils";
+import { cva } from "class-variance-authority";
 import * as React from "react";
 import { Animated, StyleSheet, Text, View } from "react-native";
 
@@ -51,17 +42,17 @@ export const useToast = () => {
 	return context;
 };
 
-const toastVariants = cva("px-4 py-3 rounded-lg shadow-lg border", {
+const toastVariants = cva("px-5 py-4 rounded-2xl border", {
 	variants: {
 		variant: {
-			default: "bg-background border-border",
+			default: "bg-background border-border backdrop-blur-sm",
 			success:
-				"bg-green-50 border-green-200 dark:bg-green-950 dark:border-green-800",
+				"bg-green-50 border-green-200 dark:bg-green-950 dark:border-green-800 backdrop-blur-sm",
 			error:
-				"bg-red-50 border-red-200 dark:bg-red-950 dark:border-red-800",
+				"bg-red-50 border-red-200 dark:bg-red-950 dark:border-red-800 backdrop-blur-sm",
 			warning:
-				"bg-yellow-50 border-yellow-200 dark:bg-yellow-950 dark:border-yellow-800",
-			info: "bg-blue-50 border-blue-200 dark:bg-blue-950 dark:border-blue-800",
+				"bg-yellow-50 border-yellow-200 dark:bg-yellow-950 dark:border-yellow-800 backdrop-blur-sm",
+			info: "bg-blue-50 border-blue-200 dark:bg-blue-950 dark:border-blue-800 backdrop-blur-sm",
 		},
 	},
 	defaultVariants: {
@@ -87,7 +78,7 @@ const toastTextVariants = cva("text-sm font-medium", {
 interface ToastProviderProps {
 	children: React.ReactNode;
 	duration?: number;
-	position?: "top" | "bottom";
+	position?: "top" | "bottom" | "top-left" | "top-right" | "bottom-left" | "bottom-right";
 }
 
 export function ToastProvider({
@@ -100,7 +91,9 @@ export function ToastProvider({
 		type: ToastType;
 	} | null>(null);
 	const fadeAnim = React.useRef(new Animated.Value(0)).current;
-	const timeoutRef = React.useRef<NodeJS.Timeout | undefined>(undefined);
+	const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | undefined>(
+		undefined,
+	);
 
 	const show = React.useCallback(
 		(message: string, type: ToastType = "default") => {
@@ -135,7 +128,26 @@ export function ToastProvider({
 		};
 	}, []);
 
-	const positionStyle = position === "top" ? { top: 50 } : { bottom: 50 };
+	const getPositionStyle = () => {
+		const sideMargin = 16;
+
+		switch (position) {
+			case "top":
+				return { top: 50, alignSelf: "center" as const };
+			case "bottom":
+				return { bottom: 50, alignSelf: "center" as const };
+			case "top-left":
+				return { top: 50, left: sideMargin, alignSelf: "flex-start" as const };
+			case "top-right":
+				return { top: 50, right: sideMargin, alignSelf: "flex-end" as const };
+			case "bottom-left":
+				return { bottom: 50, left: sideMargin, alignSelf: "flex-start" as const };
+			case "bottom-right":
+				return { bottom: 50, right: sideMargin, alignSelf: "flex-end" as const };
+			default:
+				return { bottom: 50, alignSelf: "center" as const };
+		}
+	};
 
 	return (
 		<ToastContext.Provider value={{ show }}>
@@ -144,14 +156,14 @@ export function ToastProvider({
 				<Animated.View
 					style={[
 						styles.container,
-						positionStyle,
+						getPositionStyle(),
 						{
 							opacity: fadeAnim,
 							transform: [
 								{
 									translateY: fadeAnim.interpolate({
 										inputRange: [0, 1],
-										outputRange: position === "top" ? [-40, 0] : [40, 0],
+										outputRange: position.includes("top") ? [-40, 0] : [40, 0],
 									}),
 								},
 							],
@@ -172,19 +184,24 @@ export function ToastProvider({
 const styles = StyleSheet.create({
 	container: {
 		position: "absolute",
-		alignSelf: "center",
-		left: 0,
-		right: 0,
 		alignItems: "center",
-		paddingHorizontal: 16,
 		zIndex: 9999,
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 4,
+		},
+		shadowOpacity: 0.15,
+		shadowRadius: 12,
+		elevation: 8,
 	},
 });
 
-export { toastVariants, toastTextVariants };
-export type { ToastType, ToastProviderProps };
+export { toastTextVariants, toastVariants };
+export type { ToastProviderProps, ToastType };
+
 `}
-			previewCode={`import { Button } from "@/components/ui/button";
+      previewCode={`import { Button } from "@/components/ui/button";
 import { ToastProvider, useToast } from "@/components/ui/toast";
 import { Feather } from "@expo/vector-icons";
 import { useColorScheme } from "nativewind";
@@ -192,159 +209,169 @@ import React from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-function ToastDemo() {
+function ToastScreen() {
 	const { show } = useToast();
 	const { colorScheme } = useColorScheme();
 	const isDark = colorScheme === "dark";
 
+	React.useEffect(() => {
+		const timer = setTimeout(() => {
+			show("Toast component loaded successfully!", "success");
+		}, 500);
+		return () => clearTimeout(timer);
+	}, [show]);
+
 	return (
-		<SafeAreaView className="flex-1 bg-background" edges={["bottom"]}>
-			<ScrollView className="px-5 py-5">
-				<View className="mb-6">
-					<Text className="text-2xl font-bold mb-2 text-foreground">Toast</Text>
-					<Text className="text-base mb-4 text-muted-foreground">
-						Display temporary notification messages
-					</Text>
-					<Text className="text-base mb-4 text-foreground">
-						Current mode: {isDark ? "dark" : "light"}
-					</Text>
-				</View>
+		<>
+			<SafeAreaView className="flex-1 bg-background" edges={["bottom"]}>
+				<ScrollView className="px-5 py-5">
+					<View className="mb-6">
+						<Text className="text-2xl font-bold mb-2 text-foreground">
+							Toast
+						</Text>
+						<Text className="text-base mb-4 text-muted-foreground">
+							Display temporary notification messages
+						</Text>
+						<Text className="text-base mb-4 text-foreground">
+							Current mode: {isDark ? "dark" : "light"}
+						</Text>
+					</View>
 
-				<View className="mb-6">
-					<Text className="text-xl font-semibold mb-4 text-foreground">
-						Toast Variants
-					</Text>
+					<View className="mb-6">
+						<Text className="text-xl font-semibold mb-4 text-foreground">
+							Toast Variants
+						</Text>
 
-					<View className="gap-4">
-						<View className="flex-row gap-3 flex-wrap">
-							<Button onPress={() => show("This is a default toast")}>
-								<Text className="text-primary-foreground dark:text-primary-foreground">
-									Default
-								</Text>
-							</Button>
+						<View className="gap-4">
+							<View className="flex-row gap-3 flex-wrap">
+								<Button onPress={() => show("This is a default toast")}>
+									<Text className="text-primary-foreground dark:text-primary-foreground">
+										Default
+									</Text>
+								</Button>
 
-							<Button
-								variant="outline"
-								onPress={() => show("Operation successful!", "success")}
-							>
-								<Feather
-									name="check-circle"
-									size={16}
-									color={isDark ? "white" : "#111827"}
-								/>
-								<Text className="text-foreground dark:text-foreground ml-2">
-									Success
-								</Text>
-							</Button>
+								<Button
+									variant="outline"
+									onPress={() => show("Operation successful!", "success")}
+								>
+									<Feather
+										name="check-circle"
+										size={16}
+										color={isDark ? "white" : "#111827"}
+									/>
+									<Text className="text-foreground dark:text-foreground ml-2">
+										Success
+									</Text>
+								</Button>
 
-							<Button
-								variant="destructive"
-								onPress={() => show("Something went wrong", "error")}
-							>
-								<Feather
-									name="alert-circle"
-									size={16}
-									color={isDark ? "#111827" : "white"}
-								/>
-								<Text className="text-destructive-foreground dark:text-destructive-foreground ml-2">
-									Error
-								</Text>
-							</Button>
-						</View>
+								<Button
+									variant="destructive"
+									onPress={() => show("Something went wrong", "error")}
+								>
+									<Feather
+										name="alert-circle"
+										size={16}
+										color={isDark ? "#111827" : "white"}
+									/>
+									<Text className="text-destructive-foreground dark:text-destructive-foreground ml-2">
+										Error
+									</Text>
+								</Button>
+							</View>
 
-						<View className="flex-row gap-3 flex-wrap">
-							<Button
-								variant="secondary"
-								onPress={() => show("Please review your changes", "warning")}
-							>
-								<Feather
-									name="alert-triangle"
-									size={16}
-									color={isDark ? "white" : "#111827"}
-								/>
-								<Text className="text-secondary-foreground dark:text-secondary-foreground ml-2">
-									Warning
-								</Text>
-							</Button>
+							<View className="flex-row gap-3 flex-wrap">
+								<Button
+									variant="secondary"
+									onPress={() => show("Please review your changes", "warning")}
+								>
+									<Feather
+										name="alert-triangle"
+										size={16}
+										color={isDark ? "white" : "#111827"}
+									/>
+									<Text className="text-secondary-foreground dark:text-secondary-foreground ml-2">
+										Warning
+									</Text>
+								</Button>
 
-							<Button
-								variant="ghost"
-								onPress={() => show("Here's some information", "info")}
-							>
-								<Feather
-									name="info"
-									size={16}
-									color={isDark ? "white" : "#111827"}
-								/>
-								<Text className="text-foreground dark:text-foreground ml-2">
-									Info
-								</Text>
-							</Button>
+								<Button
+									variant="ghost"
+									onPress={() => show("Here's some information", "info")}
+								>
+									<Feather
+										name="info"
+										size={16}
+										color={isDark ? "white" : "#111827"}
+									/>
+									<Text className="text-foreground dark:text-foreground ml-2">
+										Info
+									</Text>
+								</Button>
+							</View>
 						</View>
 					</View>
-				</View>
 
-				<View className="mb-6">
-					<Text className="text-xl font-semibold mb-4 text-foreground">
-						Toast with Actions
-					</Text>
+					<View className="mb-6">
+						<Text className="text-xl font-semibold mb-4 text-foreground">
+							Toast with Actions
+						</Text>
 
-					<View className="gap-4">
-						<View className="flex-row gap-3 flex-wrap">
-							<Button
-								onPress={async () => {
-									show("Processing...", "info");
-									await new Promise((resolve) => setTimeout(resolve, 1500));
-									show("Changes saved successfully!", "success");
-								}}
-							>
-								<Feather
-									name="save"
-									size={16}
-									color={isDark ? "#111827" : "white"}
-								/>
-								<Text className="text-primary-foreground dark:text-primary-foreground ml-2">
-									Save Changes
-								</Text>
-							</Button>
+						<View className="gap-4">
+							<View className="flex-row gap-3 flex-wrap">
+								<Button
+									onPress={async () => {
+										show("Processing...", "info");
+										await new Promise((resolve) => setTimeout(resolve, 1500));
+										show("Changes saved successfully!", "success");
+									}}
+								>
+									<Feather
+										name="save"
+										size={16}
+										color={isDark ? "#111827" : "white"}
+									/>
+									<Text className="text-primary-foreground dark:text-primary-foreground ml-2">
+										Save Changes
+									</Text>
+								</Button>
 
-							<Button
-								variant="outline"
-								onPress={async () => {
-									show("Uploading file...", "info");
-									await new Promise((resolve) => setTimeout(resolve, 2000));
-									show("File uploaded!", "success");
-								}}
-							>
-								<Feather
-									name="upload"
-									size={16}
-									color={isDark ? "white" : "#111827"}
-								/>
-								<Text className="text-foreground dark:text-foreground ml-2">
-									Upload File
-								</Text>
-							</Button>
+								<Button
+									variant="outline"
+									onPress={async () => {
+										show("Uploading file...", "info");
+										await new Promise((resolve) => setTimeout(resolve, 2000));
+										show("File uploaded!", "success");
+									}}
+								>
+									<Feather
+										name="upload"
+										size={16}
+										color={isDark ? "white" : "#111827"}
+									/>
+									<Text className="text-foreground dark:text-foreground ml-2">
+										Upload File
+									</Text>
+								</Button>
+							</View>
 						</View>
 					</View>
-				</View>
-			</ScrollView>
-		</SafeAreaView>
+				</ScrollView>
+			</SafeAreaView>
+		</>
 	);
 }
 
 export default function ToastPreview() {
 	return (
 		<ToastProvider duration={3000} position="bottom">
-			<ToastDemo />
+			<ToastScreen />
 		</ToastProvider>
 	);
-}
-`}
-			registryName="toast"
-			packageName="@nativeui/ui"
-			dependencies={["react-native", "class-variance-authority"]}
-			changelog={[]}
-		/>
-	);
+}`}
+      registryName="toast"
+      packageName="@nativeui/ui"
+      dependencies={["react-native"]}
+      changelog={[]}
+    />
+  );
 }
