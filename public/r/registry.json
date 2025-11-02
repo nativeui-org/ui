@@ -3,528 +3,422 @@
   "name": "nativeui",
   "homepage": "https://nativeui.io",
   "items": [
-    {
-      "name": "button",
-      "type": "registry:ui",
-      "title": "Button",
-      "description": "A button component with multiple variants for React Native applications.",
-      "files": [
-        {
-          "path": "registry/button/button.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native", "class-variance-authority"],
-      "registryDependencies": []
-    },
-    {
-      "name": "accordion",
-      "type": "registry:ui",
-      "title": "Accordion",
-      "description": "An accordion component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/accordion/accordion.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native", "@expo/vector-icons"],
-      "registryDependencies": []
-    },
-    {
-      "name": "badge",
-      "type": "registry:ui",
-      "title": "Badge",
-      "description": "A badge component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/badge/badge.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native", "class-variance-authority"],
-      "registryDependencies": []
-    },
-    {
-      "name": "avatar",
-      "type": "registry:ui",
-      "title": "Avatar",
-      "description": "An avatar component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/avatar/avatar.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "input",
-      "type": "registry:ui",
-      "title": "Input",
-      "description": "An input component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/input/input.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "textarea",
-      "type": "registry:ui",
-      "title": "Textarea",
-      "description": "A textarea component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/textarea/textarea.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "input-otp",
-      "type": "registry:ui",
-      "title": "Input OTP",
-      "description": "An input OTP component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/input-otp/input-otp.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "switch",
-      "type": "registry:ui",
-      "title": "Switch",
-      "description": "A switch component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/switch/switch.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "radio-group",
-      "type": "registry:ui",
-      "title": "Radio Group",
-      "description": "A radio group component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/radio-group/radio-group.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "checkbox",
-      "type": "registry:ui",
-      "title": "Checkbox",
-      "description": "A checkbox component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/checkbox/checkbox.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native", "@expo/vector-icons"],
-      "registryDependencies": []
-    },
-    {
-      "name": "slider",
-      "type": "registry:ui",
-      "title": "Slider",
-      "description": "A slider component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/slider/slider.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "select",
-      "type": "registry:ui",
-      "title": "Select",
-      "description": "A select component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/select/select.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native", "@expo/vector-icons"],
-      "registryDependencies": ["https://nativeui.io/registry/drawer.json"]
-    },
-    {
-      "name": "popover",
-      "type": "registry:ui",
-      "title": "Popover",
-      "description": "A popover component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/popover/popover.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "drawer",
-      "type": "registry:ui",
-      "title": "Drawer",
-      "description": "A drawer component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/drawer/drawer.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native", "react-native-safe-area-context"],
-      "registryDependencies": []
-    },
-    {
-      "name": "combobox",
-      "type": "registry:ui",
-      "title": "Combobox",
-      "description": "A combobox component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/combobox/combobox.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native", "@expo/vector-icons"],
-      "registryDependencies": [
-        "https://nativeui.io/registry/drawer.json",
-        "https://nativeui.io/registry/input.json"
-      ]
-    },
-    {
-      "name": "skeleton",
-      "type": "registry:ui",
-      "title": "Skeleton",
-      "description": "A skeleton component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/skeleton/skeleton.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "separator",
-      "type": "registry:ui",
-      "title": "Separator",
-      "description": "A separator component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/separator/separator.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "sheet",
-      "type": "registry:ui",
-      "title": "Sheet",
-      "description": "A sheet component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/sheet/sheet.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": [
-        "react-native",
-        "react-native-safe-area-context",
-        "@expo/vector-icons"
-      ],
-      "registryDependencies": []
-    },
-    {
-      "name": "tabs",
-      "type": "registry:ui",
-      "title": "Tabs",
-      "description": "A tabs component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/tabs/tabs.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "toggle",
-      "type": "registry:ui",
-      "title": "Toggle",
-      "description": "A toggle component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/toggle/toggle.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "toggle-group",
-      "type": "registry:ui",
-      "title": "Toggle Group",
-      "description": "A toggle group component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/toggle-group/toggle-group.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "progress",
-      "type": "registry:ui",
-      "title": "Progress",
-      "description": "A progress component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/progress/progress.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "pagination",
-      "type": "registry:ui",
-      "title": "Pagination",
-      "description": "A pagination component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/pagination/pagination.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native", "@expo/vector-icons"],
-      "registryDependencies": []
-    },
-    {
-      "name": "alert",
-      "type": "registry:ui",
-      "title": "Alert",
-      "description": "An alert component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/alert/alert.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native", "class-variance-authority"],
-      "registryDependencies": []
-    },
-    {
-      "name": "tooltip",
-      "type": "registry:ui",
-      "title": "Tooltip",
-      "description": "A tooltip component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/tooltip/tooltip.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "collapsible",
-      "type": "registry:ui",
-      "title": "Collapsible",
-      "description": "A collapsible component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/collapsible/collapsible.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native", "@expo/vector-icons"],
-      "registryDependencies": []
-    },
-    {
-      "name": "breadcrumb",
-      "type": "registry:ui",
-      "title": "Breadcrumb",
-      "description": "A breadcrumb component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/breadcrumb/breadcrumb.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native", "@expo/vector-icons"],
-      "registryDependencies": []
-    },
-    {
-      "name": "table",
-      "type": "registry:ui",
-      "title": "Table",
-      "description": "A table component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/table/table.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "label",
-      "type": "registry:ui",
-      "title": "Label",
-      "description": "A label component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/label/label.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "dialog",
-      "type": "registry:ui",
-      "title": "Dialog",
-      "description": "A dialog component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/dialog/dialog.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native", "@expo/vector-icons"],
-      "registryDependencies": []
-    },
-    {
-      "name": "alert-dialog",
-      "type": "registry:ui",
-      "title": "Alert Dialog",
-      "description": "An alert dialog component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/alert-dialog/alert-dialog.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "card",
-      "type": "registry:ui",
-      "title": "Card",
-      "description": "A card component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/card/card.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    },
-    {
-      "name": "carousel",
-      "type": "registry:ui",
-      "title": "Carousel",
-      "description": "A carousel component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/carousel/carousel.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native", "@expo/vector-icons"],
-      "registryDependencies": []
-    },
-    {
-      "name": "dropdown",
-      "type": "registry:ui",
-      "title": "Dropdown",
-      "description": "A dropdown component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/dropdown/dropdown.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native", "@expo/vector-icons"],
-      "registryDependencies": []
-    },
-    {
-      "name": "calendar",
-      "type": "registry:ui",
-      "title": "Calendar",
-      "description": "A calendar component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/calendar/calendar.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native", "date-fns", "@expo/vector-icons", "@react-native-community/datetimepicker"],
-      "registryDependencies": []
-    },
-    {
-      "name": "date-time-picker",
-      "type": "registry:ui",
-      "title": "Date Time Picker",
-      "description": "A date time picker component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/date-time-picker/date-time-picker.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native", "date-fns", "@expo/vector-icons"],
-      "registryDependencies": ["https://nativeui.io/registry/calendar.json"]
-    },
-    {
-      "name": "toast",
-      "type": "registry:ui",
-      "title": "Toast",
-      "description": "A toast component for React Native applications.",
-      "files": [
-        {
-          "path": "registry/toast/toast.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["react-native"],
-      "registryDependencies": []
-    }
+     {
+    "name": "accordion",
+    "type": "registry:ui",
+    "title": "Accordion",
+    "description": "An accordion component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/accordion/accordion.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native", "@expo/vector-icons"],
+    "registryDependencies": []
+  },
+  {
+    "name": "alert",
+    "type": "registry:ui",
+    "title": "Alert",
+    "description": "An alert component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/alert/alert.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native", "class-variance-authority"],
+    "registryDependencies": []
+  },
+  {
+    "name": "alert-dialog",
+    "type": "registry:ui",
+    "title": "Alert Dialog",
+    "description": "An alert dialog component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/alert-dialog/alert-dialog.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native"],
+    "registryDependencies": []
+  },
+  {
+    "name": "avatar",
+    "type": "registry:ui",
+    "title": "Avatar",
+    "description": "An avatar component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/avatar/avatar.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native"],
+    "registryDependencies": []
+  },
+  {
+    "name": "badge",
+    "type": "registry:ui",
+    "title": "Badge",
+    "description": "A badge component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/badge/badge.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native", "class-variance-authority"],
+    "registryDependencies": []
+  },
+  {
+    "name": "breadcrumb",
+    "type": "registry:ui",
+    "title": "Breadcrumb",
+    "description": "A breadcrumb component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/breadcrumb/breadcrumb.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native", "@expo/vector-icons"],
+    "registryDependencies": []
+  },
+  {
+    "name": "button",
+    "type": "registry:ui",
+    "title": "Button",
+    "description": "A button component with multiple variants for React Native applications.",
+    "files": [
+      {
+        "path": "registry/button/button.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native", "class-variance-authority"],
+    "registryDependencies": []
+  },
+  {
+    "name": "calendar",
+    "type": "registry:ui",
+    "title": "Calendar",
+    "description": "A calendar component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/calendar/calendar.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": [
+      "react-native",
+      "date-fns",
+      "@expo/vector-icons",
+      "@react-native-community/datetimepicker"
+    ],
+    "registryDependencies": []
+  },
+  {
+    "name": "card",
+    "type": "registry:ui",
+    "title": "Card",
+    "description": "A card component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/card/card.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native"],
+    "registryDependencies": []
+  },
+  {
+    "name": "carousel",
+    "type": "registry:ui",
+    "title": "Carousel",
+    "description": "A carousel component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/carousel/carousel.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native", "@expo/vector-icons"],
+    "registryDependencies": []
+  },
+  {
+    "name": "checkbox",
+    "type": "registry:ui",
+    "title": "Checkbox",
+    "description": "A checkbox component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/checkbox/checkbox.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native", "@expo/vector-icons"],
+    "registryDependencies": []
+  },
+  {
+    "name": "collapsible",
+    "type": "registry:ui",
+    "title": "Collapsible",
+    "description": "A collapsible component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/collapsible/collapsible.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native", "@expo/vector-icons"],
+    "registryDependencies": []
+  },
+  {
+    "name": "combobox",
+    "type": "registry:ui",
+    "title": "Combobox",
+    "description": "A combobox component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/combobox/combobox.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native", "@expo/vector-icons"],
+    "registryDependencies": [
+      "https://nativeui.io/registry/drawer.json",
+      "https://nativeui.io/registry/input.json"
+    ]
+  },
+  {
+    "name": "date-time-picker",
+    "type": "registry:ui",
+    "title": "Date Time Picker",
+    "description": "A date time picker component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/date-time-picker/date-time-picker.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native", "date-fns", "@expo/vector-icons"],
+    "registryDependencies": ["https://nativeui.io/registry/calendar.json"]
+  },
+  {
+    "name": "dialog",
+    "type": "registry:ui",
+    "title": "Dialog",
+    "description": "A dialog component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/dialog/dialog.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native", "@expo/vector-icons"],
+    "registryDependencies": []
+  },
+  {
+    "name": "drawer",
+    "type": "registry:ui",
+    "title": "Drawer",
+    "description": "A drawer component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/drawer/drawer.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native", "react-native-safe-area-context"],
+    "registryDependencies": []
+  },
+  
+  {
+    "name": "pagination",
+    "type": "registry:ui",
+    "title": "Pagination",
+    "description": "A pagination component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/pagination/pagination.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native", "@expo/vector-icons"],
+    "registryDependencies": []
+  },
+  {
+    "name": "popover",
+    "type": "registry:ui",
+    "title": "Popover",
+    "description": "A popover component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/popover/popover.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native"],
+    "registryDependencies": []
+  },
+  {
+    "name": "progress",
+    "type": "registry:ui",
+    "title": "Progress",
+    "description": "A progress component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/progress/progress.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native"],
+    "registryDependencies": []
+  },
+  {
+    "name": "radio-group",
+    "type": "registry:ui",
+    "title": "Radio Group",
+    "description": "A radio group component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/radio-group/radio-group.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native"],
+    "registryDependencies": []
+  },
+  {
+    "name": "select",
+    "type": "registry:ui",
+    "title": "Select",
+    "description": "A select component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/select/select.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native", "@expo/vector-icons"],
+    "registryDependencies": ["https://nativeui.io/registry/drawer.json"]
+  },
+  {
+    "name": "separator",
+    "type": "registry:ui",
+    "title": "Separator",
+    "description": "A separator component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/separator/separator.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native"],
+    "registryDependencies": []
+  },
+  {
+    "name": "sheet",
+    "type": "registry:ui",
+    "title": "Sheet",
+    "description": "A sheet component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/sheet/sheet.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": [
+      "react-native",
+      "react-native-safe-area-context",
+      "@expo/vector-icons"
+    ],
+    "registryDependencies": []
+  },
+  {
+    "name": "skeleton",
+    "type": "registry:ui",
+    "title": "Skeleton",
+    "description": "A skeleton component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/skeleton/skeleton.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "textarea",
+    "type": "registry:ui",
+    "title": "Textarea",
+    "description": "A textarea component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/textarea/textarea.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native"],
+    "registryDependencies": []
+  },
+  {
+    "name": "toast",
+    "type": "registry:ui",
+    "title": "Toast",
+    "description": "A toast component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/toast/toast.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native"],
+    "registryDependencies": []
+  },
+  {
+    "name": "toggle",
+    "type": "registry:ui",
+    "title": "Toggle",
+    "description": "A toggle component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/toggle/toggle.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native"],
+    "registryDependencies": []
+  },
+  {
+    "name": "toggle-group",
+    "type": "registry:ui",
+    "title": "Toggle Group",
+    "description": "A toggle group component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/toggle-group/toggle-group.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native"],
+    "registryDependencies": []
+  },
+  {
+    "name": "tooltip",
+    "type": "registry:ui",
+    "title": "Tooltip",
+    "description": "A tooltip component for React Native applications.",
+    "files": [
+      {
+        "path": "registry/tooltip/tooltip.tsx",
+        "type": "registry:ui"
+      }
+    ],
+    "dependencies": ["react-native"],
+    "registryDependencies": []
+  }
   ]
 }
