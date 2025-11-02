@@ -216,45 +216,46 @@ const DialogContent = React.forwardRef<View, DialogContentProps>(
             }}
           >
             <Animated.View
-              className="flex-1 justify-center items-center bg-black/50"
-              style={{ opacity: fadeAnim }}
+              style={{ flexGrow: 1, opacity: fadeAnim }}
             >
-              <TouchableWithoutFeedback>
-                <KeyboardAvoidingView
-                  behavior={Platform.OS === "ios" ? "padding" : undefined}
-                  keyboardVerticalOffset={
-                    Platform.OS === "ios" ? -SCREEN_HEIGHT * 0.2 : 0
-                  }
-                >
-                  <Animated.View
-                    ref={ref}
-                    className={cn(
-                      "bg-background m-6 rounded-2xl",
-                      "w-[85%] max-w-sm",
-                      Platform.OS === "ios"
-                        ? "ios:shadow-xl"
-                        : "android:elevation-8",
-                      className
-                    )}
-                    style={{
-                      transform: [{ scale: scaleAnim }],
-                    }}
-                    {...props}
+              <View className="flex-1 justify-center items-center bg-black/50" >
+                <TouchableWithoutFeedback>
+                  <KeyboardAvoidingView
+                    behavior={Platform.OS === "ios" ? "padding" : undefined}
+                    keyboardVerticalOffset={
+                      Platform.OS === "ios" ? -SCREEN_HEIGHT * 0.2 : 0
+                    }
                   >
-                    <ScrollView bounces={false} className="max-h-[80vh]">
-                      {showCloseButton && (
-                        <Pressable
-                          onPress={handleClose}
-                          className="absolute right-4 top-4 z-50 rounded-full p-2 bg-muted/50"
-                        >
-                          <Ionicons name="close" size={24} color="#666" />
-                        </Pressable>
+                    <Animated.View
+                      ref={ref}
+                      className={cn(
+                        "bg-background m-6 rounded-2xl",
+                        "w-[85%] max-w-sm",
+                        Platform.OS === "ios"
+                          ? "ios:shadow-xl"
+                          : "android:elevation-8",
+                        className
                       )}
-                      {children}
-                    </ScrollView>
-                  </Animated.View>
-                </KeyboardAvoidingView>
-              </TouchableWithoutFeedback>
+                      style={{
+                        transform: [{ scale: scaleAnim }],
+                      }}
+                      {...props}
+                    >
+                      <ScrollView bounces={false} className="max-h-[80vh]">
+                        {showCloseButton && (
+                          <Pressable
+                            onPress={handleClose}
+                            className="absolute right-4 top-4 z-50 rounded-full p-2 bg-muted/50"
+                          >
+                            <Ionicons name="close" size={24} color="#666" />
+                          </Pressable>
+                        )}
+                        {children}
+                      </ScrollView>
+                    </Animated.View>
+                  </KeyboardAvoidingView>
+                </TouchableWithoutFeedback>
+              </View>
             </Animated.View>
           </TouchableWithoutFeedback>
         </Modal>

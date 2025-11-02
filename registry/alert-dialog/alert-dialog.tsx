@@ -210,35 +210,35 @@ const AlertDialogContent = React.forwardRef<View, AlertDialogContentProps>(
             }}
           >
             <Animated.View
-              className="flex-1 justify-center items-center bg-black/50"
-              style={{ opacity: fadeAnim }}
-            >
-              <TouchableWithoutFeedback>
-                <KeyboardAvoidingView
-                  behavior={Platform.OS === "ios" ? "padding" : undefined}
-                  keyboardVerticalOffset={
-                    Platform.OS === "ios" ? -SCREEN_HEIGHT * 0.2 : 0
-                  }
-                >
-                  <Animated.View
-                    ref={ref}
-                    className={cn(
-                      "bg-background m-6 rounded-2xl",
-                      "w-[85%] max-w-sm",
-                      Platform.OS === "ios"
-                        ? "ios:shadow-xl"
-                        : "android:elevation-8",
-                      className
-                    )}
-                    style={{
-                      transform: [{ scale: scaleAnim }],
-                    }}
-                    {...props}
+              style={{ flexGrow: 1, opacity: fadeAnim }} >
+              <View className="flex-1 justify-center items-center bg-black/50">
+                <TouchableWithoutFeedback>
+                  <KeyboardAvoidingView
+                    behavior={Platform.OS === "ios" ? "padding" : undefined}
+                    keyboardVerticalOffset={
+                      Platform.OS === "ios" ? -SCREEN_HEIGHT * 0.2 : 0
+                    }
                   >
-                    {children}
-                  </Animated.View>
-                </KeyboardAvoidingView>
-              </TouchableWithoutFeedback>
+                    <Animated.View
+                      ref={ref}
+                      className={cn(
+                        "bg-background m-6 rounded-2xl",
+                        "w-[85%] max-w-sm",
+                        Platform.OS === "ios"
+                          ? "ios:shadow-xl"
+                          : "android:elevation-8",
+                        className
+                      )}
+                      style={{
+                        transform: [{ scale: scaleAnim }],
+                      }}
+                      {...props}
+                    >
+                      {children}
+                    </Animated.View>
+                  </KeyboardAvoidingView>
+                </TouchableWithoutFeedback>
+              </View>
             </Animated.View>
           </TouchableWithoutFeedback>
         </Modal>
