@@ -438,33 +438,35 @@ const Drawer = React.forwardRef<View, DrawerProps>(
           </Animated.View>
 
           <Animated.View
-            style={[styles.drawerContainer, { transform: [{ translateY }] }]}
-            className={cn(
-              "absolute bottom-0 left-0 right-0 bg-popover rounded-t-xl overflow-hidden",
-              Platform.OS === "ios" ? "ios:shadow-xl" : "android:elevation-24",
-              contentClassName
-            )}
-          >
-
-            <View {...panResponder.panHandlers}>
-              <View className="w-full items-center py-2">
-                <View className="w-10 h-1 rounded-full bg-muted-foreground/30" />
-              </View>
-
-              {title && (
-                <View className="px-4 pt-1 pb-3 border-b border-border">
-                  <Text className="text-xl font-medium text-center text-foreground">
-                    {title}
-                  </Text>
-                </View>
+            style={[{ transform: [{ translateY }] }]}>
+            <View
+              style={[styles.drawerContainer]}
+              className={cn(
+                "absolute bottom-0 left-0 right-0 bg-popover rounded-t-xl overflow-hidden",
+                Platform.OS === "ios" ? "ios:shadow-xl" : "android:elevation-24",
+                contentClassName
               )}
-            </View>
+            >
+              <View {...panResponder.panHandlers}>
+                <View className="w-full items-center py-2">
+                  <View className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                </View>
 
-            <SafeAreaView className="flex-1" edges={["bottom"]}>
-              <View ref={ref} className="flex-1">
-                {children}
+                {title && (
+                  <View className="px-4 pt-1 pb-3 border-b border-border">
+                    <Text className="text-xl font-medium text-center text-foreground">
+                      {title}
+                    </Text>
+                  </View>
+                )}
               </View>
-            </SafeAreaView>
+
+              <SafeAreaView className="flex-1" edges={["bottom"]}>
+                <View ref={ref} className="flex-1">
+                  {children}
+                </View>
+              </SafeAreaView>
+            </View>
           </Animated.View>
         </View>
       ),
