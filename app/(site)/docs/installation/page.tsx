@@ -290,7 +290,7 @@ module.exports = {
           "--color-background": "255 255 255",
           "--color-primary-foreground": "255 255 255",
           "--color-foreground": "0 0 0",
-          "--color-popover": "255 255 255"
+          "--color-popover": "255 255 255",
           "--color-destructive": "239 68 68",
           "--color-success": "34 197 94",
           "--color-warning": "234 179 8",
