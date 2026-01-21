@@ -297,7 +297,7 @@ export function CodeBlock({
                   <div className="relative w-full h-[calc(100%-24px)]">
                     <video
                       className="w-full h-full object-cover"
-                      src={`https://xbu6gsnzqpqao6cm.public.blob.vercel-storage.com/ui/${componentName}.mp4`}
+                      src={`https://assets.nativeui.io/ui/${componentName}.mp4`}
                       autoPlay
                       loop
                       muted
