@@ -70,6 +70,47 @@ _Use this as a reference to build your own component libraries._
 
 Please read our [contributing guide](./registry/CONTRIBUTING.md).
 
+### Local development and interactive previews
+
+Use Node.js 20.19 or newer and run `npm install`, then `npm run dev`.
+Installation also installs the locked dependencies in `preview/`. Both `dev`
+and `build` compile the previews automatically; no Expo server or external
+playground is needed. `npm run build` produces the deployable Next.js site.
+
+Component documentation renders the actual `registry/*/*.preview.tsx` demos
+inside a 375 × 812 iPhone viewport. The preview toolbar switches between light
+and dark themes without losing demo state, and resets the demo on demand.
+The phone scales down on narrow screens; scrolling, modals, and styles stay
+inside its iframe.
+
+The separate `preview/` package uses React Native Web, NativeWind 4, and
+Tailwind 3, while the documentation keeps Tailwind 4. Its esbuild configuration
+resolves demo component imports to `registry/`, loads each demo on demand, and
+writes the generated assets to `public/previews/` (not committed). Preview-only
+adapters omit Expo navigation headers and supply a browser time input for the
+native date/time picker. Native alerts display inside the preview.
+
+When editing registry demos, run `npm run dev:previews` in a second terminal
+and reload the preview after changes. Restart that command after changing its
+build or Tailwind configuration. New `registry/<name>/<name>.preview.tsx` files
+are discovered automatically. To update preview dependencies, run
+`npm --prefix preview install <package>` and commit its package and lock files.
+
+Run the checks with:
+
+```bash
+npm run lint
+npx tsc --noEmit
+npm --prefix preview run typecheck
+npx playwright install chromium
+npm run test:previews
+npm run build
+```
+
+Browser tests cover every registry demo in both themes, local font loading,
+state changes, modal isolation, date/time selection, reset, recovery from failed
+loads, and the phone's mobile layout. Tests start a local server on port 3199.
+
 ## License
 
 Licensed under the [MIT license](https://github.com/nativeui-org/ui/blob/main/LICENSE).

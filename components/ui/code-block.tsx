@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { InteractivePreview } from "@/components/docs/interactive-preview";
 import { Highlight, themes } from "prism-react-renderer";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
@@ -290,38 +291,11 @@ export function CodeBlock({
 
       <div className={cn("relative group rounded-md overflow-hidden border border-border", className)}>
         {localActiveTab === "preview" && (
-          <div className="p-6 border-b">
-            {componentName ? (
-              <div className="flex items-center justify-center">
-                <div className="w-[350px] h-[700px] bg-slate-100 dark:bg-slate-900 rounded-[40px] overflow-hidden border-8 border-slate-300 dark:border-slate-700 shadow-xl relative">
-                  <div className="relative w-full h-[calc(100%-24px)]">
-                    <video
-                      className="w-full h-full object-cover"
-                      src={`https://assets.nativeui.io/ui/${componentName}.mp4`}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      controls
-                      controlsList="nodownload"
-                      preload="auto"
-                      style={{ objectFit: 'cover' }}
-                    >
-                      Your browser does not support video playback.
-                    </video>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="h-[250px] w-full flex items-center justify-center bg-slate-100 dark:bg-slate-900 rounded-md">
-                <div className="flex flex-col items-center gap-2">
-                  <p className="text-sm text-muted-foreground">
-                    Video preview will load here
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
+          componentName ? <InteractivePreview componentName={componentName} /> : (
+            <div className="flex min-h-64 items-center justify-center p-6 text-sm text-muted-foreground">
+              No preview available.
+            </div>
+          )
         )}
 
         {children}

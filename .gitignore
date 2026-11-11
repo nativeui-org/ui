@@ -38,3 +38,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated interactive previews and browser test output
+/public/previews/
+/preview/node_modules/
+/playwright-report/
+/test-results/

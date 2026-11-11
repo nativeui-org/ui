@@ -1,0 +1,131 @@
+.preview {
+  padding: 16px;
+  background: var(--background);
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.control {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  transition:
+    background-color 150ms,
+    transform 150ms;
+  cursor: pointer;
+}
+.control:hover {
+  background: var(--muted);
+}
+.control:active {
+  transform: scale(0.96);
+}
+.control:focus-visible,
+.retry:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 24px;
+}
+.phone {
+  width: 395px;
+  height: 832px;
+  padding: 10px;
+  border-radius: 54px;
+  background: #161618;
+  box-shadow:
+    0 0 0 1px #4b4b50,
+    0 8px 24px rgb(0 0 0 / 12%);
+  transform-origin: top left;
+}
+.screen {
+  position: relative;
+  width: 375px;
+  height: 812px;
+  overflow: hidden;
+  border-radius: 44px;
+  background: #fff;
+  color: #0d0d0d;
+  isolation: isolate;
+}
+.phone[data-theme="dark"] .screen {
+  background: #17171c;
+  color: #fafafa;
+}
+.iframe {
+  display: block;
+  border: 0;
+  width: 375px;
+  height: 812px;
+}
+.statusBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 26px;
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+.notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 164px;
+  height: 29px;
+  transform: translateX(-50%);
+  border-radius: 0 0 20px 20px;
+  background: #161618;
+}
+.homeIndicator {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  width: 134px;
+  height: 5px;
+  transform: translateX(-50%);
+  border-radius: 3px;
+  background: currentColor;
+  pointer-events: none;
+}
+.message {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  text-align: center;
+  font-size: 14px;
+  background: inherit;
+}
+.retry {
+  min-height: 40px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid currentColor;
+  cursor: pointer;
+}
+@media (prefers-reduced-motion: reduce) {
+  .control {
+    transition: none;
+  }
+}

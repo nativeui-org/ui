@@ -9,7 +9,13 @@
     "lint": "next lint",
     "build:registry": "node scripts/build-registry.js",
     "generate:docs": "node scripts/generate-component-docs.js",
-    "update:components": "node scripts/update-components.js"
+    "update:components": "node scripts/update-components.js",
+    "predev": "npm run build:previews",
+    "prebuild": "npm run build:previews",
+    "build:previews": "npm --prefix preview run build",
+    "dev:previews": "npm --prefix preview run watch",
+    "test:previews": "playwright test",
+    "postinstall": "npm --prefix preview ci"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",
@@ -65,6 +71,7 @@
     "glob": "^11.0.2",
     "shadcn": "2.4.0-canary.17",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "@playwright/test": "^1.61.1"
   }
 }

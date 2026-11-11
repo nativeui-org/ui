@@ -418,7 +418,7 @@ npm install react-native
 ## Usage
 
 ```tsx
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tootlip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import * as React from "react";
 import { Text } from "react-native";
 
@@ -446,7 +446,7 @@ export default function TooltipExample() {
 ## Preview
 
 ```tsx
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tootlip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Ionicons } from "@expo/vector-icons";
 import * as React from "react";
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, View } from "react-native";

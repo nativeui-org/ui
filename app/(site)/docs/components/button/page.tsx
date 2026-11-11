@@ -226,9 +226,10 @@ export default function ButtonScreen() {
 
                 <Button
                   size="icon"
+                  accessibilityLabel="Increment counter"
                   onPress={() => setCounter(counter + 1)}
                 >
-                  <Feather name="plus" size={16} />
+                  <Feather name="plus" size={16} color={isDark ? "#111827" : "white"} />
                 </Button>
               </View>
             </View>
